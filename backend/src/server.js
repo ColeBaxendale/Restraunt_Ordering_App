@@ -2,6 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const adminRoutes = require('./routes/adminRoutes');
+const ownerRoutes = require('./routes/ownerRoutes');
+const userRoutes = require('./routes/userRoutes');
+
 
 
 
@@ -14,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 app.use(bodyParser.json());
 app.use('/admin', adminRoutes);
-app.use('/owner', ownerRoutes);
+// app.use('/owner', ownerRoutes);
 app.use('/user', userRoutes);
 app.use(express.json());
 
