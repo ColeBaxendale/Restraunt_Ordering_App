@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const ownerRoutes = require('./routes/ownerRoutes');
 const userRoutes = require('./routes/userRoutes');
-const authRoute = require('./routes/authRoutes');
 const cors = require('cors');
 
 
