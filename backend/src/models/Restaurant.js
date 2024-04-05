@@ -21,7 +21,9 @@ const restaurantSchema = new mongoose.Schema({
     sunday: { open: String, close: String },
   },
   menuSections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuSection' }],
-  ordersEnabled: { type: Boolean, default: true }, isActive: { type: Boolean, default: false }, stripeAccountId: { type: String, required: true },
+  ordersEnabled: { type: Boolean, default: true }, isActive: { type: Boolean, default: false }, 
+  stripeAccountId: { type: String, required: true },
+  overallIncome: { type: Number, required: true },
   fixedRate:{type: Number, required: true},
   addFees:{type: Boolean, required: true},
 });
