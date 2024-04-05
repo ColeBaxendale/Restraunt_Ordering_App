@@ -11,15 +11,16 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.log(err));
+  .catch(err => console.error(err));
 
 app.use(bodyParser.json());
 app.use('/admin', adminRoutes);
 // app.use('/owner', ownerRoutes);
 app.use('/user', userRoutes);
-app.use(express.json());
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
