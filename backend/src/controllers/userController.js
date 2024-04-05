@@ -44,8 +44,6 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  const emailLC = email.toLowerCase();
-
   const user = await User.findOne({ email });
   if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
@@ -58,10 +56,28 @@ exports.login = async (req, res) => {
 
   // Generate a JWT token for the user
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true }); // Adjust cookie settings as needed
-    res.send("Login successful");
+    role = user.role;
+    res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true }); 
+    console.log("success login");
+    res.send({role});
 }
 
-exports.verifyUser = (req, res) => {
-  res.send({ isAuthenticated: true, role: req.user.role });
+exports.authAdmin = (req, res) => {
+  console.log('in auth');
+  if (req.user.role === 'admin') {
+    console.log('authd');
+    return res.json({ authorized: true });
+  } else {
+    console.log('not authd');
+
+    return res.status(403).json({ authorized: false });
+  }
+};
+
+exports.authOwner = (req, res) => {
+  if (req.user.role === 'owner') {
+    return res.json({ authorized: true });
+  } else {
+    return res.status(403).json({ authorized: false });
+  }
 };

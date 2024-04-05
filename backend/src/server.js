@@ -6,18 +6,17 @@ const adminRoutes = require('./routes/adminRoutes');
 const ownerRoutes = require('./routes/ownerRoutes');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
-
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
-app.use(cors())
-const corsOptions = {
-  origin: 'http://localhost:4200',
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'http://localhost:4200', // Adjust according to your frontend host
+  credentials: true, // To accept cookies via cross-origin requests
+}));
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
