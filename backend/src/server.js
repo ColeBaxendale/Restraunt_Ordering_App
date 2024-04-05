@@ -3,8 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const restaurantRoutes = require('./routes/restaurantRoutes');
-const authRoutes = require('./routes/authRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,8 +13,9 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch(err => console.log(err));
 
 app.use(bodyParser.json());
-
-app.use('/api/restaurants', restaurantRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/admin', adminRoutes);
+app.use('/owner', ownerRoutes);
+app.use('/user', userRoutes);
+app.use(express.json());
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
