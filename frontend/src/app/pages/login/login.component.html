@@ -1,0 +1,22 @@
+<div class="loginPageContainer">
+    <div class="leftContainer">
+        <div class="textContainer">
+            <img class="logo" title="logo" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp">
+            <h1>Login</h1>
+            <form (ngSubmit)="onSubmit()">
+                <div class="formInputContainer">
+                    <input type="email" class="formInput" [(ngModel)]="user.email" name="email" placeholder="Email" required>
+                    <input type="password" class="formInput" [(ngModel)]="user.password" name="password" placeholder="Password" required>
+		            <button type="submit" class="formInputLogin">Login</button>
+                    <a class="forgotPassword" href="">Forgot Password?</a>
+                </div>
+		    </form>
+        </div>
+    </div>
+
+    <div class="rightContainer">
+        <img class="image" title="OnlineOrderingImage" src="../../../assets/images/OnlineOrderingImage.png">
+    </div>
+        
+
+</div>

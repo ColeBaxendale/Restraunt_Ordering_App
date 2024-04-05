@@ -51,15 +51,17 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
   }
 
-  // Compare the provided password with the stored hash
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
   }
 
   // Generate a JWT token for the user
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-
-  // Send the token as the response
-  res.json({ token });
+    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true }); // Adjust cookie settings as needed
+    res.send("Login successful");
 }
+
+exports.verifyUser = (req, res) => {
+  res.send({ isAuthenticated: true, role: req.user.role });
+};
