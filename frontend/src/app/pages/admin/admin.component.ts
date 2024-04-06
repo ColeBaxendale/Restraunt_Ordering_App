@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AddRestaurantDialogComponent } from '../../components/add-restaurant/add-restaurant.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 export interface Restaurant {
   uniqueId: string;
   name: string;
@@ -53,7 +56,7 @@ export class AdminComponent implements OnInit {
   selectedRestaurant: Restaurant | null = null;
   totalIncome: number = 0;
 
-  constructor(private restaurantService: RestaurantService, public dialog: MatDialog) {}
+  constructor(private restaurantService: RestaurantService, public dialog: MatDialog,private http: HttpClient,private router: Router) {}
 
   ngOnInit(): void {
     this.loadRestaurants();
@@ -86,6 +89,12 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    // Implement logout functionality
-  }
-}
+    this.http.get('http://localhost:3000/user/logout', { withCredentials: true })
+    .pipe(
+      finalize(() => this.router.navigate(['/login']))
+    )
+    .subscribe({
+      next: (response) => console.log('Logged out successfully'),
+      error: (error) => console.error('Logout failed:', error),
+    });
+}}

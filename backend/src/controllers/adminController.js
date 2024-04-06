@@ -1,23 +1,26 @@
 const Restaurant = require('../models/restaurant'); // Adjust the path as necessary
 const User = require('../models/user')
+const bcrypt = require('bcryptjs');
+
 
 exports.createRestaurant = async (req, res, next) => {
+  console.log(req.body);
   try {
-    const { ownerEmail, ownerName, restaurant } = req.body;
+    const { email, name, restaurantData } = req.body;
     // Ensure all required fields are present
-    console.log(ownerEmail + ' ' + ownerName + '' + restaurant + ' ' + restaurant.uniqueId);
-    if (!ownerEmail || !ownerName || !restaurant || !restaurant.uniqueId) {
+    console.log(email, name, restaurantData.uniqueId);
+    if (!email || !name || !restaurantData || !restaurantData.uniqueId) {
       throw new Error("Missing fields or restaurant unique ID");
     }
     
     // Check if a restaurant with the same uniqueId already exists
-    const existingRestaurant = await Restaurant.findOne({ uniqueId: restaurant.uniqueId });
+    const existingRestaurant = await Restaurant.findOne({ uniqueId: restaurantData.uniqueId });
     if (existingRestaurant) {
       throw new Error("Restaurant unique ID already exists");
     }
 
     // Create and save the restaurant
-    const rest = new Restaurant(restaurant);
+    const rest = new Restaurant(restaurantData);
     await rest.save();
 
     // Hash the temporary password
@@ -25,9 +28,9 @@ exports.createRestaurant = async (req, res, next) => {
     
     // Create and save a new user associated with the restaurant
     const newUser = new User({
-      email: ownerEmail,
+      email,
       password: tempPass,
-      name: ownerName,
+      name,
       role: 'owner',
       restaurant: rest._id // Link the restaurant ID
     });

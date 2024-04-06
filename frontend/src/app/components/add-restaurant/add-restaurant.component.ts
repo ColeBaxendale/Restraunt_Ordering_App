@@ -34,7 +34,7 @@ export class AddRestaurantDialogComponent {
     private userService: UserService
   ) {
     this.restaurantForm = this.formBuilder.group({
-      uniqueId: ['elbowroom'],
+      uniqueId: ['elbowroomtoo'],
       name: ['elbowroom'],
       description: ['elbowroomtoo'],
       location: this.formBuilder.group({
@@ -45,7 +45,6 @@ export class AddRestaurantDialogComponent {
       }),
       ownerEmail: ['cbaxendale99@gmail.com'],
       ownerName: ['cole'],
-      owner: [{}],
       operatingHours: this.formBuilder.group({
         monday: this.formBuilder.group({
           open: ['1:00 PM'],
