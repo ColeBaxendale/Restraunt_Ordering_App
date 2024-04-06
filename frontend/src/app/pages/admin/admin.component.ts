@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { CommonModule, NgFor } from '@angular/common';
 export interface Restaurant {
   uniqueId: string;
   name: string;
@@ -46,7 +47,7 @@ export interface User {
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,NgFor],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
@@ -63,9 +64,18 @@ export class AdminComponent implements OnInit {
   }
 
   loadRestaurants(): void {
-    // Implement service call to fetch restaurants
-    // Calculate total income
+    this.restaurantService.getAllRestaurants().subscribe(
+      (data: any) => {
+        this.restaurants = data.restaurants; // Assign retrieved data to restaurants array
+        console.log('Restaurants loaded successfully:', this.restaurants);
+      },
+      (error) => {
+        console.error('Error loading restaurants:', error);
+      }
+    );
   }
+  
+
 
   searchRestaurants(inputElement: HTMLInputElement): void {
   const searchTerm = inputElement.value;

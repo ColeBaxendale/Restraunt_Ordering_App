@@ -34,7 +34,7 @@ export class AddRestaurantDialogComponent {
     private userService: UserService
   ) {
     this.restaurantForm = this.formBuilder.group({
-      uniqueId: ['elbowroomtoo'],
+      uniqueId: ['elbowroqwomtooqwdqwd'],
       name: ['elbowroom'],
       description: ['elbowroomtoo'],
       location: this.formBuilder.group({
@@ -43,7 +43,7 @@ export class AddRestaurantDialogComponent {
         state: ['NY'],
         zipCode: ['11901']
       }),
-      ownerEmail: ['cbaxendale99@gmail.com'],
+      ownerEmail: ['cbaxendale9999@gmail.com'],
       ownerName: ['cole'],
       operatingHours: this.formBuilder.group({
         monday: this.formBuilder.group({
@@ -88,9 +88,6 @@ export class AddRestaurantDialogComponent {
     if (this.restaurantForm.valid) {
       const { ownerEmail, ownerName, ...restaurantData } = this.restaurantForm.value;
       console.log(restaurantData);
-  
-      // Assuming restaurantData includes all necessary restaurant details
-      // And assuming createRestaurant expects an object with { email, name, restaurantData }
       const payload = { 
         email: ownerEmail, 
         name: ownerName, 
@@ -106,6 +103,7 @@ export class AddRestaurantDialogComponent {
         },
         (error) => {
           console.error('Error creating restaurant:', error);
+          alert('Error creating restaurant: ' + error.message);
           // Handle any errors that occur during the HTTP request.
         }
       );
@@ -114,51 +112,6 @@ export class AddRestaurantDialogComponent {
       // Optionally, handle the case where the form is not valid.
       // You might want to display validation errors or a generic message to the user.
     }
-
-
-    // if (this.restaurantForm.valid) {
-    //   // Remove email and owner name from the restaurant form value
-    //   const { email, name, ...restaurantData } = this.restaurantForm.value;
-  
-    //   // Step 1: Create the restaurant object
-    //   this.restaurantService.createRestaurant(restaurantData).subscribe(
-    //     (restaurantResponse: Restaurant) => { 
-    //       console.log(`Created restaurant with server-assigned id ${restaurantResponse.id}`);
-          
-    //       // Step 2: Create the user object with restaurant ID, email, and owner name
-    //       const userData: User = {
-    //         email: email, // Use the omitted email field
-    //         name: name,   // Use the omitted owner name field
-    //         password: 'password',
-    //         role: 'owner',
-    //         restaurant: restaurantResponse.id // Assign restaurant ID to user
-    //       };
-  
-    //       // Step 3: Create the user object
-    //       this.userService.createUser(userData).subscribe(
-    //         (userResponse: User) => {
-    //           console.log(`Created user with server-assigned id ${userResponse.id}`);
-    //           // Step 4: Optionally, update restaurant information with the new user
-    //           this.restaurantService.updateRestaurant(restaurantResponse.id, { owner: userResponse.id }).subscribe(
-    //             () => {
-    //               console.log('Restaurant information updated with owner ID');
-    //               // Additional actions after successful creation and update can be added here
-    //             },
-    //             error => {
-    //               console.error('Error updating restaurant information:', error);
-    //             }
-    //           );
-    //         },
-    //         error => {
-    //           console.error('Error creating user:', error);
-    //         }
-    //       );
-    //     },
-    //     error => {
-    //       console.error('Error creating restaurant:', error);
-    //     }
-    //   );
-    // }
   }
   
 
