@@ -3,9 +3,10 @@ const User = require('../models/user')
 
 exports.createRestaurant = async (req, res, next) => {
   try {
-    const { email, name, restaurant } = req.body;
+    const { ownerEmail, ownerName, restaurant } = req.body;
     // Ensure all required fields are present
-    if (!email || !name || !restaurant || !restaurant.uniqueId) {
+    console.log(ownerEmail + ' ' + ownerName + '' + restaurant + ' ' + restaurant.uniqueId);
+    if (!ownerEmail || !ownerName || !restaurant || !restaurant.uniqueId) {
       throw new Error("Missing fields or restaurant unique ID");
     }
     
@@ -24,9 +25,9 @@ exports.createRestaurant = async (req, res, next) => {
     
     // Create and save a new user associated with the restaurant
     const newUser = new User({
-      email,
+      email: ownerEmail,
       password: tempPass,
-      name,
+      name: ownerName,
       role: 'owner',
       restaurant: rest._id // Link the restaurant ID
     });

@@ -63,13 +63,9 @@ exports.login = async (req, res) => {
 }
 
 exports.authAdmin = (req, res) => {
-  console.log('in auth');
   if (req.user.role === 'admin') {
-    console.log('authd');
     return res.json({ authorized: true });
   } else {
-    console.log('not authd');
-
     return res.status(403).json({ authorized: false });
   }
 };

@@ -34,50 +34,51 @@ export class AddRestaurantDialogComponent {
     private userService: UserService
   ) {
     this.restaurantForm = this.formBuilder.group({
-      uniqueId: ['', Validators.required],
-      name: ['', Validators.required],
-      description: [''],
+      uniqueId: ['elbowroom'],
+      name: ['elbowroom'],
+      description: ['elbowroomtoo'],
       location: this.formBuilder.group({
-        address: ['', Validators.required],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        zipCode: ['', Validators.required]
+        address: ['123 main road'],
+        city: ['jamesport'],
+        state: ['NY'],
+        zipCode: ['11901']
       }),
-      ownerEmail: [],
-      ownerName: [],
-      owner: [''],
+      ownerEmail: ['cbaxendale99@gmail.com'],
+      ownerName: ['cole'],
+      owner: [{}],
       operatingHours: this.formBuilder.group({
         monday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         tuesday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         wednesday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         thursday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         friday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         saturday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         }),
         sunday: this.formBuilder.group({
-          open: [''],
-          close: ['']
+          open: ['1:00 PM'],
+          close: ['1:00 PM']
         })
       }),
       menuSections: this.formBuilder.array([]), // Assuming menuSections is an empty array by default
-      stripeAccountId: [''],
+      isActive: [true],
+      stripeAccountId: ['12345'],
       overallIncome: [0], // Assuming initial income is 0
       fixedRate: [0.02], // Assuming a default fixed rate
       addFees: [true] // Assuming fees are not added by default

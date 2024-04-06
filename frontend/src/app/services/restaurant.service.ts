@@ -14,22 +14,22 @@ export class RestaurantService {
 
   createRestaurant(payload: { email: any; name: any; restaurantData: any; }): Observable<Restaurant> {
 
-    return this.http.post<Restaurant>(this.baseUrl, payload);
+    return this.http.post<Restaurant>(this.baseUrl, payload,{withCredentials: true });
   }
 
   getRestaurantById(id: string): Observable<Restaurant> {
-    return this.http.get<Restaurant>(`${this.baseUrl}/${id}`);
+    return this.http.get<Restaurant>(`${this.baseUrl}/${id}`,{withCredentials: true });
   }
 
   updateRestaurant(id: string, restaurant: Restaurant): Observable<Restaurant> {
-    return this.http.put<Restaurant>(`${this.baseUrl}/${id}`, restaurant);
+    return this.http.put<Restaurant>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
   deleteRestaurant(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`,{withCredentials: true });
   }
 
   getAllRestaurants(): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(`${this.baseUrl}`);
+    return this.http.get<Restaurant[]>(`${this.baseUrl}`,{withCredentials: true });
   }
 }
