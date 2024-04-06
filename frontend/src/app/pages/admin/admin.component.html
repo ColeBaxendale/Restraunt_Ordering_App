@@ -1,1 +1,40 @@
-<p>admin works!</p>
+<div class="adminContainer">
+  <input class="searchbar" type="text" placeholder="Search by restaurant unique name..." (input)="searchRestaurants($any($event.target).value)">
+  <div class="topButtons">
+    
+    <button  class="button" aria-label="showAddRestaurantForm" (click)="showAddRestaurantForm()">Add New</button>
+    <button class="button" aria-label="logout" (click)="logout()">Logout</button>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- <div class="header">
+    <input type="text" placeholder="Search by restaurant unique name..." (input)="searchRestaurants($any($event.target).value)">
+    <button (click)="showAddRestaurantForm()">Add Restaurant</button>
+  </div>
+  
+  <div class="summary">
+    <p>Total Income: {{ totalIncome }}</p>
+    <button (click)="logout()">Logout</button>
+  </div>
+  
+  <div class="restaurants-container">
+    <div *ngFor="let restaurant of filteredRestaurants" class="restaurant-card" (click)="selectRestaurant(restaurant)">
+      <p>UniqueId: {{ restaurant.uniqueId }}</p>
+      <p>Income: {{ restaurant.overallIncome * restaurant.fixedRate }}</p>
+    </div>
+  </div> -->
+  
+  <!-- Modal or separate component for Add/Edit form -->
+  <!-- <app-restaurant-modal [selectedRestaurant]="selectedRestaurant" (refresh)="loadRestaurants()"></app-restaurant-modal> -->
+  

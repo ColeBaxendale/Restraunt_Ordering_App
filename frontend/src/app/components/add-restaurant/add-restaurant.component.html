@@ -1,0 +1,159 @@
+<h2 mat-dialog-title class="title">Add New Restaurant</h2>
+
+<mat-dialog-content class="addNewContainer">
+  <form [formGroup]="restaurantForm">
+    <div class="owner-container">
+      <mat-label>Restaurant Info</mat-label>
+    </div>
+    <input
+      matInput
+      class="input"
+      title="uniqueId"
+      formControlName="uniqueId"
+      placeholder="Unique ID"
+    />
+    <input
+      matInput
+      class="input"
+      title="name"
+      formControlName="name"
+      placeholder="Restaurant name"
+    />
+    <textarea
+      matInput
+      class="description"
+      title="description"
+      formControlName="description"
+      placeholder="Description"
+    ></textarea>
+
+    <!-- Location form group -->
+    <div formGroupName="location">
+      <input
+        matInput
+        class="input"
+        title="address"
+        formControlName="address"
+        placeholder="Address"
+      />
+      <input
+        matInput
+        class="input"
+        title="city"
+        formControlName="city"
+        placeholder="City"
+      />
+      <input
+        matInput
+        class="input"
+        title="state"
+        formControlName="state"
+        placeholder="State"
+      />
+      <input
+        matInput
+        class="input"
+        title="zipCode"
+        formControlName="zipCode"
+        placeholder="Zip Code"
+      />
+    </div>
+
+    <div class="owner-container">
+      <mat-label>Owner Info</mat-label>
+    </div>
+    <input
+      matInput
+      class="input"
+      title="ownerEmail"
+      formControlName="ownerEmail"
+      placeholder="Email"
+    />
+    <input
+      matInput
+      class="input"
+      title="ownerName"
+      formControlName="ownerName"
+      placeholder="Name"
+    />
+
+    <!-- Operating Hours form group -->
+    <div formGroupName="operatingHours" class="operating-hours-container">
+      <div class="owner-container">
+        <mat-label>Operating Hours: 8:00 AM / 5:00 PM</mat-label>
+      </div>
+
+      <!-- Monday -->
+      <div formGroupName="monday">
+        <input matInput placeholder="Monday Open" formControlName="open" />
+        <input matInput placeholder="Monday Close" formControlName="close" />
+      </div>
+      <!-- Tuesday -->
+      <div formGroupName="tuesday">
+        <input matInput placeholder="Tuesday Open" formControlName="open" />
+        <input matInput placeholder="Tuesday Close" formControlName="close" />
+      </div>
+      <!-- Wednesday -->
+      <div formGroupName="wednesday">
+        <input matInput placeholder="Wednesday Open" formControlName="open" />
+        <input matInput placeholder="Wednesday Close" formControlName="close" />
+      </div>
+      <!-- Thursday -->
+      <div formGroupName="thursday">
+        <input matInput placeholder="Thursday Open" formControlName="open" />
+        <input matInput placeholder="Thursday Close" formControlName="close" />
+      </div>
+      <!-- Friday -->
+      <div formGroupName="friday">
+        <input matInput placeholder="Friday Open" formControlName="open" />
+        <input matInput placeholder="Friday Close" formControlName="close" />
+      </div>
+      <!-- Saturday -->
+      <div formGroupName="saturday">
+        <input matInput placeholder="Saturday Open" formControlName="open" />
+        <input matInput placeholder="Saturday Close" formControlName="close" />
+      </div>
+      <!-- Sunday -->
+      <div formGroupName="sunday">
+        <input matInput placeholder="Sunday Open" formControlName="open" />
+        <input matInput placeholder="Sunday Close" formControlName="close" />
+      </div>
+    </div>
+
+    <div class="owner-container">
+      <mat-label>Account Details</mat-label>
+    </div>
+    <input
+      matInput
+      class="input"
+      title="isActive"
+      formControlName="isActive"
+      placeholder="Is Active Yes / No"
+    />
+    <input
+      matInput
+      class="input"
+      title="stripeAccountId"
+      formControlName="stripeAccountId"
+      placeholder="Stripe Account ID"
+    />
+    <input
+      matInput
+      class="input"
+      title="fixedRate"
+      formControlName="fixedRate"
+      placeholder="Fixed Rate 0.02"
+    />
+    <input
+      matInput
+      class="input"
+      title="addFees"
+      formControlName="addFees"
+      placeholder="Add Fees Yes / No"
+    />
+  </form>
+  <div class="buttons">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onSubmit()">Save</button>
+  </div>
+</mat-dialog-content>

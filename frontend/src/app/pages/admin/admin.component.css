@@ -1,0 +1,36 @@
+.adminContainer {
+    display: grid; /* Use grid layout */
+    grid-template-columns: auto auto; /* Two columns: one for buttons, one for search bar */
+    justify-content: space-between; /* Space between the two main elements */
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .adminContainer .searchbar {
+    width: 60vw;
+    height: 5vh;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding-left: 2%;
+    /* No need for margin-left: auto; */
+  }
+  
+  .adminContainer .topButtons {
+    display: flex;
+    justify-content: flex-start; /* Buttons align to the start of their grid cell */
+  }
+  
+  .adminContainer .topButtons .button {
+    width: 6vw;
+    height: 5vh;
+    border-radius: 20px;
+    margin-right: 20px; /* Adjusted to margin-right for spacing between buttons */
+    background-color: #f9f9f9;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .adminContainer .topButtons .button:hover{
+    background-color: #cdcdcd;
+  }
+  
