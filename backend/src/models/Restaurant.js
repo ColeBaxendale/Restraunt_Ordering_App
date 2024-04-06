@@ -1,32 +1,68 @@
 const mongoose = require('mongoose');
 
-const restaurantSchema = new mongoose.Schema({
-  uniqueId: { type: String, required: true, unique: true, index: true },
-  name: { type: String, required: true}, 
-  description: String,
-  location: {
-    address: { type: String, required: true},
-    city: { type: String, required: true}, 
-    state: { type: String, required: true}, 
-    zipCode: { type: String, required: true}, 
-  },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  operatingHours:{
-    monday: { open: String, close: String }, 
-    tuesday: { open: String, close: String }, 
-    wednesday: { open: String, close: String }, 
-    thursday: { open: String, close: String }, 
-    friday: { open: String, close: String }, 
-    saturday: { open: String, close: String }, 
-    sunday: { open: String, close: String },
-  },
-  menuSections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuSection' }],
-  ordersEnabled: { type: Boolean, default: true }, 
-  isActive: { type: Boolean, default: false }, 
-  stripeAccountId: { type: String, required: true },
-  overallIncome: { type: Number, required: true },
-  fixedRate:{type: Number, required: true},
-  addFees:{type: Boolean, required: true},
+
+
+const RestaurantLocation = new mongoose.Schema({
+  address: { type: String},
+  city: { type: String},
+  state: { type: String},
+  zipCode: { type: String},
 });
 
-module.exports = mongoose.model('Restaurant', restaurantSchema);
+// Define a schema for operating hours
+const OperatingHoursSchema = new mongoose.Schema({
+  isOpen: { type: Boolean},
+  open: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
+  close: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
+});
+
+// Define a schema for the restaurant's weekly operating hours
+const WeeklyOperatingHoursSchema = new mongoose.Schema({
+  monday: OperatingHoursSchema,
+  tuesday: OperatingHoursSchema,
+  wednesday: OperatingHoursSchema,
+  thursday: OperatingHoursSchema,
+  friday: OperatingHoursSchema,
+  saturday: OperatingHoursSchema,
+  sunday: OperatingHoursSchema,
+});
+
+const RestaurantDetails = new mongoose.Schema({
+  logo: { type: String },
+  name: { type: String, unique: true, required: true },
+  description: { type: String },
+  location: RestaurantLocation,
+  operatingHours: WeeklyOperatingHoursSchema,
+
+  owners: [{ 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Owner',
+    required: function() { return this.role === 'owner'; }
+  }],
+  menuSections: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'MenuSection' 
+  }],
+  ordersEnabled: { type: Boolean, default: true },
+
+});
+
+const AdminDetails = new mongoose.Schema({
+  isActive: { type: Boolean, default: false },
+  overallIncome: { type: Number, default: 0 },
+  fixedRate: { type: Number, required: true },
+
+});
+const StripeDetails = new mongoose.Schema({
+  stripeAccountId: { type: String},
+  addFees: { type: Boolean, required: true },
+});
+
+// Define the main restaurant schema
+const RestaurantSchema = new mongoose.Schema({
+  details: RestaurantDetails,
+  admin: AdminDetails,
+  stripe: StripeDetails
+});
+
+module.exports = mongoose.model('Restaurant', RestaurantSchema);
