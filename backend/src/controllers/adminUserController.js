@@ -3,17 +3,19 @@ const bcrypt = require("bcryptjs");
 
 exports.createUser = async (req, res) => {
     try {
-      const { email, password, name } = req.body;
-
+      const { email, name } = req.body;
+      console.log(email, name);
       const emailLower = email.toLowerCase();
+      console.log(emailLower);
       // Hash password
+      const password = 'Welcome1'
       const hashedPassword = await bcrypt.hash(password, 10);
   
       let restaurants = [];
   
       // Create a new user instance and save it to the database
       const newUser = await User.create({
-        emailLower,
+        email: emailLower,
         password: hashedPassword,
         name,
         role: 'owner',
