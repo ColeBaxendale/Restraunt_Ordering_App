@@ -4,15 +4,15 @@ const bcrypt = require("bcryptjs");
 
 exports.createRestaurant = async (req, res, next) => {
     try {
-      let { restaurantData } = req.body;
+      let { data } = req.body;
   
-      console.log(restaurantData); // To ensure we receive the expected structure
-      console.log("Accessing name:", restaurantData.details.name); // This should now work as expected
+      console.log(data); // To ensure we receive the expected structure
+      console.log("Accessing name:", data.details.name); // This should now work as expected
   
       // Directly call .toLowerCase() on the string
-      const lowerCaseName = restaurantData.details.name.toLowerCase();
+      const lowerCaseName = data.details.name.toLowerCase();
   
-      if (!restaurantData.details || !restaurantData.details.name) {
+      if (!data.details || !data.details.name) {
         return res.status(400).json({ error: "Missing restaurant name in details." });
       }
   
@@ -24,19 +24,19 @@ exports.createRestaurant = async (req, res, next) => {
       if (existingRestaurant) {
         return res.status(409).json({ error: "Restaurant name already exists." });
       }
-      restaurantData.details.phone = restaurantData.details.phone || '';
+      data.details.phone = data.details.phone || '';
       // Ensure admin object exists
-      restaurantData.admin = restaurantData.admin || { nameLowerCase: lowerCaseName, isActive: false, overallIncome: 0, fixedRate: 0.02 };
+      data.admin = data.admin || { nameLowerCase: lowerCaseName, isActive: false, overallIncome: 0, fixedRate: 0.02 };
       
       // Initialize StripeDetails if not provided
-      restaurantData.stripe = restaurantData.stripe || { stripeAccountId: '', addFees: true };
+      data.stripe = data.stripe || { stripeAccountId: '', addFees: true };
   
       // Initialize location with defaults if not provided
-      restaurantData.details.location = restaurantData.details.location || { address: '', city: '', state: '', zipCode: '' };
+      data.details.location = data.details.location || { address: '', city: '', state: '', zipCode: '' };
   
       // Initialize operatingHours with default closed status if not provided
       const defaultOperatingHoursClosed = { isOpen: false, open: null, close: null };
-      restaurantData.details.operatingHours = restaurantData.details.operatingHours || {
+      data.details.operatingHours = data.details.operatingHours || {
         monday: defaultOperatingHoursClosed,
         tuesday: defaultOperatingHoursClosed,
         wednesday: defaultOperatingHoursClosed,
@@ -46,7 +46,7 @@ exports.createRestaurant = async (req, res, next) => {
         sunday: defaultOperatingHoursClosed,
       };
   
-      const newRestaurant = new Restaurant(restaurantData);
+      const newRestaurant = new Restaurant(data);
       await newRestaurant.save();
   
       return res.status(201).json({
@@ -81,19 +81,44 @@ exports.getRestaurantName = async (req, res, next) => {
 
 exports.updateRestaurant = async (req, res, next) => {
   try {
-    const { name } = req.params;
+    const { name } = req.params;  // Ensure you're using the correct parameter name as defined in your route
+ 
+    console.log(name);
     const lowerCaseName = name.toLowerCase();
+    console.log(lowerCaseName);
 
     // First, find the restaurant by the lowercase name
     const restaurant = await Restaurant.findOne({ "admin.nameLowerCase": lowerCaseName });
+    console.log(restaurant);
 
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
     }
 
+    if ('admin' in req.body && 'nameLowerCase' in req.body.admin) {
+      return res.status(400).json({ message: "Cannot directly update admin nameLowerCase" });
+    }
+
+    // If the 'name' field in details is being updated
+    if (req.body.details && 'name' in req.body.details) {
+      // Assuming the correct path is "details.name" and we should also update "admin.nameLowerCase"
+      restaurant.details.name = req.body.details.name;
+      restaurant.admin.nameLowerCase = req.body.details.name.toLowerCase();
+    }
+
+    // Update other fields from req.body directly on the restaurant object
+    Object.keys(req.body).forEach(key => {
+      if (key !== 'details') { // Prevent direct overwrite of details, handled above
+        restaurant[key] = req.body[key];
+      }
+    });
+    
+
     // Now update the restaurant with the new values from req.body
     Object.keys(req.body).forEach(key => {
-      restaurant[key] = req.body[key];
+      if (key !== 'name') { // Avoid overwriting the name set above
+        restaurant[key] = req.body[key];
+      }
     });
 
     // Save the updated document
@@ -140,80 +165,3 @@ exports.getAllRestaurants = async (req, res, next) => {
 
 
 
-
-
-exports.createUser = async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      email: req.body.email,
-      password: hashedPassword,
-      name: req.body.name,
-      role: req.body.role,
-      restaurant: req.body.restaurant,
-    });
-    const savedUser = await user.save();
-    res.status(201).json(savedUser);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (user == null) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-exports.updateUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (user == null) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    if (req.body.email != null) {
-      user.email = req.body.email;
-    }
-    if (req.body.name != null) {
-      user.name = req.body.name;
-    }
-    if (req.body.role != null) {
-      user.role = req.body.role;
-    }
-    if (req.body.restaurant != null) {
-      user.restaurant = req.body.restaurant;
-    }
-    const updatedUser = await user.save();
-    res.json(updatedUser);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (user == null) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    await user.remove();
-    res.json({ message: "User deleted" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
