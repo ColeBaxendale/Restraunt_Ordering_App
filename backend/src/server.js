@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const ownerRoutes = require('./routes/ownerRoutes');
 const userRoutes = require('./routes/userRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
+
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -25,7 +27,8 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(bodyParser.json());
 app.use('/admin', adminRoutes);
 // app.use('/owner', ownerRoutes);
-app.use('/user', userRoutes);
+// app.use('/user', userRoutes);
+app.use('/session', sessionRoutes);
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

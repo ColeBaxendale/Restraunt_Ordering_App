@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 
 
 const RestaurantLocation = new mongoose.Schema({
-  address: { type: String},
-  city: { type: String},
-  state: { type: String},
-  zipCode: { type: String},
+  address: { type: String, default: ''},
+  city: { type: String, default: ''},
+  state: { type: String, default: ''},
+  zipCode: { type: String, default: ''},
 });
 
 // Define a schema for operating hours
 const OperatingHoursSchema = new mongoose.Schema({
-  isOpen: { type: Boolean},
+  isOpen: { type: Boolean, default: false},
   open: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
   close: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
 });
@@ -28,9 +28,10 @@ const WeeklyOperatingHoursSchema = new mongoose.Schema({
 });
 
 const RestaurantDetails = new mongoose.Schema({
-  logo: { type: String },
-  name: { type: String, unique: true, required: true },
-  description: { type: String },
+  logo: { type: String, default: ''},
+  name: { type: String},
+  description: { type: String, default: '' },
+  phone: {type: String, default: ''},
   location: RestaurantLocation,
   operatingHours: WeeklyOperatingHoursSchema,
 
@@ -43,19 +44,19 @@ const RestaurantDetails = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'MenuSection' 
   }],
-  ordersEnabled: { type: Boolean, default: true },
-
+  ordersEnabled: { type: Boolean, default: false},
 });
 
 const AdminDetails = new mongoose.Schema({
-  isActive: { type: Boolean, default: false },
+  nameLowerCase: { type: String, unique: true, required: true},
+  isActive: { type: Boolean, default: false},
   overallIncome: { type: Number, default: 0 },
-  fixedRate: { type: Number, required: true },
+  fixedRate: { type: Number, default: 0.02 },
 
 });
 const StripeDetails = new mongoose.Schema({
-  stripeAccountId: { type: String},
-  addFees: { type: Boolean, required: true },
+  stripeAccountId: { type: String, default: ''},
+  addFees: { type: Boolean, default: true},
 });
 
 // Define the main restaurant schema
