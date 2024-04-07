@@ -1,44 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
-
+import { SessionService } from '../../services/session.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,RouterOutlet],
+  imports: [FormsModule, RouterOutlet],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   user = {
     email: '',
-    password: ''
+    password: '',
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
   onSubmit() {
-    console.log(this.user);
-    this.http.post('http://localhost:3000/user/login', this.user, { withCredentials: true })
-      .subscribe({
-        next: (res: any) => {
-          console.log('Login successful:', res);
-          if(res.role === "admin"){
-            this.router.navigate(['/admin']);
-          }
-          else if(res.role === "owner"){
-            this.router.navigate(['/owner']);
-          }
-          else{
-            this.router.navigate(['/login']);
-          }
-        },
-        error: (error) => {
-          console.error(error);
+    this.sessionService.login(this.user.email, this.user.password).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response.role + ' role');
+        const role = response.role;
+        if (role === 'admin') this.router.navigate(['/admin']);
+        else if (role === 'owner') this.router.navigate(['/owner']);
+        else {
+          console.error('Unexpected user role:', role);
+          this.router.navigate(['/']);
         }
-      });
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+        // Handle login error (show error message to user, etc.)
+      },
+    });
   }
 }
-

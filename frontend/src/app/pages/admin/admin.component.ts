@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 export interface Restaurant {
   uniqueId: string;
   name: string;
@@ -57,7 +58,7 @@ export class AdminComponent implements OnInit {
   selectedRestaurant: Restaurant | null = null;
   totalIncome: number = 0;
 
-  constructor(private restaurantService: RestaurantService, public dialog: MatDialog,private http: HttpClient,private router: Router) {}
+  constructor(private restaurantService: RestaurantService, public dialog: MatDialog,private http: HttpClient,private router: Router, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     this.loadRestaurants();
@@ -99,12 +100,15 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    this.http.get('http://localhost:3000/user/logout', { withCredentials: true })
+    this.sessionService.logout()
     .pipe(
       finalize(() => this.router.navigate(['/login']))
     )
     .subscribe({
-      next: (response) => console.log('Logged out successfully'),
+      next: () => console.log('Logged out successfully'),
       error: (error) => console.error('Logout failed:', error),
     });
-}}
+}
+
+}
+
