@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Restaurant } from '../pages/admin/admin.component';
 import { Observable } from 'rxjs';
+import { Restaurant } from '../../../types';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,11 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  createRestaurant(payload: { email: any; name: any; restaurantData: any; }): Observable<Restaurant> {
-
-    return this.http.post<Restaurant>(this.baseUrl, payload,{withCredentials: true });
+  createRestaurant(details: any): Observable<Restaurant> {
+    const payload = { data: { details } };
+    return this.http.post<Restaurant>(this.baseUrl, payload, {withCredentials: true});
   }
+  
 
   getRestaurantById(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.baseUrl}/${id}`,{withCredentials: true });

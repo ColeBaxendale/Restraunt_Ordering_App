@@ -2,15 +2,10 @@
   <input class="searchbar" type="text" placeholder="Search by restaurant unique name..." (input)="searchRestaurants($any($event.target).value)">
   <div class="topButtons">
     
-    <button  class="button" aria-label="showAddRestaurantForm" (click)="showAddRestaurantForm()">Add New</button>
+    <button  class="button" aria-label="addRestaurant" (click)="addRestaurant()">Add New</button>
     <button class="button" aria-label="logout" (click)="logout()">Logout</button>
   </div>
   <div class="restaurants-container">
-    <div *ngFor="let restaurant of restaurants" class="restaurant-card" (click)="selectRestaurant(restaurant)" [ngClass]="{'active': restaurant.isActive}">
-        <h2>{{ restaurant.uniqueId }}</h2>
-        <h3>{{ restaurant.name }}</h3>
-        <p class="income">${{ restaurant.overallIncome * restaurant.fixedRate }}</p>
-    </div>
   </div>
 </div>
 

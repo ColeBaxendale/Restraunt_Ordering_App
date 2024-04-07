@@ -1,48 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
-import { AddRestaurantDialogComponent } from '../../components/add-restaurant/add-restaurant.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
 import { SessionService } from '../../services/session.service';
-export interface Restaurant {
-  uniqueId: string;
-  name: string;
-  description?: string;
-  location: {
-    address: string,
-    city: string, 
-    state: string, 
-    zipCode: string, 
-  };
-  owner?: string;
-  operatingHours?: {
-    monday: { open: string, close: string }, 
-    tuesday: { open: string, close: string }, 
-    wednesday: { open: string, close: string }, 
-    thursday: { open: string, close: string }, 
-    friday: { open: string, close: string }, 
-    saturday: { open: string, close: string }, 
-    sunday: { open: string, close: string }, 
-  };
-  menuSections?: string[]; 
-  ordersEnabled?: boolean;
-  isActive?: boolean;
-  stripeAccountId: string;
-  overallIncome: number;
-  fixedRate: number;
-  addFees: boolean;
-}
+import { Restaurant } from '../../../../types';
 
-export interface User {
-  email: string;
-  password: string;
-  name: string;
-  role: 'admin' | 'owner';
-  restaurant: string;
-}
 
 
 @Component({
@@ -83,16 +48,8 @@ export class AdminComponent implements OnInit {
   // Implement search functionality
   }
 
-  showAddRestaurantForm(): void {
-    const dialogRef = this.dialog.open(AddRestaurantDialogComponent, {
-      width: '70vw',
-      height: 'max-content',
-    });
-
-    dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('The dialog was closed', result);
-      // Handle result if needed, result is what's passed with dialog close
-  })
+  addRestaurant(): void {
+    this.router.navigate(['/addRestaurant']);
 }
 
   selectRestaurant(restaurant: Restaurant): void {
