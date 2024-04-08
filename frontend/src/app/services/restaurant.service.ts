@@ -12,12 +12,10 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  createRestaurant(details: any): Observable<Restaurant> {
-    const payload = { data: { details } };
-    return this.http.post<Restaurant>(this.baseUrl, payload, {withCredentials: true});
+  createRestaurant(restaurantData: any): Observable<Restaurant> {
+    return this.http.post<Restaurant>(`${this.baseUrl}`, restaurantData, { withCredentials: true });
   }
   
-
   getRestaurantById(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.baseUrl}/${id}`,{withCredentials: true });
   }

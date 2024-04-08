@@ -1,0 +1,42 @@
+.mainContainer {
+    padding: 20px;
+    border: 1px solid #000000; /* Light grey border */
+    border-radius: 5px; /* Optional: rounds the corners */
+    width: 100vw;
+    height:100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: none;
+  }
+
+  .mainContainer h1{
+    color: white;
+  }
+
+  .formInput{
+    background-color: #333333;
+    color: white;
+    border-radius: 20px;
+    margin: 30px;
+    width: 10vw;
+    text-align: center;
+    height: 4vh;
+  }
+
+  .btnRounded{
+    border-radius: 20px;
+    background-color: #CF6679;
+    color: white;
+    width:6vw;
+    height: 4vh;
+    cursor: pointer;
+  }
+
+
+  .errorClass{
+    color: #CF6679;
+    text-align: center;
+    margin-top: 10px;
+  }

@@ -22,6 +22,8 @@ exports.createRestaurant = async (req, res, next) => {
       });
   
       if (existingRestaurant) {
+       console.log("Restaurant name already exists.");
+        
         return res.status(409).json({ error: "Restaurant name already exists." });
       }
       data.details.phone = data.details.phone || '';

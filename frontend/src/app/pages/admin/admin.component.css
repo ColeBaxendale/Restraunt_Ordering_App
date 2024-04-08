@@ -25,7 +25,8 @@
     height: 5vh;
     border-radius: 20px;
     margin-right: 20px; /* Adjusted to margin-right for spacing between buttons */
-    background-color: #f9f9f9;
+    background-color: #CF6679;
+    color: white;
     text-align: center;
     cursor: pointer;
   }

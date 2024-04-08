@@ -1,18 +1,30 @@
-<div class="container">
-    <form (ngSubmit)="submitForm()">
-      <!-- Step 1: Name -->
-      <div *ngIf="currentStep === 1">
-        <div class="mb-3">
-          <label for="restaurantName" class="form-label">Restaurant Name</label>
-          <input type="text" class="form-control" id="restaurantName" [(ngModel)]="restaurantName" name="restaurantName" placeholder="Enter restaurant name" required>
-        </div>
-        <button type="button" class="btn btn-primary" (click)="submitForm()">Next</button>
+<div class="mainContainer">
+  <h1>Add New Restaurant</h1>
+  <form (ngSubmit)="submitForm()">
+    <div *ngIf="currentStep === 1">
+      <div class="inputContainer">
+        <input
+          type="text"
+          class="formInput"
+          id="restaurantName"
+          [(ngModel)]="restaurantName"
+          name="restaurantName"
+          placeholder="Enter restaurant name"
+          required
+        />
+
       </div>
-  
-      <!-- Additional steps and form controls here -->
-  
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-success" *ngIf="currentStep > 1">Submit</button>
-    </form>
+    </div>
+  </form>
+  <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
+  <button type="submit" class="btn" *ngIf="currentStep > 1">
+    Submit
+  </button>
+  <div *ngIf="errorMsg != ''">
+    <p class="errorClass">{{errorMsg}}</p>
   </div>
-  
+</div>
+
+<!-- Additional steps and form controls here -->
+
+<!-- Submit button -->
