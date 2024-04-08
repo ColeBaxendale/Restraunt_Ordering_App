@@ -15,6 +15,20 @@
     color: white;
   }
 
+  .mainContainer h2{
+    color: #CF6679;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .inputContainerTwo{
+    display: flex;
+    flex-direction: row;
+    width: 50vw;
+    text-align: center;
+    justify-content: space-around;
+
+  }
   .formInput{
     background-color: #333333;
     color: white;
@@ -23,6 +37,23 @@
     width: 10vw;
     text-align: center;
     height: 4vh;
+  }
+.formInputDescription{
+  background-color: #333333;
+  color: white;
+  border-radius: 20px;
+  margin: 30px;
+  width: 20vw;
+  text-align: center;
+
+  height: 10vh;
+}
+  .formInputFile{
+    color: white;
+    margin: 30px;
+    width: 15vw;
+    text-align: center;
+    height: 5vh;
   }
 
   .btnRounded{

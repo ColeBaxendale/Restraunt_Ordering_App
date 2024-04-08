@@ -2,26 +2,92 @@
   <h1>Add New Restaurant</h1>
   <form (ngSubmit)="submitForm()">
     <div *ngIf="currentStep === 1">
-      <div class="inputContainer">
+      <input
+        type="text"
+        class="formInput"
+        id="restaurantName"
+        [(ngModel)]="restaurantName"
+        name="restaurantName"
+        placeholder="Enter restaurant name"
+        required
+      />
+    </div>
+
+    <div *ngIf="currentStep === 2">
+      <h2>Restaurant Details</h2>
+
+      <div class="inputContainerTwo">
+        <input
+          type="file"
+          class="formInputFile"
+          id="logo"
+          [(ngModel)]="logo"
+          name="logo"
+          placeholder="LOGO"
+        />
+        <input
+          type="text"
+          class="formInputDescription"
+          id="description"
+          [(ngModel)]="description"
+          name="description"
+          placeholder="Enter description"
+        />
+
         <input
           type="text"
           class="formInput"
-          id="restaurantName"
-          [(ngModel)]="restaurantName"
-          name="restaurantName"
-          placeholder="Enter restaurant name"
-          required
+          id="phone"
+          [(ngModel)]="phone"
+          name="phone"
+          placeholder="Enter phone number"
+        />
+      </div>
+      <h2>Restaurant Location</h2>
+
+      <div class="inputContainerTwo">
+        <input
+          type="text"
+          class="formInput"
+          id="address"
+          [(ngModel)]="address"
+          name="address"
+          placeholder="Enter street address"
         />
 
+        <input
+          type="text"
+          class="formInput"
+          id="city"
+          [(ngModel)]="city"
+          name="city"
+          placeholder="Enter City"
+        />
+
+        <input
+          type="text"
+          class="formInput"
+          id="state"
+          [(ngModel)]="state"
+          name="state"
+          placeholder="Enter State"
+        />
+
+        <input
+          type="text"
+          class="formInput"
+          id="zipCode"
+          [(ngModel)]="zipCode"
+          name="zipCode"
+          placeholder="Enter Zip Code"
+        />
       </div>
     </div>
   </form>
   <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
-  <button type="submit" class="btn" *ngIf="currentStep > 1">
-    Submit
-  </button>
+  <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
   <div *ngIf="errorMsg != ''">
-    <p class="errorClass">{{errorMsg}}</p>
+    <p class="errorClass">{{ errorMsg }}</p>
   </div>
 </div>
 

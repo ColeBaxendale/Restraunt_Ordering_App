@@ -68,8 +68,29 @@ export enum UserRole {
   }
   
   export interface Restaurant {
+    [x: string]: any;
     _id?: string; // Optional since it's assigned by MongoDB when a document is created
     details: RestaurantDetails;
     admin: AdminDetails;
     stripe: StripeDetails;
+  }
+
+
+
+  export interface RestaurantResponse {
+    message: string;
+    restaurant: Restaurant;
+  }
+
+  export interface idType {
+    id: string;
+  }
+
+  export interface PartialRestaurantUpdate {
+    details:{
+      logo?: string;
+      description?: string;
+      phone?: string;
+    }
+
   }
