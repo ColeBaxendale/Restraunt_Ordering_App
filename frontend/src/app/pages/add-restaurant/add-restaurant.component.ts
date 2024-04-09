@@ -1,15 +1,15 @@
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from 'express';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
-import { RestaurantResponse } from '../../../../types';
+import { OperatingHours, RestaurantResponse, WeeklyOperatingHours} from '../../../../types';
 
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
-  imports: [NgIf, FormsModule],
+  imports: [NgIf, FormsModule,CommonModule,],
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css'
 })
@@ -25,9 +25,15 @@ export class AddRestaurantComponent {
   city: string = '';
   state: string = '';
   zipCode: string = '';
-
-
-
+  days = [
+    { name: 'Monday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Tuesday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Wednesday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Thursday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Friday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Saturday', isOpen: false, openTime: '', closeTime: '' },
+    { name: 'Sunday', isOpen: false, openTime: '', closeTime: '' },
+  ];
 
   constructor(private restaurantService: RestaurantService) {}
 
@@ -68,6 +74,7 @@ export class AddRestaurantComponent {
     } else if(this.currentStep === 2){
       // Check if at least one of the fields is provided before attempting an update
       if (this.logo !== '' || this.description !== '' || this.phone !== '' || this.address !== '' || this.city !== '' || this.state !== '' || this.zipCode !== '') {
+        
         const updatedRestaurantData = {
             details: {
               logo: this.logo,
@@ -78,12 +85,23 @@ export class AddRestaurantComponent {
                 city: this.city,
                 state: this.state,
                 zipCode: this.zipCode,
-
-              }
+              },
+              operatingHours: this.days.reduce<WeeklyOperatingHours>((acc, day) => {
+                const dayName = day.name.toLowerCase(); // Ensure the day's name is in the correct format
+                if (["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].includes(dayName)) {
+                  acc[dayName as keyof WeeklyOperatingHours] = {
+                    isOpen: day.isOpen,
+                    open: day.isOpen ? day.openTime : undefined,
+                    close: day.isOpen ? day.closeTime : undefined,
+                  };
+                }
+                return acc;
+              }, {} as WeeklyOperatingHours) // Initialize the accumulator as WeeklyOperatingHours
+              
             }
         };
-
-        if (this.id) {
+          console.log('we are here');
+          
           this.restaurantService.updateRestaurantStepTwo(this.restaurantName, updatedRestaurantData).subscribe({
             next: (response) => {
               console.log('Restaurant updated successfully', response);
@@ -97,11 +115,6 @@ export class AddRestaurantComponent {
 
             }
           });
-        } else {
-          console.error('No restaurant ID defined for update.');
-          this.errorMsg = 'Attempted to update without a valid restaurant ID.';
-        }
-
       }
     } else{
 

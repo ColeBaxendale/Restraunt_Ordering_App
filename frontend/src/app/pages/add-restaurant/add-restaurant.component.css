@@ -8,11 +8,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: none;
+    overflow: auto;
+    justify-content: center;
+    align-content: center;
+  }
+
+  form{
+    justify-content: center;
+    align-items: center;
+    align-content: center;
   }
 
   .mainContainer h1{
     color: white;
+    margin-bottom: 2vh;
+    text-align: center;
   }
 
   .mainContainer h2{
@@ -20,6 +30,49 @@
     margin-top: 10px;
     text-align: center;
   }
+
+  .week-container h3{
+    color: #CF6679;
+
+  }
+
+  .week-container {
+    display: flex;
+    flex-direction: column; /* Aligns each day's container in a column */
+    align-items: flex-start; /* Centers the rows horizontally */
+    width: 100%; /* Adjust width as needed */
+  }
+  
+  .inputContainerThree {
+    display: flex;
+    flex-direction: row; /* Aligns the day's name, checkbox, and inputs in a row */
+    align-items: center; /* Vertically centers the elements in the row */
+    justify-content: center; /* Centers the row's content horizontally */
+    margin-bottom: 15px; /* Space between each day's row */
+    width: 80%; /* Adjust width as needed to fit your design */
+  }
+  
+  /* Styles for the day's name */
+  .day-name {
+    margin-right: 10px; /* Space between the day's name and the checkbox */
+  }
+  
+  /* Adjust the input styles to fit in the row neatly */
+  .formInput, .formInputDescription, .formInputFile, .timeInput {
+    margin: 0 5px; /* Adjusts spacing around inputs */
+  }
+  
+  /* Additional styles for visual clarity and interaction */
+  .timeInput:disabled {
+    background-color: #e9ecef;
+    color: #ccc; /* Makes text color lighter to indicate disabled state */
+  }
+  
+  .checkbox{
+    margin-right: 2vw;
+  }
+  
+
 
   .inputContainerTwo{
     display: flex;
@@ -63,6 +116,8 @@
     width:6vw;
     height: 4vh;
     cursor: pointer;
+    margin-bottom: 10vh;
+
   }
 
 
@@ -70,4 +125,5 @@
     color: #CF6679;
     text-align: center;
     margin-top: 10px;
+
   }

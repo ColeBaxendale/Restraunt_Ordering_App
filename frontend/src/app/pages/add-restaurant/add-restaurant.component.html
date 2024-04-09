@@ -1,6 +1,7 @@
 <div class="mainContainer">
-  <h1>Add New Restaurant</h1>
   <form (ngSubmit)="submitForm()">
+  <h1>Add New Restaurant</h1>
+
     <div *ngIf="currentStep === 1">
       <input
         type="text"
@@ -82,13 +83,51 @@
           placeholder="Enter Zip Code"
         />
       </div>
+
+      <h2>Restaurant Hours</h2>
+
+      <div class="week-container">
+        <div *ngFor="let day of days" class="inputContainerThree">
+          <input
+          type="checkbox"
+          [(ngModel)]="day.isOpen"
+          name="{{ day.name }}isOpen"
+          id="{{day.name}}.isOpen"
+          class="checkbox"
+
+        />
+          <h3>{{ day.name }}:</h3>
+
+          <div *ngIf="day.isOpen">
+            <input
+              type="textt"
+              class="formInput"
+              [(ngModel)]="day.openTime"
+              name="{{ day.name }}OpenTime"
+              id="{{day.name}}.openTime"
+
+              placeholder="Open time"
+            />
+            <input
+              type="text"
+              class="formInput"
+              [(ngModel)]="day.closeTime"
+              name="{{ day.name }}closeTime"
+              id="{{day.name}}.closeTime"
+
+              placeholder="Close time"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
+    <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
+    <div *ngIf="errorMsg != ''">
+      <p class="errorClass">{{ errorMsg }}</p>
     </div>
   </form>
-  <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
-  <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
-  <div *ngIf="errorMsg != ''">
-    <p class="errorClass">{{ errorMsg }}</p>
-  </div>
+
 </div>
 
 <!-- Additional steps and form controls here -->

@@ -1,3 +1,5 @@
+import internal from "node:stream";
+
 export enum UserRole {
     Admin = 'admin',
     Owner = 'owner',
@@ -19,18 +21,17 @@ export enum UserRole {
 
 
 
-
   export interface RestaurantLocation {
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    zipCode?: string;
   }
   
   export interface OperatingHours {
     isOpen: boolean;
-    open?: number; // Made optional since it's conditionally required based on isOpen
-    close?: number; // Made optional for the same reason
+    open?: string; // Made optional since it's conditionally required based on isOpen
+    close?: string; // Made optional for the same reason
   }
   
   export interface WeeklyOperatingHours {
@@ -82,15 +83,13 @@ export enum UserRole {
     restaurant: Restaurant;
   }
 
-  export interface idType {
-    id: string;
-  }
 
   export interface PartialRestaurantUpdate {
     details:{
       logo?: string;
       description?: string;
       phone?: string;
+      location?: RestaurantLocation;
+      operatingHours?: WeeklyOperatingHours;
     }
-
   }
