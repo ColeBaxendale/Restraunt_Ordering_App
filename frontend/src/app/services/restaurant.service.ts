@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PartialRestaurantUpdate, Restaurant } from '../../../types';
+import { RestaurantDetailsUpdate, Restaurant } from '../../../types';
 import { RestaurantResponse } from '../../../types';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { RestaurantResponse } from '../../../types';
 })
 export class RestaurantService {
 
-  private baseUrl = 'http://localhost:3000/admin/restaurants'; // Assuming your backend API endpoint
+  private baseUrl = 'http://localhost:3000/admin/restaurants'; 
 
   constructor(private http: HttpClient) { }
 
@@ -21,16 +21,16 @@ export class RestaurantService {
     return this.http.get<Restaurant>(`${this.baseUrl}/${id}`,{withCredentials: true });
   }
 
-  updateRestaurant(name: string, restaurant: Restaurant): Observable<RestaurantResponse> {
-    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${name}`, restaurant,{withCredentials: true });
+  updateRestaurant(id: string, restaurant: Restaurant): Observable<RestaurantResponse> {
+    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
-  updateRestaurantStepTwo(name: string, restaurant: PartialRestaurantUpdate): Observable<RestaurantResponse> {
-    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${name}`, restaurant,{withCredentials: true });
+  updateRestaurantDetails(id: string, restaurant: RestaurantDetailsUpdate): Observable<RestaurantResponse> {
+    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
-
-  updateRestaurantStepThree(name: string, restaurant: PartialRestaurantUpdate): Observable<RestaurantResponse> {
-    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${name}`, restaurant,{withCredentials: true });
+  
+  updateRestaurantStepThree(id: string, restaurant: RestaurantDetailsUpdate): Observable<RestaurantResponse> {
+    return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
   deleteRestaurant(id: string): Observable<void> {

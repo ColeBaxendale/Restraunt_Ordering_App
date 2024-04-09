@@ -34,6 +34,9 @@ const RestaurantDetails = new mongoose.Schema({
   phone: {type: String, default: ''},
   location: RestaurantLocation,
   operatingHours: WeeklyOperatingHoursSchema,
+  owners: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Owner' }], 
+  menuSections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuSection' }], 
+  ordersEnabled: { type: Boolean, default: false },
 
   owners: [{ 
     type: mongoose.Schema.Types.ObjectId,
@@ -64,6 +67,7 @@ const RestaurantSchema = new mongoose.Schema({
   details: RestaurantDetails,
   admin: AdminDetails,
   stripe: StripeDetails
+  
 });
 
 module.exports = mongoose.model('Restaurant', RestaurantSchema);

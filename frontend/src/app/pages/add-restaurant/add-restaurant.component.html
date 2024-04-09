@@ -7,7 +7,7 @@
         type="text"
         class="formInput"
         id="restaurantName"
-        [(ngModel)]="restaurantName"
+        [(ngModel)]="restaurantDetails.details.name"
         name="restaurantName"
         placeholder="Enter restaurant name"
         required
@@ -22,7 +22,7 @@
           type="file"
           class="formInputFile"
           id="logo"
-          [(ngModel)]="logo"
+          [(ngModel)]="restaurantDetails.details.logo"
           name="logo"
           placeholder="LOGO"
         />
@@ -30,7 +30,7 @@
           type="text"
           class="formInputDescription"
           id="description"
-          [(ngModel)]="description"
+          [(ngModel)]="restaurantDetails.details.description"
           name="description"
           placeholder="Enter description"
         />
@@ -39,7 +39,7 @@
           type="text"
           class="formInput"
           id="phone"
-          [(ngModel)]="phone"
+          [(ngModel)]="restaurantDetails.details.phone"
           name="phone"
           placeholder="Enter phone number"
         />
@@ -51,7 +51,7 @@
           type="text"
           class="formInput"
           id="address"
-          [(ngModel)]="address"
+          [(ngModel)]="restaurantDetails.details.location.address"
           name="address"
           placeholder="Enter street address"
         />
@@ -60,7 +60,7 @@
           type="text"
           class="formInput"
           id="city"
-          [(ngModel)]="city"
+          [(ngModel)]="restaurantDetails.details.location.city"
           name="city"
           placeholder="Enter City"
         />
@@ -69,7 +69,7 @@
           type="text"
           class="formInput"
           id="state"
-          [(ngModel)]="state"
+          [(ngModel)]="restaurantDetails.details.location.state"
           name="state"
           placeholder="Enter State"
         />
@@ -78,48 +78,44 @@
           type="text"
           class="formInput"
           id="zipCode"
-          [(ngModel)]="zipCode"
+          [(ngModel)]="restaurantDetails.details.location.zipCode"
           name="zipCode"
           placeholder="Enter Zip Code"
         />
       </div>
 
-      <h2>Restaurant Hours</h2>
-
-      <div class="week-container">
-        <div *ngFor="let day of days" class="inputContainerThree">
-          <input
-          type="checkbox"
-          [(ngModel)]="day.isOpen"
-          name="{{ day.name }}isOpen"
-          id="{{day.name}}.isOpen"
-          class="checkbox"
-
-        />
-          <h3>{{ day.name }}:</h3>
-
-          <div *ngIf="day.isOpen">
+      <!-- <h2>Restaurant Hours</h2>
+      <div>{{ restaurantDetails.details.operatingHours.monday.isOpen }}</div>
+      <div class="week-container" *ngIf="currentStep === 2">
+        <ng-container *ngFor="let dayKey of getOperatingHoursKeys()">
+          <div class="inputContainerThree">
             <input
-              type="textt"
-              class="formInput"
-              [(ngModel)]="day.openTime"
-              name="{{ day.name }}OpenTime"
-              id="{{day.name}}.openTime"
-
-              placeholder="Open time"
+              type="checkbox"
+              [(ngModel)]="restaurantDetails.details.operatingHours[dayKey].isOpen"
+              [id]="dayKey + 'IsOpen'"
+              class="checkbox"
             />
-            <input
-              type="text"
-              class="formInput"
-              [(ngModel)]="day.closeTime"
-              name="{{ day.name }}closeTime"
-              id="{{day.name}}.closeTime"
-
-              placeholder="Close time"
-            />
+            <label [for]="dayKey + 'IsOpen'">{{ dayKey | titlecase }}</label>
+      
+            <div *ngIf="restaurantDetails.details.operatingHours[dayKey].isOpen">
+              <input
+                type="text"
+                class="formInput"
+                [(ngModel)]="restaurantDetails.details.operatingHours[dayKey].open"
+                [id]="dayKey + 'OpenTime'"
+                placeholder="Open time (HH:MM)"
+              />
+              <input
+                type="text"
+                class="formInput"
+                [(ngModel)]="restaurantDetails.details.operatingHours[dayKey].close"
+                [id]="dayKey + 'CloseTime'"
+                placeholder="Close time (HH:MM)"
+              />
+            </div>
           </div>
-        </div>
-      </div>
+        </ng-container>
+      </div> -->
     </div>
     <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
     <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>

@@ -3,64 +3,70 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 exports.createRestaurant = async (req, res, next) => {
-    try {
-      let { data } = req.body;
-  
-      console.log(data); // To ensure we receive the expected structure
-      console.log("Accessing name:", data.details.name); // This should now work as expected
-  
-      // Directly call .toLowerCase() on the string
-      const lowerCaseName = data.details.name.toLowerCase();
-  
-      if (!data.details || !data.details.name) {
-        return res.status(400).json({ error: "Missing restaurant name in details." });
-      }
-  
-      // Check for an existing restaurant with the same name in lowercase
-      const existingRestaurant = await Restaurant.findOne({
-        "admin.nameLowerCase": lowerCaseName,
-      });
-  
-      if (existingRestaurant) {
-       console.log("Restaurant name already exists.");
-        
-        return res.status(409).json({ error: "Restaurant name already exists." });
-      }
-      data.details.phone = data.details.phone || '';
-      // Ensure admin object exists
-      data.admin = data.admin || { nameLowerCase: lowerCaseName, isActive: false, overallIncome: 0, fixedRate: 0.02 };
-      
-      // Initialize StripeDetails if not provided
-      data.stripe = data.stripe || { stripeAccountId: '', addFees: true };
-  
-      // Initialize location with defaults if not provided
-      data.details.location = data.details.location || { address: '', city: '', state: '', zipCode: '' };
-  
-      // Initialize operatingHours with default closed status if not provided
-      const defaultOperatingHoursClosed = { isOpen: false, open: null, close: null };
-      data.details.operatingHours = data.details.operatingHours || {
-        monday: defaultOperatingHoursClosed,
-        tuesday: defaultOperatingHoursClosed,
-        wednesday: defaultOperatingHoursClosed,
-        thursday: defaultOperatingHoursClosed,
-        friday: defaultOperatingHoursClosed,
-        saturday: defaultOperatingHoursClosed,
-        sunday: defaultOperatingHoursClosed,
-      };
-  
-      const newRestaurant = new Restaurant(data);
-      await newRestaurant.save();
-  
-      return res.status(201).json({
-        message: "Restaurant created successfully",
-        restaurant: newRestaurant,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: error.message });
+  try {
+    const { details } = req.body;
+
+    // Validate incoming details
+    if (!details || !details.name) {
+      return res.status(400).json({ error: "Missing restaurant name in details." });
     }
-  };
-  
+
+    const lowerCaseName = details.name.toLowerCase();
+
+    // Check for an existing restaurant with the same name in lowercase
+    const existingRestaurant = await Restaurant.findOne({
+      "admin.nameLowerCase": lowerCaseName,
+    });
+
+    if (existingRestaurant) {
+      console.log("Restaurant name already exists.");
+      return res.status(409).json({ error: "Restaurant name already exists." });
+    }
+
+    // Initialize defaults for optional properties
+    details.phone = details.phone || '';
+    const adminDetails = { nameLowerCase: lowerCaseName, isActive: false, overallIncome: 0, fixedRate: 0.02 };
+    const stripeDetails = { stripeAccountId: '', addFees: true };
+    const locationDefaults = { address: '', city: '', state: '', zipCode: '' };
+    const operatingHoursDefaults = {
+      monday: { isOpen: false, open: null, close: null },
+      tuesday: { isOpen: false, open: null, close: null },
+      wednesday: { isOpen: false, open: null, close: null },
+      thursday: { isOpen: false, open: null, close: null },
+      friday: { isOpen: false, open: null, close: null },
+      saturday: { isOpen: false, open: null, close: null },
+      sunday: { isOpen: false, open: null, close: null },
+    };
+
+    // Prepare the data object with provided details and initialized defaults
+    let data = {
+      details: {
+        ...details, 
+        owners: details.owners || [],
+        menuSections: details.menuSections || [], 
+        ordersEnabled: details.ordersEnabled !== undefined ? details.ordersEnabled : false,
+        location: details.location || locationDefaults,
+        operatingHours: details.operatingHours || operatingHoursDefaults,
+      },
+      admin: adminDetails,
+      stripe: stripeDetails,
+    };
+
+    // Create and save the new restaurant
+    const newRestaurant = new Restaurant(data);
+    await newRestaurant.save();
+
+    // Respond with success
+    return res.status(201).json({
+      message: "Restaurant created successfully",
+      restaurant: newRestaurant,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 
 
 exports.getRestaurantName = async (req, res, next) => {
@@ -88,7 +94,6 @@ exports.updateRestaurant = async (req, res, next) => {
 
     // First, find the restaurant by the lowercase name
     const restaurant = await Restaurant.findById(id);
-    console.log(restaurant);
 
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
