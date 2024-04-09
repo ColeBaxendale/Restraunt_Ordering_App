@@ -83,14 +83,11 @@ exports.getRestaurantName = async (req, res, next) => {
 
 exports.updateRestaurant = async (req, res, next) => {
   try {
-    const { name } = req.params;  // Ensure you're using the correct parameter name as defined in your route
+    const { id } = req.params;  // Ensure you're using the correct parameter name as defined in your route
  
-    console.log(name);
-    const lowerCaseName = name.toLowerCase();
-    console.log(lowerCaseName);
 
     // First, find the restaurant by the lowercase name
-    const restaurant = await Restaurant.findOne({ "admin.nameLowerCase": lowerCaseName });
+    const restaurant = await Restaurant.findById(id);
     console.log(restaurant);
 
     if (!restaurant) {
