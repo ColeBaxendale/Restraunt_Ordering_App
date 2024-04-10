@@ -40,6 +40,7 @@ export class AddRestaurantComponent {
       },
     },
   };
+
   restaurantAdmin: RestaurantDetailsUpdateAdmin = {
     admin: {
       nameLowerCase: '',
@@ -48,6 +49,7 @@ export class AddRestaurantComponent {
       fixedRate: 0
     }
   };
+
   restaurantStripe: RestaurantDetailsUpdateStripe = {
     stripe: {
       stripeAccountId: '',
@@ -71,6 +73,12 @@ export class AddRestaurantComponent {
     }
     if (this.currentStep == 2) {
       this.stepTwo();
+    }
+    if (this.currentStep == 3) {
+      this.stepThree();
+    }
+    if (this.currentStep == 4) {
+      this.stepFour();
     }
   }
 
@@ -147,6 +155,14 @@ export class AddRestaurantComponent {
           },
         });
     }
+  }
+
+  private stepThree(){
+
+  }
+
+  private stepFour(){
+
   }
 
   private stepAhead() {
