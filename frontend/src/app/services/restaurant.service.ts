@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RestaurantDetailsUpdate, Restaurant, RestaurantDetailsUpdateAdmin, RestaurantDetailsUpdateStripe } from '../../../types';
+import { RestaurantUpdateDetails, Restaurant, RestaurantUpdateAdmin, RestaurantUpdateStripe } from '../../../types';
 import { RestaurantResponse } from '../../../types';
 
 @Injectable({
@@ -25,15 +25,15 @@ export class RestaurantService {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
-  updateRestaurantDetails(id: string, restaurant: RestaurantDetailsUpdate): Observable<RestaurantResponse> {
+  updateRestaurantDetails(id: string, restaurant: RestaurantUpdateDetails): Observable<RestaurantResponse> {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
   
-  updateRestaurantAdmin(id: string, restaurant: RestaurantDetailsUpdateAdmin): Observable<RestaurantResponse> {
+  updateRestaurantAdmin(id: string, restaurant: RestaurantUpdateAdmin): Observable<RestaurantResponse> {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
-  updateRestaurantStripe(id: string, restaurant: RestaurantDetailsUpdateStripe): Observable<RestaurantResponse> {
+  updateRestaurantStripe(id: string, restaurant: RestaurantUpdateStripe): Observable<RestaurantResponse> {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 

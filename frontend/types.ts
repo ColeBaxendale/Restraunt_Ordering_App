@@ -74,18 +74,8 @@ export interface RestaurantResponse {
   restaurant: Restaurant;
 }
 
-export interface RestaurantDetailsUpdate {
-    details: {
-      name: string;
-      logo: string;
-      description: string;
-      phone: string;
-      location: RestaurantLocation;
-      operatingHours: WeeklyOperatingHours;
-    };
-}
 
-export interface RestaurantDetailsUpdateDetails {
+export interface RestaurantUpdateDetails {
   details: {
     name: string;
     logo: string;
@@ -97,7 +87,7 @@ export interface RestaurantDetailsUpdateDetails {
 }
 
 
-export interface RestaurantDetailsUpdateAdmin {
+export interface RestaurantUpdateAdmin {
   admin: {
     nameLowerCase: string;
     isActive: boolean;
@@ -107,7 +97,7 @@ export interface RestaurantDetailsUpdateAdmin {
 }
 
 
-export interface RestaurantDetailsUpdateStripe {
+export interface RestaurantUpdateStripe {
   stripe: {
     stripeAccountId: string;
     addFees: boolean;

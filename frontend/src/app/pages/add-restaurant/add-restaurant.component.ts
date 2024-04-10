@@ -3,10 +3,9 @@ import { Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import {
-  RestaurantDetailsUpdate,
-  RestaurantDetailsUpdateAdmin,
-  RestaurantDetailsUpdateDetails,
-  RestaurantDetailsUpdateStripe,
+  RestaurantUpdateAdmin,
+  RestaurantUpdateDetails,
+  RestaurantUpdateStripe,
   RestaurantResponse,
 } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,7 +23,7 @@ export class AddRestaurantComponent {
   currentStep: number = 1;
   id: string | undefined;
   errorMsg = '';
-  restaurantDetails: RestaurantDetailsUpdate = {
+  restaurantDetails: RestaurantUpdateDetails = {
     details: {
       name: '',
       logo: '',
@@ -48,7 +47,7 @@ export class AddRestaurantComponent {
     },
   };
 
-  restaurantAdmin: RestaurantDetailsUpdateAdmin = {
+  restaurantAdmin: RestaurantUpdateAdmin = {
     admin: {
       nameLowerCase: '',
       isActive: false,
@@ -57,7 +56,7 @@ export class AddRestaurantComponent {
     },
   };
 
-  restaurantStripe: RestaurantDetailsUpdateStripe = {
+  restaurantStripe: RestaurantUpdateStripe = {
     stripe: {
       stripeAccountId: '',
       addFees: false,
@@ -197,7 +196,7 @@ export class AddRestaurantComponent {
   }
 
   private stepFour() {
-    // add stripe input
+    
   }
 
   private stepAhead() {
