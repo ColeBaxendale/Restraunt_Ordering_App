@@ -10,7 +10,7 @@ import {
 } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
-import { response } from 'express';
+import { Router, response } from 'express';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -66,7 +66,8 @@ export class AddRestaurantComponent {
   constructor(
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
-    private zone: NgZone
+    private zone: NgZone,
+    private router: Router
   ) {}
 
   submitForm() {
