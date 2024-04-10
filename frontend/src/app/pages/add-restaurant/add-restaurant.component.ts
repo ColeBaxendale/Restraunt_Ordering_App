@@ -83,6 +83,8 @@ export class AddRestaurantComponent {
     if (this.currentStep == 4) {
       this.stepFour();
     }
+    if (this.currentStep == 5) {
+    }
   }
 
   private stepOne() {
@@ -196,7 +198,32 @@ export class AddRestaurantComponent {
   }
 
   private stepFour() {
-    
+    if (!this.id) {
+      this.errorMsg = 'Restaurant ID is undefined.';
+      return;
+    }
+    if (
+      this.restaurantStripe.stripe.addFees == false &&
+      this.restaurantStripe.stripe.stripeAccountId == ''
+    ) {
+      this.stepAhead();
+      return;
+    } else {
+      // INPUT VALIDATION FOR STRIPE ID
+      this.restaurantService
+        .updateRestaurantStripe(this.id, this.restaurantStripe)
+        .subscribe({
+          next: (response: RestaurantResponse) => {
+            // this.showMessage(response.message);
+            this.stepAhead();
+            return;
+          },
+          error: (error) => {
+            this.errorMsg = error.error.error;
+            return;
+          },
+        });
+    }
   }
 
   private stepAhead() {
