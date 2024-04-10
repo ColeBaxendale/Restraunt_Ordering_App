@@ -158,6 +158,7 @@ export class AddRestaurantComponent {
   }
 
   private stepThree(){
+    // add admin input
 
   }
 
