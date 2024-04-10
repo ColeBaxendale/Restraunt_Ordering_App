@@ -29,11 +29,11 @@ export class RestaurantService {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
   
-  updateRestaurantStepThree(id: string, restaurant: RestaurantDetailsUpdateAdmin): Observable<RestaurantResponse> {
+  updateRestaurantAdmin(id: string, restaurant: RestaurantDetailsUpdateAdmin): Observable<RestaurantResponse> {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
-  updateRestaurantStepFour(id: string, restaurant: RestaurantDetailsUpdateStripe): Observable<RestaurantResponse> {
+  updateRestaurantStripe(id: string, restaurant: RestaurantDetailsUpdateStripe): Observable<RestaurantResponse> {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
