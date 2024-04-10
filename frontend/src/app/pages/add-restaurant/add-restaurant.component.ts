@@ -162,7 +162,7 @@ export class AddRestaurantComponent {
   }
 
   private stepFour(){
-
+    // add stripe input
   }
 
   private stepAhead() {
