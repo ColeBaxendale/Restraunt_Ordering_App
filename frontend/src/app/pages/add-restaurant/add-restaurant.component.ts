@@ -2,9 +2,16 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
-import { RestaurantDetailsUpdate, RestaurantDetailsUpdateAdmin, RestaurantDetailsUpdateDetails, RestaurantDetailsUpdateStripe, RestaurantResponse } from '../../../../types';
+import {
+  RestaurantDetailsUpdate,
+  RestaurantDetailsUpdateAdmin,
+  RestaurantDetailsUpdateDetails,
+  RestaurantDetailsUpdateStripe,
+  RestaurantResponse,
+} from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
+import { response } from 'express';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -46,19 +53,16 @@ export class AddRestaurantComponent {
       nameLowerCase: '',
       isActive: false,
       overallIncome: 0,
-      fixedRate: 0
-    }
+      fixedRate: 0.02,
+    },
   };
 
   restaurantStripe: RestaurantDetailsUpdateStripe = {
     stripe: {
       stripeAccountId: '',
-      addFees: false
-    }
+      addFees: false,
+    },
   };
-
-
-
 
   constructor(
     private restaurantService: RestaurantService,
@@ -145,9 +149,10 @@ export class AddRestaurantComponent {
       this.restaurantService
         .updateRestaurantDetails(this.id, this.restaurantDetails)
         .subscribe({
-          next: (response: RestaurantResponse) => { 
-            this.showMessage(response.message); 
+          next: (response: RestaurantResponse) => {
+            // this.showMessage(response.message);
             this.stepAhead();
+            return;
           },
           error: (error) => {
             this.errorMsg = error.error.error;
@@ -157,12 +162,41 @@ export class AddRestaurantComponent {
     }
   }
 
-  private stepThree(){
-    // add admin input
+  private stepThree() {
+    if (!this.id) {
+      this.errorMsg = 'Restaurant ID is undefined.';
+      return;
+    }
 
+    if (this.restaurantAdmin.admin.fixedRate == 0.02) {
+      this.stepAhead();
+      return;
+    } else {
+      if (
+        this.restaurantAdmin.admin.fixedRate < 0.01 ||
+        this.restaurantAdmin.admin.fixedRate > 0.1
+      ) {
+        this.errorMsg = 'Fixed rate should be between 0.01 and 0.1.';
+        return;
+      } else {
+        this.restaurantService
+          .updateRestaurantAdmin(this.id, this.restaurantAdmin)
+          .subscribe({
+            next: (response: RestaurantResponse) => {
+              // this.showMessage(response.message);
+              this.stepAhead();
+              return;
+            },
+            error: (error) => {
+              this.errorMsg = error.error.error;
+              return;
+            },
+          });
+      }
+    }
   }
 
-  private stepFour(){
+  private stepFour() {
     // add stripe input
   }
 
