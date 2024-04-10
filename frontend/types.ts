@@ -95,3 +95,21 @@ export interface RestaurantDetailsUpdateDetails {
     operatingHours: WeeklyOperatingHours;
   };
 }
+
+
+export interface RestaurantDetailsUpdateAdmin {
+  admin: {
+    nameLowerCase: string;
+    isActive: boolean;
+    overallIncome: number;
+    fixedRate: number;
+  };
+}
+
+
+export interface RestaurantDetailsUpdateStripe {
+  stripe: {
+    stripeAccountId: string;
+    addFees: boolean;
+  }
+}

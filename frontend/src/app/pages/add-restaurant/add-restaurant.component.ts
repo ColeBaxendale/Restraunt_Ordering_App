@@ -2,7 +2,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
-import { RestaurantDetailsUpdate, RestaurantResponse } from '../../../../types';
+import { RestaurantDetailsUpdate, RestaurantDetailsUpdateAdmin, RestaurantDetailsUpdateDetails, RestaurantDetailsUpdateStripe, RestaurantResponse } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
 
@@ -40,6 +40,23 @@ export class AddRestaurantComponent {
       },
     },
   };
+  restaurantAdmin: RestaurantDetailsUpdateAdmin = {
+    admin: {
+      nameLowerCase: '',
+      isActive: false,
+      overallIncome: 0,
+      fixedRate: 0
+    }
+  };
+  restaurantStripe: RestaurantDetailsUpdateStripe = {
+    stripe: {
+      stripeAccountId: '',
+      addFees: false
+    }
+  };
+
+
+
 
   constructor(
     private restaurantService: RestaurantService,
