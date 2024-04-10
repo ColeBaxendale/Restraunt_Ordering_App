@@ -143,9 +143,4 @@ export class AddRestaurantComponent {
       });
     });
   }
-
-  getOperatingHoursKeys(): string[] {
-    return Object.keys(this.restaurantDetails.details.operatingHours);
-  }
-
 }

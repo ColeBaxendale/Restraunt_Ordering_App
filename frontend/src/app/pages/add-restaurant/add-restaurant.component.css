@@ -36,37 +36,6 @@
 
   }
 
-  .week-container {
-    display: flex;
-    flex-direction: column; /* Aligns each day's container in a column */
-    align-items: flex-start; /* Centers the rows horizontally */
-    width: 100%; /* Adjust width as needed */
-  }
-  
-  .inputContainerThree {
-    display: flex;
-    flex-direction: row; /* Aligns the day's name, checkbox, and inputs in a row */
-    align-items: center; /* Vertically centers the elements in the row */
-    justify-content: center; /* Centers the row's content horizontally */
-    margin-bottom: 15px; /* Space between each day's row */
-    width: 80%; /* Adjust width as needed to fit your design */
-  }
-  
-  /* Styles for the day's name */
-  .day-name {
-    margin-right: 10px; /* Space between the day's name and the checkbox */
-  }
-  
-  /* Adjust the input styles to fit in the row neatly */
-  .formInput, .formInputDescription, .formInputFile, .timeInput {
-    margin: 0 5px; /* Adjusts spacing around inputs */
-  }
-  
-  /* Additional styles for visual clarity and interaction */
-  .timeInput:disabled {
-    background-color: #e9ecef;
-    color: #ccc; /* Makes text color lighter to indicate disabled state */
-  }
   
   .checkbox{
     margin-right: 2vw;
@@ -126,4 +95,25 @@
     text-align: center;
     margin-top: 10px;
 
+  }
+
+  .week-container .day-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color:white;
+  }
+  
+  .inputContainerThree {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+  }
+  
+  .formInputToo {
+    margin-left: 5px;
+  }
+
+  .week-container h4{
+    margin-right: 15px;
   }

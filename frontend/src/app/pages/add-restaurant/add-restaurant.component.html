@@ -84,7 +84,37 @@
         />
       </div>
 
-      <!-- <h2>Restaurant Hours</h2>
+      <h2>Restaurant Hours</h2>
+      <div class="week-container" *ngIf="currentStep === 2">
+        <div *ngFor="let day of ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" class="day-container">
+          <div class="inputContainerThree">
+            <h4>{{ day | titlecase }} Open?</h4>
+            <input type="checkbox" [(ngModel)]="restaurantDetails.details.operatingHours[day].isOpen" [name]="day + 'IsOpen'" />
+          </div>
+      
+          <div *ngIf="restaurantDetails.details.operatingHours[day].isOpen">
+            <input type="text" class="formInputToo" [(ngModel)]="restaurantDetails.details.operatingHours[day].open" [name]="day + '.isOpen.open'" placeholder="Open time (HH:MM)" />
+            <input type="text" class="formInputToo" [(ngModel)]="restaurantDetails.details.operatingHours[day].close" [name]="day + '.isOpen.close'" placeholder="Close time (HH:MM)" />
+          </div>
+        </div>
+      </div>
+    
+
+    
+    </div>
+    <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
+    <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
+    <div *ngIf="errorMsg != ''">
+      <p class="errorClass">{{ errorMsg }}</p>
+    </div>
+  </form>
+
+</div>
+
+<!-- Additional steps and form controls here -->
+
+<!-- Submit button -->
+  <!-- <h2>Restaurant Hours</h2>
       <div>{{ restaurantDetails.details.operatingHours.monday.isOpen }}</div>
       <div class="week-container" *ngIf="currentStep === 2">
         <ng-container *ngFor="let dayKey of getOperatingHoursKeys()">
@@ -116,16 +146,3 @@
           </div>
         </ng-container>
       </div> -->
-    </div>
-    <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
-    <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
-    <div *ngIf="errorMsg != ''">
-      <p class="errorClass">{{ errorMsg }}</p>
-    </div>
-  </form>
-
-</div>
-
-<!-- Additional steps and form controls here -->
-
-<!-- Submit button -->
