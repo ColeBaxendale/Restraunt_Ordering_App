@@ -10,7 +10,9 @@ import {
 } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
-import { Router, response } from 'express';
+import { response } from 'express';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-restaurant',
@@ -85,6 +87,8 @@ export class AddRestaurantComponent {
       this.stepFour();
     }
     if (this.currentStep == 5) {
+    this.router.navigate(['/admin']);
+
     }
   }
 
