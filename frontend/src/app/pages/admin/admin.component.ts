@@ -30,17 +30,20 @@ export class AdminComponent implements OnInit {
   }
 
   loadRestaurants(): void {
-    this.restaurantService.getAllRestaurants().subscribe(
-      (data: any) => {
-        this.restaurants = data.restaurants; // Assign retrieved data to restaurants array
-        console.log('Restaurants loaded successfully:', this.restaurants);
+    this.restaurantService.getAllRestaurants().subscribe({
+      next: (response: any) => { // Temporarily use 'any' if you're unsure of the structure
+        // Now correctly access the 'restaurants' property
+        this.restaurants = response.restaurants;
+        console.log('Restaurants loaded:', this.restaurants);
       },
-      (error) => {
-        console.error('Error loading restaurants:', error);
+      error: (err) => {
+        console.error('Error loading restaurants:', err);
       }
-    );
+    });
   }
   
+  
+
 
 
   searchRestaurants(inputElement: HTMLInputElement): void {

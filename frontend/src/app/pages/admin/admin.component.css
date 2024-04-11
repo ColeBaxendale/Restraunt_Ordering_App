@@ -34,48 +34,35 @@
   .adminContainer .topButtons .button:hover{
     background-color: #ffffff;
   }
-  .restaurants-container {
+
+
+
+
+
+
+  .restaurants-container .row {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; /* Center vertically */
-    margin-top: 10vh;
-    width: 60vw;
-    padding: 40px; /* Optional: Add padding for better spacing */
-  }
-
-  
-  .restaurant-card {
-    background-color: #f9f9f9;
-
-
-    text-align: left;
-    margin: 20px;
-    width: 20vw; /* Adjust width as needed */
-    height: 20vh; /* Adjust height as needed */
-    color: rgb(0, 0, 0);
-    border: 1.5px solid #000000;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
-    border-radius: 8px;
-    padding: 20px;
-    box-sizing: border-box;
-    cursor: pointer;
-  }
-
-  .restaurant-card h2, h3, h4, p{
-    margin-top: 10px;
-    background-color: #f9f9f9;
-
-
-
-
-  }
-
-  .restaurant-card income{
-    margin-top: 105px;
-    background-color: rgb(0, 0, 0);
+    margin: -15px; /* Adjust the margin to manage spacing */
   }
   
-
+  .restaurant-item {
+    flex: 0 1 calc(33.333% - 30px); /* Subtract twice the margin to account for spacing */
+    margin: 15px; /* This creates the gutter */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow around items */
+    padding: 20px; /* Optional: Adds some padding inside each item */
+  }
   
-
+  /* Optional: Add responsiveness */
+  @media (max-width: 768px) {
+    .restaurant-item {
+      flex: 0 1 calc(50% - 30px); /* Adjust to show 2 items per row on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .restaurant-item {
+      flex: 0 1 calc(100% - 30px); /* Adjust to show 1 item per row on very small screens */
+    }
+  }
   

@@ -1,113 +1,159 @@
-.loginPageContainer{
-    margin:0;
-    width:100vw;
-    height:100vh;
-    overflow: none;
+.container {
     display: flex;
-    justify-content: left;
-    flex-direction: row;
+    min-height: 100vh; /* Cover the full viewport height */
 }
 
-.leftContainer{
-    background-color: #121212;
-    width:40vw;
+.loginContainer {
+    width: 40%;
+    background-color: var(--darkerBlue); /* Replace with your desired color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brandingContainer {
+    width: 60%;
+    background-color: var(--darkestBlue); /* Replace with your desired color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginFormContainer{
+    background-color: var(--darkestBlue); /* Replace with your desired color */
+
+}
+
+/* Make sure your content inside .loginFormContainer and .brandingContainer is centered */
+.loginFormContainer, .brandingContent {
+    width: 100%; /* You can adjust this if you want padding or max-width */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .loginContainer, .brandingContainer {
+        width: 100%; /* Each container takes full width on smaller screens */
+    }
+}
+
+
+
+
+
+
+/* 
+body, html {
     height: 100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    align-content: center;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primary-color);
 }
 
-.leftContainer .logo{
-    height: 30%;
-    background-color: #1E1E1E ;
-    width: 50%;
-    
-}
-.leftContainer .textContainer{
-    color: white ;
-    background-color: #1E1E1E ;
-    text-align: center;
-    height:65%;
-    width:60%;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.leftContainer .textContainer h1{
-    color:#CF6679 ;
-    background-color: #1E1E1E;
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-size: 50px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-
+    height: 100%;
 }
 
-.leftContainer .textContainer .formInputContainer{
+
+
+
+.login, .branding {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    background-color: var(--login-bg-color);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.login-form h2, .login-form input, .login-form button, .login-form a {
+    color: var(--text-color);
+}
+
+.login-form {
+    max-width: 300px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 10px;
-    background-color: #1E1E1E ;
-
 }
 
-.leftContainer .textContainer .formInputContainer .formInput{
-    color:white;
-    background-color: #333333;
-    text-decoration: none;
-    width:70%;
-    height: 5vh;
-    border-radius: 50px;
-    font-size: 16px;
+.input-group {
+    margin-bottom: 15px;
+}
 
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0;
+    display: inline-block;
     border: none;
+    background: var(--input-bg-color);
+    color: var(--primary-color);
+}
+
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 20px;
+}
+
+button:hover {
+    filter: brightness(95%);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.branding h1, .branding p, .description {
     text-align: center;
-    margin: 10px;
+    margin: 0;
 }
 
-.leftContainer .textContainer .formInputContainer .formInputLogin{
-    color: white;
-    font-size: 18px;
-    background-color: #CF6679 ;
-    border-radius: 50px;
-    border: none;
-    width:60%;
-    height: 5vh;
+.branding h1 {
+    font-size: 2.5em; 
+    color: var(--text-color);
+}
+
+.branding p {
+    font-size: 1.2em; 
+    color: var(--text-color);
+}
+
+.description {
+    color: var(--text-color);
+    font-size: 1em;
     margin-top: 20px;
 }
 
-.leftContainer .textContainer .formInputContainer .forgotPassword{
-    text-decoration: none;
-    color: #CF6679 ;
-    margin-top: 20px;
-    font-size: 16px;
 
-}
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
 
-.rightContainer{
-    background-color: #1E1E1E;
-    width:60vw;
-    height: 100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.rightContainer  .image{
-    object-fit: contain;
-    margin-right: 2vw;
-    background-color: #1E1E1E;
-    height: 100%;
-    width: 90%;
-}
+    .login, .branding {
+        width: 80%;
+        margin: 10px;
+    }
+} */

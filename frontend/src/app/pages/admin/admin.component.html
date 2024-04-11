@@ -5,7 +5,29 @@
     <button  class="button" aria-label="addRestaurant" (click)="addRestaurant()">Add New</button>
     <button class="button" aria-label="logout" (click)="logout()">Logout</button>
   </div>
+
+
+
+
+
+
+
+
+  
   <div class="restaurants-container">
+    <div class="row">
+      <div class="restaurant-item" *ngFor="let restaurant of restaurants">
+        <h3>{{ restaurant.details.name }}</h3>
+        <p>Is active? {{ restaurant.admin.isActive }}</p>
+        <p>Overall Income: {{ restaurant.admin.overallIncome }}</p>
+      </div>
+    </div>
+    
+      <!-- Template for the case where there are no restaurants -->
+      <ng-template #noRestaurants>
+        <p>No restaurants available.</p>
+      </ng-template>
+    
   </div>
 </div>
 

@@ -1,7 +1,25 @@
+:root {
+    --lightBlue: #D7F9FF;
+    --darkerBlue: #AFCBFF;
+    --darkestBlue: #0E1C36;
+    --lightTan: #F9FBF2;
+    --lightOrange: #FFEDE1;
+}
+
+
 *{
     margin:0;
-    background-color: #121212;
     overflow: auto;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+@font-face {
+    font-family: 'JetBrainsMono';
+    src: url('assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
