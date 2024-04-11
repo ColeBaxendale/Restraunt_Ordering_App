@@ -3,10 +3,9 @@ import { Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import {
-  RestaurantUpdateAdmin,
   RestaurantUpdateDetails,
-  RestaurantUpdateStripe,
   RestaurantResponse,
+  RestaurantUpdateAdminStripe,
 } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
@@ -49,16 +48,13 @@ export class AddRestaurantComponent {
     },
   };
 
-  restaurantAdmin: RestaurantUpdateAdmin = {
+  restaurantAdminStripe: RestaurantUpdateAdminStripe = {
     admin: {
       nameLowerCase: '',
       isActive: false,
       overallIncome: 0,
       fixedRate: 0.02,
     },
-  };
-
-  restaurantStripe: RestaurantUpdateStripe = {
     stripe: {
       stripeAccountId: '',
       addFees: false,
@@ -75,24 +71,21 @@ export class AddRestaurantComponent {
   submitForm() {
     this.errorMsg = '';
     if (this.currentStep == 1) {
-      this.stepOne();
+      this.createRestaurant();
     }
     if (this.currentStep == 2) {
-      this.stepTwo();
+      this.restaurantDetailsUpdate();
     }
     if (this.currentStep == 3) {
-      this.stepThree();
+      this.restaurantAdminStripeUpdate();
     }
     if (this.currentStep == 4) {
-      this.stepFour();
-    }
-    if (this.currentStep == 5) {
-    this.router.navigate(['/admin']);
+      this.router.navigate(['/admin']);
 
     }
   }
 
-  private stepOne() {
+  private createRestaurant() {
     if (this.restaurantDetails.details.name === '') {
       this.errorMsg = 'Restaurant name field must not be blank.';
       return;
@@ -126,7 +119,7 @@ export class AddRestaurantComponent {
     });
   }
 
-  private stepTwo() {
+  private restaurantDetailsUpdate() {
     if (!this.id) {
       this.errorMsg = 'Restaurant ID is undefined.';
       return;
@@ -168,55 +161,27 @@ export class AddRestaurantComponent {
     }
   }
 
-  private stepThree() {
-    if (!this.id) {
-      this.errorMsg = 'Restaurant ID is undefined.';
-      return;
-    }
 
-    if (this.restaurantAdmin.admin.fixedRate == 0.02) {
-      this.stepAhead();
-      return;
-    } else {
-      if (
-        this.restaurantAdmin.admin.fixedRate < 0.01 ||
-        this.restaurantAdmin.admin.fixedRate > 0.1
-      ) {
-        this.errorMsg = 'Fixed rate should be between 0.01 and 0.1.';
-        return;
-      } else {
-        this.restaurantService
-          .updateRestaurantAdmin(this.id, this.restaurantAdmin)
-          .subscribe({
-            next: (response: RestaurantResponse) => {
-              // this.showMessage(response.message);
-              this.stepAhead();
-              return;
-            },
-            error: (error) => {
-              this.errorMsg = error.error.error;
-              return;
-            },
-          });
-      }
-    }
-  }
-
-  private stepFour() {
+  private restaurantAdminStripeUpdate() {
     if (!this.id) {
       this.errorMsg = 'Restaurant ID is undefined.';
       return;
     }
     if (
-      this.restaurantStripe.stripe.addFees == false &&
-      this.restaurantStripe.stripe.stripeAccountId == ''
-    ) {
-      this.stepAhead();
-      return;
-    } else {
+      this.restaurantAdminStripe.admin.fixedRate == 0.02 && this.restaurantAdminStripe.stripe.addFees == false && this.restaurantAdminStripe.stripe.stripeAccountId == '') {
+        this.stepAhead();
+        return;
+    } else{
+      if (
+        this.restaurantAdminStripe.admin.fixedRate < 0.01 ||
+        this.restaurantAdminStripe.admin.fixedRate > 0.1
+      ) {
+        this.errorMsg = 'Fixed rate should be between 0.01 and 0.1.';
+        return;
+      } else {
       // INPUT VALIDATION FOR STRIPE ID
       this.restaurantService
-        .updateRestaurantStripe(this.id, this.restaurantStripe)
+        .updateRestaurantAdminStripe(this.id, this.restaurantAdminStripe)
         .subscribe({
           next: (response: RestaurantResponse) => {
             // this.showMessage(response.message);
@@ -230,6 +195,7 @@ export class AddRestaurantComponent {
         });
     }
   }
+}
 
   private stepAhead() {
     this.currentStep++;

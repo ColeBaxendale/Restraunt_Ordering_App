@@ -87,19 +87,16 @@ export interface RestaurantUpdateDetails {
 }
 
 
-export interface RestaurantUpdateAdmin {
+export interface RestaurantUpdateAdminStripe {
   admin: {
     nameLowerCase: string;
     isActive: boolean;
     overallIncome: number;
     fixedRate: number;
   };
-}
-
-
-export interface RestaurantUpdateStripe {
   stripe: {
     stripeAccountId: string;
     addFees: boolean;
   }
 }
+
