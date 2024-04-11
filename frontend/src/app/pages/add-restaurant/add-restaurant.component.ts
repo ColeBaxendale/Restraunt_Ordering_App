@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import {
@@ -64,7 +64,8 @@ export class AddRestaurantComponent {
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
     private zone: NgZone,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {}
   
   submitForm() {
@@ -79,7 +80,7 @@ export class AddRestaurantComponent {
     } else if (this.currentStep == 3) {
         console.log('Proceeding from Step 3 to Step 4');
         this.restaurantAdminStripeUpdate();
-    } if (this.currentStep == 4) {
+    } if (this.currentStep > 3) {
         console.log('Final Step, navigating to /admin');
         this.router.navigate(['/admin']);
     }
@@ -109,10 +110,11 @@ export class AddRestaurantComponent {
   
     this.restaurantService.createRestaurant(payload).subscribe({
       next: (response: RestaurantResponse) => {
-        // this.showMessage(response.message);
         this.id = response.restaurant._id;
         this.errorMsg = '';
         this.stepAhead();
+        console.log(response.message);
+
         return;
       },
       error: (error) => {
@@ -143,12 +145,8 @@ export class AddRestaurantComponent {
       (day) => day.isOpen === false
     );
 
-    console.log(areAllDaysClosed);
-    console.log(areDetailsEmpty);
-    
-
     if (areDetailsEmpty && areAllDaysClosed) {
-      // this.showMessage('No details were added.');
+      console.log('No details were added.');
       this.stepAhead();
       return;
     } else {
@@ -156,7 +154,7 @@ export class AddRestaurantComponent {
         .updateRestaurantDetails(this.id, this.restaurantDetails)
         .subscribe({
           next: (response: RestaurantResponse) => {
-            // this.showMessage(response.message);
+            console.log(response.message);
             
             this.stepAhead();
             return;
@@ -171,7 +169,6 @@ export class AddRestaurantComponent {
 
 
   private restaurantAdminStripeUpdate() {
-    console.log('in stripe')
     if (!this.id) {
       this.errorMsg = 'Restaurant ID is undefined.';
       return;
@@ -209,15 +206,14 @@ export class AddRestaurantComponent {
   }
 }
 
-  private stepAhead() {
-    this.currentStep++;
-  }
+private stepAhead() {
+  this.currentStep++;
+  this.changeDetectorRef.detectChanges(); // Manually trigger change detection
 
-  private showMessage(message: string, duration: number = 3000): void {
-    this.zone.runOutsideAngular(() => {
-      this.snackBar.open(message, '', {
-        duration: duration,
-      });
-    });
+  if (this.currentStep > 3) {
+    this.router.navigate(['/admin']);
   }
+}
+
+
 }

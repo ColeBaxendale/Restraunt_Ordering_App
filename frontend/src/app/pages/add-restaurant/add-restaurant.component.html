@@ -154,10 +154,10 @@
       />
     </div>
 
-    <button type="button" class="btnRounded"  *ngIf="currentStep <= 2" (click)="submitForm()">
+
+    <button type="button" class="btnRounded"  (click)="submitForm()">
       Next
     </button>
-    <button type="submit" class="btn" (click)="submitForm()" *ngIf="currentStep > 2">Submit</button>
     <div *ngIf="errorMsg != ''">
       <p class="errorClass">{{ errorMsg }}</p>
     </div>
