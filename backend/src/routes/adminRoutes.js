@@ -7,7 +7,7 @@ const { isAdmin } = require('../util/middleware/authMiddleware');
 const { verifyToken } = require('../middleware/authenticate');
 
 router.post('/restaurants', verifyToken, isAdmin, adminRestaurantController.createRestaurant);
-router.get('/restaurants/:name', verifyToken, isAdmin, adminRestaurantController.getRestaurantName);
+router.get('/restaurants/:id', verifyToken, isAdmin, adminRestaurantController.getRestaurant);
 router.put('/restaurants/:id', verifyToken, isAdmin, adminRestaurantController.updateRestaurant);
 router.delete('/restaurants/:name', verifyToken, isAdmin, adminRestaurantController.deleteRestaurant);
 router.get('/restaurants', verifyToken, isAdmin, adminRestaurantController.getAllRestaurants);

@@ -50,9 +50,7 @@ export class AddRestaurantComponent {
 
   restaurantAdminStripe: RestaurantUpdateAdminStripe = {
     admin: {
-      nameLowerCase: '',
       isActive: false,
-      overallIncome: 0,
       fixedRate: 0.02,
     },
     stripe: {
@@ -69,32 +67,22 @@ export class AddRestaurantComponent {
   ) {}
   
   submitForm() {
+    console.log(`Current Step before decision: ${this.currentStep}`);
     this.errorMsg = '';
     if (this.currentStep == 1) {
-      console.log(this.currentStep);
-
-      this.createRestaurant();
-
+        console.log('Proceeding from Step 1 to Step 2');
+        this.createRestaurant();
+    } else if (this.currentStep == 2) {
+        console.log('Proceeding from Step 2 to Step 3');
+        this.restaurantDetailsUpdate();
+    } else if (this.currentStep == 3) {
+        console.log('Proceeding from Step 3 to Step 4');
+        this.restaurantAdminStripeUpdate();
+    } if (this.currentStep == 4) {
+        console.log('Final Step, navigating to /admin');
+        this.router.navigate(['/admin']);
     }
-    if (this.currentStep == 2) {
-      console.log(this.currentStep);
-
-      this.restaurantDetailsUpdate();
-
-    }
-    if (this.currentStep == 3) {
-      console.log(this.currentStep);
-
-      this.restaurantAdminStripeUpdate();
-
-    }
-    if (this.currentStep == 4) {
-      console.log(this.currentStep);
-
-      this.router.navigate(['/admin']);
-
-    }
-  }
+}
 
   private createRestaurant() {
     if (this.restaurantDetails.details.name === '') {
@@ -179,6 +167,7 @@ export class AddRestaurantComponent {
 
 
   private restaurantAdminStripeUpdate() {
+    console.log('in stripe')
     if (!this.id) {
       this.errorMsg = 'Restaurant ID is undefined.';
       return;
@@ -187,20 +176,23 @@ export class AddRestaurantComponent {
       this.restaurantAdminStripe.admin.fixedRate == 0.02 && this.restaurantAdminStripe.stripe.addFees == false && this.restaurantAdminStripe.stripe.stripeAccountId == '') {
         this.stepAhead();
         return;
-    } else{
+    } 
+    else{
       if (
         this.restaurantAdminStripe.admin.fixedRate < 0.01 ||
         this.restaurantAdminStripe.admin.fixedRate > 0.1
       ) {
         this.errorMsg = 'Fixed rate should be between 0.01 and 0.1.';
         return;
-      } else {
+      } 
+      else {
       // INPUT VALIDATION FOR STRIPE ID
       this.restaurantService
         .updateRestaurantAdminStripe(this.id, this.restaurantAdminStripe)
         .subscribe({
           next: (response: RestaurantResponse) => {
             // this.showMessage(response.message);
+            console.log(response.message);
             this.stepAhead();
             return;
           },

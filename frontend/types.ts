@@ -89,9 +89,7 @@ export interface RestaurantUpdateDetails {
 
 export interface RestaurantUpdateAdminStripe {
   admin: {
-    nameLowerCase: string;
     isActive: boolean;
-    overallIncome: number;
     fixedRate: number;
   };
   stripe: {

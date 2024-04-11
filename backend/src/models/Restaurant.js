@@ -29,7 +29,8 @@ const WeeklyOperatingHoursSchema = new mongoose.Schema({
 
 const RestaurantDetails = new mongoose.Schema({
   logo: { type: String, default: ''},
-  name: { type: String},
+  name: { type: String, unique: true},
+  nameLowerCase: { type: String, unique: true },
   description: { type: String, default: '' },
   phone: {type: String, default: ''},
   location: RestaurantLocation,
@@ -51,7 +52,6 @@ const RestaurantDetails = new mongoose.Schema({
 });
 
 const AdminDetails = new mongoose.Schema({
-  nameLowerCase: { type: String, unique: true, required: true},
   isActive: { type: Boolean, default: false},
   overallIncome: { type: Number, default: 0 },
   fixedRate: { type: Number, default: 0.02 },
