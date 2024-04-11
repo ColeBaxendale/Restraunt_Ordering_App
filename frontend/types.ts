@@ -83,6 +83,7 @@ export interface RestaurantUpdateDetails {
     phone: string;
     location: RestaurantLocation;
     operatingHours: WeeklyOperatingHours;
+    ordersEnabled: boolean;
   };
 }
 

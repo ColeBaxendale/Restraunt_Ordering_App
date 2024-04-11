@@ -45,6 +45,7 @@ export class AddRestaurantComponent {
         saturday: { isOpen: false, open: '', close: '' },
         sunday: { isOpen: false, open: '', close: '' },
       },
+      ordersEnabled: false,
     },
   };
 
