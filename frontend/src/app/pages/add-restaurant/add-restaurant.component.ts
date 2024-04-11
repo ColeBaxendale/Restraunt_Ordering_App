@@ -24,6 +24,7 @@ export class AddRestaurantComponent {
   currentStep: number = 1;
   id: string | undefined;
   errorMsg = '';
+  name: string = "";
   restaurantDetails: RestaurantUpdateDetails = {
     details: {
       name: '',
@@ -86,25 +87,28 @@ export class AddRestaurantComponent {
 }
 
   private createRestaurant() {
-    if (this.restaurantDetails.details.name === '') {
+    if (!this.name || this.name.trim() === '') {
       this.errorMsg = 'Restaurant name field must not be blank.';
       return;
-    }
+  }
 
-    if (
-      this.restaurantDetails.details.name.length < 4 ||
-      this.restaurantDetails.details.name.length > 50
-    ) {
-      this.errorMsg = 'Restaurant name input validation failed.';
+  if (this.name.length < 4 || this.name.length > 50) {
+      this.errorMsg = 'Restaurant name must be between 4 and 50 characters.';
       return;
-    }
+  }
 
-    if (this.restaurantDetails.details.name.match(/\d+/)) {
+  if (/\d/.test(this.name)) {
       this.errorMsg = 'Restaurant name cannot contain numbers.';
       return;
-    }
-    console.log(this.restaurantDetails);
-    this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
+  }
+
+  const payload = {
+    name: this.name
+  };
+
+  console.log(payload);
+  
+    this.restaurantService.createRestaurant(payload).subscribe({
       next: (response: RestaurantResponse) => {
         // this.showMessage(response.message);
         this.id = response.restaurant._id;
