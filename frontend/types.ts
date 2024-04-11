@@ -77,7 +77,6 @@ export interface RestaurantResponse {
 
 export interface RestaurantUpdateDetails {
   details: {
-    name: string;
     logo: string;
     description: string;
     phone: string;

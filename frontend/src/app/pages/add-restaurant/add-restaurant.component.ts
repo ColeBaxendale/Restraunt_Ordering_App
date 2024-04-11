@@ -27,7 +27,6 @@ export class AddRestaurantComponent {
   name: string = "";
   restaurantDetails: RestaurantUpdateDetails = {
     details: {
-      name: '',
       logo: '',
       description: '',
       phone: '',
