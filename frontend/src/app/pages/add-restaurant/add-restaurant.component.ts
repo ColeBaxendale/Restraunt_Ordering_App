@@ -67,19 +67,30 @@ export class AddRestaurantComponent {
     private zone: NgZone,
     private router: Router
   ) {}
-
+  
   submitForm() {
     this.errorMsg = '';
     if (this.currentStep == 1) {
+      console.log(this.currentStep);
+
       this.createRestaurant();
+
     }
     if (this.currentStep == 2) {
+      console.log(this.currentStep);
+
       this.restaurantDetailsUpdate();
+
     }
     if (this.currentStep == 3) {
+      console.log(this.currentStep);
+
       this.restaurantAdminStripeUpdate();
+
     }
     if (this.currentStep == 4) {
+      console.log(this.currentStep);
+
       this.router.navigate(['/admin']);
 
     }
@@ -140,6 +151,10 @@ export class AddRestaurantComponent {
       (day) => day.isOpen === false
     );
 
+    console.log(areAllDaysClosed);
+    console.log(areDetailsEmpty);
+    
+
     if (areDetailsEmpty && areAllDaysClosed) {
       // this.showMessage('No details were added.');
       this.stepAhead();
@@ -150,6 +165,7 @@ export class AddRestaurantComponent {
         .subscribe({
           next: (response: RestaurantResponse) => {
             // this.showMessage(response.message);
+            
             this.stepAhead();
             return;
           },

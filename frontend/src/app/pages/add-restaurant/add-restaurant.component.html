@@ -98,10 +98,20 @@
           </div>
         </div>
       </div>
-    
-
-    
     </div>
+    <div *ngIf="currentStep === 3">
+      <h2>Restaurant Admin & Stripe</h2>
+
+      <input
+        type="text"
+        class="formInput"
+        id="fixedRate"
+        [(ngModel)]="restaurantAdminStripe.admin.fixedRate"
+        name="fixedRate"
+        required
+      />
+    </div>
+
     <button type="button" class="btnRounded" (click)="submitForm()">Next</button>
     <button type="submit" class="btn" *ngIf="currentStep > 2">Submit</button>
     <div *ngIf="errorMsg != ''">
