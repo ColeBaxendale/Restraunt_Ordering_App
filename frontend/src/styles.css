@@ -11,9 +11,10 @@
     margin:0;
     overflow: auto;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html {
+    font-size: 16px; /* Set your desired font size here */
+  }
+  
 
 
 @font-face {

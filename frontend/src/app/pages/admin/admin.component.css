@@ -1,68 +1,73 @@
-.adminContainer {
-    display: grid; /* Use grid layout */
-    grid-template-columns: auto auto; /* Two columns: one for buttons, one for search bar */
-    justify-content: space-between; /* Space between the two main elements */
-    align-items: center;
-    margin: 20px;
-  }
-  
-  .adminContainer .searchbar {
-    width: 60vw;
-    height: 5vh;
-    background-color: #f9f9f9;
-    border-radius: 20px;
-    padding-left: 2%;
-    /* No need for margin-left: auto; */
-  }
-  
-  .adminContainer .topButtons {
-    display: flex;
-    justify-content: flex-start; /* Buttons align to the start of their grid cell */
-  }
-  
-  .adminContainer .topButtons .button {
-    width: 6vw;
-    height: 5vh;
-    border-radius: 20px;
-    margin-right: 20px; /* Adjusted to margin-right for spacing between buttons */
-    background-color: #CF6679;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-  }
+.container {
+  display: flex;
+  min-height: 100vh; /* Cover the full viewport height */
+  background-color: var(--darkestBlue);
+}
 
-  .adminContainer .topButtons .button:hover{
-    background-color: #ffffff;
-  }
+.leftContainer {
+  width: 53.23vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.875rem;
+}
+
+.leftContainer .searchbar{
+  width: 56.25rem;
+  height: 6rem;
+  border-radius: 6.25rem;
+  border: none;
+  text-align: center;
+  font-size: 2.3125rem;
+  margin-bottom: 2.875rem;
+  position: sticky;
+
+
+}
+
+.leftContainer .searchbar::placeholder {
+  color: var(--darkestBlue);
+  font-size: 2.3125rem;
 
 
 
+}
+.leftContainer .searchbar:focus {
+  outline: none;
+  
+}
+.leftContainer .searchbar:-webkit-autofill,
+.leftContainer .searchbar:-webkit-autofill:hover, 
+.leftContainer .searchbar:-webkit-autofill:focus, 
+.leftContainer .searchbar:-webkit-autofill:active  {
+  transition: background-color 5000s ease-in-out 0s; /* Attempt to delay the autofill style */
+  -webkit-text-fill-color: var(--lightTan) !important;
+}
+.leftContainer .searchbar:focus::placeholder {
+  color: transparent;
+}
 
 
+.leftContainer .restaurantContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.875rem;
 
-  .restaurants-container .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -15px; /* Adjust the margin to manage spacing */
-  }
-  
-  .restaurant-item {
-    flex: 0 1 calc(33.333% - 30px); /* Subtract twice the margin to account for spacing */
-    margin: 15px; /* This creates the gutter */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow around items */
-    padding: 20px; /* Optional: Adds some padding inside each item */
-  }
-  
-  /* Optional: Add responsiveness */
-  @media (max-width: 768px) {
-    .restaurant-item {
-      flex: 0 1 calc(50% - 30px); /* Adjust to show 2 items per row on smaller screens */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .restaurant-item {
-      flex: 0 1 calc(100% - 30px); /* Adjust to show 1 item per row on very small screens */
-    }
-  }
-  
+
+}
+
+.leftContainer .restaurantContainer .restaurantItem{
+  background-color: var(--lightTan);
+  height:10.625rem;
+  width: 26.25rem;
+
+}
+
+.rightContainer {
+  width: 50vw;
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
