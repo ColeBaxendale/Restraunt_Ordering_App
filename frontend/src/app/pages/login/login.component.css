@@ -140,9 +140,10 @@
     margin-bottom: 4.75rem;
 
 }
-.brandingContainer .branding p{
+.brandingContainer .branding a{
     font-family: 'JetBrainsMono';
     font-size: 1.375rem;
+    text-decoration: none;
     line-height: 4.875rem;
     text-align: center;
     color: var(--darkerBlue);
