@@ -4,42 +4,81 @@
 }
 
 .loginContainer {
-    width: 40%;
+    width: 42vw;
+    height:100vh;
     background-color: var(--darkerBlue); /* Replace with your desired color */
     display: flex;
-    align-items: center;
     justify-content: center;
-}
-
-.brandingContainer {
-    width: 60%;
-    background-color: var(--darkestBlue); /* Replace with your desired color */
-    display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .loginFormContainer{
+    background-color: var(--darkestBlue);
+    width: 36.9375rem;
+    height: 49.4375rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginFormContainer h1{
+    font-family: 'JetBrainsMono';
+    font-size: 5.4375rem;
+    letter-spacing: 0.435rem;
+    color: var(--lightTan);
+    font-weight: 100;
+    margin-top: 5.5625rem;
+    margin-bottom: 5.25rem;
+}
+
+.loginFormContainer .formInput{
+    border-radius: 6.25rem;
+    width: 23.5625rem;
+    height: 5.125rem;
+    background-color: var(--darkestBlue);
+    border: 0.1875rem solid var(--lightTan);
+    text-align: center;
+    font-family: 'JetBrainsMono';
+    font-weight: 100;
+    font-size: 1.5rem;
+    letter-spacing: -0.043125rem;
+    color: var(--lightTan) !important;
+    caret-color: var(--lightBlue);
+    margin-bottom: 3.25rem;
+}
+
+.loginFormContainer .formInput::placeholder {
+    color: var(--lightTan);
+    font-size: 2rem;
+
+}
+.loginFormContainer .formInput:focus {
+    outline: none;
+}
+.loginFormContainer .formInput:-webkit-autofill,
+.loginFormContainer .formInput:-webkit-autofill:hover, 
+.loginFormContainer .formInput:-webkit-autofill:focus, 
+.loginFormContainer .formInput:-webkit-autofill:active  {
+    transition: background-color 5000s ease-in-out 0s; /* Attempt to delay the autofill style */
+    -webkit-text-fill-color: var(--lightTan) !important;
+}
+.loginFormContainer .formInput:focus::placeholder {
+    color: transparent;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brandingContainer{
+    width: 58vw;
+
+    height:100vh;
     background-color: var(--darkestBlue); /* Replace with your desired color */
 
 }
-
-/* Make sure your content inside .loginFormContainer and .brandingContainer is centered */
-.loginFormContainer, .brandingContent {
-    width: 100%; /* You can adjust this if you want padding or max-width */
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .loginContainer, .brandingContainer {
-        width: 100%; /* Each container takes full width on smaller screens */
-    }
-}
-
 
 
 

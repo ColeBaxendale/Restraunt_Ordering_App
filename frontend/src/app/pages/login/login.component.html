@@ -1,7 +1,13 @@
 <div class="container">
     <div class="loginContainer">
         <div class="loginFormContainer">
-            
+            <h1>LOGIN</h1>
+            <form class="form" (ngSubmit)="onSubmit()">
+                    
+                <input type="email" class="formInput" [(ngModel)]="user.email" name="email" placeholder = "EMAIL" required>
+                <input type="password" class="formInput" [(ngModel)]="user.password" name="password" placeholder="PASSWORD" required>
+             
+            </form>
         </div>
     </div>
     <div class="brandingContainer">
