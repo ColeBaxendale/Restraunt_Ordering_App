@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 0 1.25rem 0.125rem rgba(0, 0, 0, 0.7);
 }
 
 .loginFormContainer h1{
@@ -39,11 +40,35 @@
     border: 0.1875rem solid var(--lightTan);
     text-align: center;
     font-family: 'JetBrainsMono';
-    font-weight: 100;
-    font-size: 1.5rem;
+    font-size: 2rem;
     letter-spacing: -0.043125rem;
     color: var(--lightTan) !important;
     caret-color: var(--lightBlue);
+    margin-bottom: 3.25rem;
+}
+
+.loginFormContainer .formInputLogin{
+    border-radius: 6.25rem;
+    width: 20.375rem;
+    height: 5.125rem;
+    background-color: var(--darkerBlue);
+    text-align: center;
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    letter-spacing: -0.043125rem;
+    color: var(--darkestBlue) !important;
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.loginFormContainer .forgotPassword{
+    text-align: center;
+    font-family: 'JetBrainsMono';
+    font-weight: 100;
+    font-size: 1.6875rem;
+    letter-spacing: -0.043125rem;
+    text-decoration: none;
+    color: var(--darkerBlue) !important;
     margin-bottom: 3.25rem;
 }
 
@@ -80,8 +105,49 @@
 
 }
 
+.brandingContainer .branding{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.brandingContainer .branding h1{
+    font-family: 'JetBrainsMono';
+    font-size: 8.0625rem;
+    line-height: 9.375rem;
+    text-align: center;
+    margin-top: 9rem;
+    letter-spacing: 1.45125rem;
+    color: var(--lightBlue);
+    margin-bottom: 4.75rem;
+    font-weight: 300;
+    overflow: hidden;
+    text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     2px  1px 0 #000; /* Stroke effect */
+}
 
+.brandingContainer .branding h2{
+    font-family: 'JetBrainsMono';
+    font-size: 2.1875rem;
+    line-height: 4.875rem;
+    text-align: center;
+    letter-spacing: 0.48125rem;
+    color: var(--lightTan);
+    font-weight: 100;
+    margin-bottom: 4.75rem;
+
+}
+.brandingContainer .branding p{
+    font-family: 'JetBrainsMono';
+    font-size: 1.375rem;
+    line-height: 4.875rem;
+    text-align: center;
+    color: var(--darkerBlue);
+    font-weight: 100;
+}
 
 
 /* 

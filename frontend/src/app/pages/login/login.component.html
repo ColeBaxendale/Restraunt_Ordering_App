@@ -6,12 +6,17 @@
                     
                 <input type="email" class="formInput" [(ngModel)]="user.email" name="email" placeholder = "EMAIL" required>
                 <input type="password" class="formInput" [(ngModel)]="user.password" name="password" placeholder="PASSWORD" required>
-             
             </form>
+            <button type="submit" (click)="onSubmit()" class="formInputLogin">LOGIN</button>
+            <a class="forgotPassword" href="">FORGOT PASSWORD?</a>
         </div>
     </div>
     <div class="brandingContainer">
-        
+        <div class="branding">
+            <h1>ORDER<br>FEAST</h1>
+            <h2>SIMPLIFY ORDERING.<br>AMPLIFY YOUR SUCCESS.</h2>
+            <p>DISCOVER HOW TO HARNESS OUR SERVICES FOR YOUR RESTAURANT'S SUCCESS.</p>
+        </div>
     </div>
 
 </div>
