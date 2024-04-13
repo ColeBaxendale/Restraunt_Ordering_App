@@ -53,6 +53,12 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  restaurantPage(restaurantId: string){
+    console.log(restaurantId);
+    
+    // this.router.navigate(['/addRestaurant']);
+  }
+
   searchRestaurants(inputElement: HTMLInputElement): void {
     const searchTerm = inputElement.value;
     // Implement search functionality

@@ -5,7 +5,7 @@
 
     </div>
     <div class="restaurantContainer">
-      <div class="restaurantItem" *ngFor="let restaurant of restaurants">
+      <div class="restaurantItem" *ngFor="let restaurant of restaurants" (click)="restaurant._id ? restaurantPage(restaurant._id) : null">
         <h3>{{ restaurant.details.name }}</h3>
         <h3><span *ngIf="restaurant.admin.isActive; else notLive">Live</span><ng-template #notLive>Not Live</ng-template></h3>
 
