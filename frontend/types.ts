@@ -51,7 +51,6 @@ export interface RestaurantDetails {
 }
 
 export interface AdminDetails {
-  nameLowerCase: string;
   isActive: boolean;
   overallIncome: number;
   fixedRate: number;

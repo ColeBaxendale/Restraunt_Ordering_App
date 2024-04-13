@@ -1,165 +1,65 @@
-<div class="mainContainer">
-  <form (ngSubmit)="submitForm()">
-    <h1>Add New Restaurant</h1>
-
-    <div *ngIf="currentStep === 1">
-      <input
-        type="text"
-        class="formInput"
-        id="restaurantName"
-        [(ngModel)]="name"
-        name="restaurantName"
-        placeholder="Enter restaurant name"
-        required
-      />
+<div class="container">
+  <div class="headerContainer">
+    <div class="leftHeaderContainer">
+      <h1>ADD NEW RESTAURANT</h1>
     </div>
+    <div class="rightHeaderContainer">
+      <button class="buttonClass" (click)="submitForm()" >SUBMIT</button>
+      <button class="buttonClass" (click)="cancel()" >CANCEL</button>
+      <button class="buttonClass" (click)="logout()" >LOGOUT</button>
+    </div>
+  </div>
 
-    <div *ngIf="currentStep === 2">
-      <h2>Restaurant Details</h2>
-
-      <div class="inputContainerTwo">
-        <input
-          type="file"
-          class="formInputFile"
-          id="logo"
-          [(ngModel)]="restaurantDetails.details.logo"
-          name="logo"
-          placeholder="LOGO"
-        />
-        <input
-          type="text"
-          class="formInputDescription"
-          id="description"
-          [(ngModel)]="restaurantDetails.details.description"
-          name="description"
-          placeholder="Enter description"
-        />
-
-        <input
-          type="text"
-          class="formInput"
-          id="phone"
-          [(ngModel)]="restaurantDetails.details.phone"
-          name="phone"
-          placeholder="Enter phone number"
-        />
-      </div>
-      <h2>Restaurant Location</h2>
-
-      <div class="inputContainerTwo">
-        <input
-          type="text"
-          class="formInput"
-          id="address"
-          [(ngModel)]="restaurantDetails.details.location.address"
-          name="address"
-          placeholder="Enter street address"
-        />
-
-        <input
-          type="text"
-          class="formInput"
-          id="city"
-          [(ngModel)]="restaurantDetails.details.location.city"
-          name="city"
-          placeholder="Enter City"
-        />
-
-        <input
-          type="text"
-          class="formInput"
-          id="state"
-          [(ngModel)]="restaurantDetails.details.location.state"
-          name="state"
-          placeholder="Enter State"
-        />
-
-        <input
-          type="text"
-          class="formInput"
-          id="zipCode"
-          [(ngModel)]="restaurantDetails.details.location.zipCode"
-          name="zipCode"
-          placeholder="Enter Zip Code"
-        />
+  <div class="bottomContainer">
+    <div class="bottomLeftContainer">
+      <div class="inputContainer">
+        <h1>DETAILS: </h1>
+        <input type="file" id="fileInput" class="hiddenInput" [(ngModel)]="restaurantDetails.details.logo" name="logo">
+        <label for="fileInput" class="linkLike">Upload Logo</label>
       </div>
 
-      <h2>Restaurant Hours</h2>
-      <div class="week-container" *ngIf="currentStep === 2">
-        <div
-          *ngFor="
-            let day of [
-              'monday',
-              'tuesday',
-              'wednesday',
-              'thursday',
-              'friday',
-              'saturday',
-              'sunday'
-            ]
-          "
-          class="day-container"
-        >
-          <div class="inputContainerThree">
-            <h4>{{ day | titlecase }} Open?</h4>
-            <input
-              type="checkbox"
-              [(ngModel)]="restaurantDetails.details.operatingHours[day].isOpen"
-              [name]="day + 'IsOpen'"
-            />
-          </div>
-
-          <div *ngIf="restaurantDetails.details.operatingHours[day].isOpen">
-            <input
-              type="text"
-              class="formInputToo"
-              [(ngModel)]="restaurantDetails.details.operatingHours[day].open"
-              [name]="day + '.isOpen.open'"
-              placeholder="Open time (HH:MM)"
-            />
-            <input
-              type="text"
-              class="formInputToo"
-              [(ngModel)]="restaurantDetails.details.operatingHours[day].close"
-              [name]="day + '.isOpen.close'"
-              placeholder="Close time (HH:MM)"
-            />
-          </div>
-        </div>
+      <div class="inputContainer">
+        <h2>NAME: </h2>
+        <input type="text" class="formInput" [(ngModel)]="restaurantDetails.details.name" name="name" required>
       </div>
-    </div>
-    <div *ngIf="currentStep === 3">
-      <h2>Restaurant Admin & Stripe</h2>
 
-      <input
-        type="text"
-        class="formInput"
-        id="fixedRate"
-        [(ngModel)]="restaurantAdminStripe.admin.fixedRate"
-        name="fixedRate"
-      />
-      <input
-        type="checkbox"
-        class="formInput"
-        id="addFees"
-        [(ngModel)]="restaurantAdminStripe.stripe.addFees"
-        name="addFees"
-      />
-      <input
-        type="text"
-        class="formInput"
-        id="stripeAccountId"
-        [(ngModel)]="restaurantAdminStripe.stripe.stripeAccountId"
-        name="stripeAccountId"
-      />
-    </div>
+      <div class="inputContainer">
+        <h2>PHONE: </h2>
+        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.phone" name="phone">
+      </div>
+
+      <div class="inputContainer">
+        <h2>DESC: </h2>
+        <textarea [(ngModel)]="restaurantDetails.details.description" name="inputName"  class="formInputTextBox"></textarea>
+      </div>
+
+      <div class="inputContainer">
+        <h2>STREET: </h2>
+        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.location.address" name="address">
+      </div>
+
+      <div class="inputContainer">
+        <h2>CITY: </h2>
+        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.location.city" name="city">
+      </div>
+
+      <div class="inputContainer">
+        <h2>STATE: </h2>
+        <input type="string" class="formInputSmall" [(ngModel)]="restaurantDetails.details.location.state" name="state">
+        <h2>ZIP: </h2>
+        <input type="string" class="formInputSmall" [(ngModel)]="restaurantDetails.details.location.zipCode" name="zipCode">
+      </div>
 
 
-    <button type="button" class="btnRounded"  (click)="submitForm()">
-      Next
-    </button>
-    <div *ngIf="errorMsg != ''">
-      <p class="errorClass">{{ errorMsg }}</p>
     </div>
-  </form>
+    <div class="bottomMiddleContainer">
+
+    </div>
+
+    <div class="bottomRightContainer">
+
+    </div>
+  </div>
+  
+
 </div>

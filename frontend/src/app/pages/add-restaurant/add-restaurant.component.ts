@@ -6,6 +6,7 @@ import {
   RestaurantUpdateDetails,
   RestaurantResponse,
   RestaurantUpdateAdminStripe,
+  Restaurant,
 } from '../../../../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgZone } from '@angular/core';
@@ -21,11 +22,17 @@ import { Router } from '@angular/router';
   styleUrl: './add-restaurant.component.css',
 })
 export class AddRestaurantComponent {
+cancel() {
+throw new Error('Method not implemented.');
+}
+logout() {
+throw new Error('Method not implemented.');
+}
   currentStep: number = 1;
   id: string | undefined;
   errorMsg = '';
   name: string = "";
-  restaurantDetails: RestaurantUpdateDetails = {
+  restaurantDetails: Restaurant = {
     details: {
       logo: '',
       description: '',
@@ -46,19 +53,24 @@ export class AddRestaurantComponent {
         sunday: { isOpen: false, open: '', close: '' },
       },
       ordersEnabled: false,
+      name: '',
+      owners: [],
+      menuSections: []
     },
-  };
 
-  restaurantAdminStripe: RestaurantUpdateAdminStripe = {
-    admin: {
+    admin:{
       isActive: false,
       fixedRate: 0.02,
+      overallIncome: 0
     },
+
     stripe: {
       stripeAccountId: '',
       addFees: false,
     },
+
   };
+
 
   constructor(
     private restaurantService: RestaurantService,
@@ -69,151 +81,6 @@ export class AddRestaurantComponent {
   ) {}
   
   submitForm() {
-    console.log(`Current Step before decision: ${this.currentStep}`);
-    this.errorMsg = '';
-    if (this.currentStep == 1) {
-        console.log('Proceeding from Step 1 to Step 2');
-        this.createRestaurant();
-    } else if (this.currentStep == 2) {
-        console.log('Proceeding from Step 2 to Step 3');
-        this.restaurantDetailsUpdate();
-    } else if (this.currentStep == 3) {
-        console.log('Proceeding from Step 3 to Step 4');
-        this.restaurantAdminStripeUpdate();
-    } if (this.currentStep > 3) {
-        console.log('Final Step, navigating to /admin');
-        this.router.navigate(['/admin']);
-    }
-}
 
-  private createRestaurant() {
-    if (!this.name || this.name.trim() === '') {
-      this.errorMsg = 'Restaurant name field must not be blank.';
-      return;
   }
-
-  if (this.name.length < 4 || this.name.length > 50) {
-      this.errorMsg = 'Restaurant name must be between 4 and 50 characters.';
-      return;
-  }
-
-  if (/\d/.test(this.name)) {
-      this.errorMsg = 'Restaurant name cannot contain numbers.';
-      return;
-  }
-
-  const payload = {
-    name: this.name
-  };
-
-  console.log(payload);
-  
-    this.restaurantService.createRestaurant(payload).subscribe({
-      next: (response: RestaurantResponse) => {
-        this.id = response.restaurant._id;
-        this.errorMsg = '';
-        this.stepAhead();
-        console.log(response.message);
-
-        return;
-      },
-      error: (error) => {
-        this.errorMsg = error.error.error;
-        return;
-      },
-    });
-  }
-
-  private restaurantDetailsUpdate() {
-    if (!this.id) {
-      this.errorMsg = 'Restaurant ID is undefined.';
-      return;
-    }
-    const { logo, description, phone, location, operatingHours } =
-      this.restaurantDetails.details;
-
-    const areDetailsEmpty = [
-      logo,
-      description,
-      phone,
-      location.address,
-      location.city,
-      location.state,
-      location.zipCode,
-    ].every((detail) => detail === '');
-    const areAllDaysClosed = Object.values(operatingHours).every(
-      (day) => day.isOpen === false
-    );
-
-    if (areDetailsEmpty && areAllDaysClosed) {
-      console.log('No details were added.');
-      this.stepAhead();
-      return;
-    } else {
-      this.restaurantService
-        .updateRestaurantDetails(this.id, this.restaurantDetails)
-        .subscribe({
-          next: (response: RestaurantResponse) => {
-            console.log(response.message);
-            
-            this.stepAhead();
-            return;
-          },
-          error: (error) => {
-            this.errorMsg = error.error.error;
-            return;
-          },
-        });
-    }
-  }
-
-
-  private restaurantAdminStripeUpdate() {
-    if (!this.id) {
-      this.errorMsg = 'Restaurant ID is undefined.';
-      return;
-    }
-    if (
-      this.restaurantAdminStripe.admin.fixedRate == 0.02 && this.restaurantAdminStripe.stripe.addFees == false && this.restaurantAdminStripe.stripe.stripeAccountId == '') {
-        this.stepAhead();
-        return;
-    } 
-    else{
-      if (
-        this.restaurantAdminStripe.admin.fixedRate < 0.01 ||
-        this.restaurantAdminStripe.admin.fixedRate > 0.1
-      ) {
-        this.errorMsg = 'Fixed rate should be between 0.01 and 0.1.';
-        return;
-      } 
-      else {
-      // INPUT VALIDATION FOR STRIPE ID
-      this.restaurantService
-        .updateRestaurantAdminStripe(this.id, this.restaurantAdminStripe)
-        .subscribe({
-          next: (response: RestaurantResponse) => {
-            // this.showMessage(response.message);
-            console.log(response.message);
-            this.stepAhead();
-            return;
-          },
-          error: (error) => {
-            this.errorMsg = error.error.error;
-            return;
-          },
-        });
-    }
-  }
-}
-
-private stepAhead() {
-  this.currentStep++;
-  this.changeDetectorRef.detectChanges(); // Manually trigger change detection
-
-  if (this.currentStep > 3) {
-    this.router.navigate(['/admin']);
-  }
-}
-
-
 }

@@ -114,6 +114,8 @@
   font-size: 1.375rem;
   color: var(--darkestBlue);
   cursor: pointer;
+  border: none;
+
 }
 
 .rightContainer .branding{
