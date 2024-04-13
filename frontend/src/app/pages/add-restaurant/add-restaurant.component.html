@@ -1,7 +1,13 @@
 <div class="container">
   <div class="headerContainer">
     <div class="leftHeaderContainer">
-      <h1>ADD NEW RESTAURANT</h1>
+      <div class="leftHeaderContainerStack">
+        <h1>ADD NEW RESTAURANT</h1>
+        <div *ngIf="errorMsg != ''">
+          <p>{{ errorMsg }}</p>
+        </div>
+      </div>
+
     </div>
     <div class="rightHeaderContainer">
       <button class="buttonClass" (click)="submitForm()">SUBMIT</button>
