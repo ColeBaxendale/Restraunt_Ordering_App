@@ -1,0 +1,281 @@
+.container {
+    display: flex;
+    ;flex-direction: column; 
+    min-height: 100vh; /* Cover the full viewport height */
+    background-color: var(--darkestBlue);
+    overflow: hidden;
+  }
+  
+  .container .headerContainer{
+    display: flex;
+    height: 13.61vh;
+    width:  100%;
+    margin-top: 1rem;
+  
+  }
+  
+  .container .headerContainer .leftHeaderContainer{
+    width: 51.51vw;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+  
+  .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    
+  }
+  .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack p{
+    margin-left: 5.375rem;
+    font-size: 1.5rem;
+    color:red;
+    font-family: 'JetBrainsMono';
+    font-weight: 100;
+  
+    
+    
+  }
+  
+  .container .headerContainer .leftHeaderContainer h1{
+    margin-left: 5.375rem;
+    font-family: 'JetBrainsMono';
+    font-size: 4.0625rem;
+    color: var(--lightTan);
+  }
+  
+  .container .headerContainer .leftHeaderContainer h2{
+    margin-left: 5.375rem;
+    font-family: 'JetBrainsMono';
+    font-size: 1.25rem;
+    color: var(--lightTan);
+  }
+  .container .headerContainer .rightHeaderContainer{
+    width: 48.49vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+  }
+  
+  
+  .container .headerContainer .buttonClass{
+    border-radius: 6.25rem;
+    width: 14.9375rem;
+    height: 6rem;
+    background-color: var(--darkerBlue);
+    font-family: 'JetBrainsMono';
+    font-size: 1.375rem;
+    color: var(--darkestBlue);
+    cursor: pointer;
+    border: none;
+    border:none;
+  }
+  
+  .container .bottomContainer{
+    width: 100%;
+    height: 86.39vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .container .bottomContainer .bottomLeftContainer{
+    height:100%;
+    width: 33.33vw;
+    margin-left: 5.375rem;
+  
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2.3125rem;
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer h1{
+    margin-top: 1rem;
+  
+    font-family: 'JetBrainsMono';
+    font-size: 2.5rem;
+    color: var(--lightTan);
+    margin-right: 6rem;
+  
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
+  
+  .linkLike {
+    cursor: pointer;
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    font-weight: 100;
+    margin-top: 1rem;
+  
+    color: var(--lightTan);
+    text-decoration: none ;
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer h2{
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    color: var(--lightTan);
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer .formInput{
+    width: 27.9375rem;
+    height: 4.1875rem;
+    background-color: var(--lightTan);
+    font-family: 'JetBrainsMono';
+    font-size: 1.875rem;
+    border-radius: 6.25rem;
+    color: var(--darkestBlue);
+    text-align: center;
+    margin-right: 6.875rem;
+    margin-left: 3.3125rem;
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer .formInputSmall{
+    width: 8rem;
+    height: 4.1875rem;
+    background-color: var(--lightTan);
+    font-family: 'JetBrainsMono';
+    font-size: 1.875rem;
+    border-radius: 6.25rem;
+    color: var(--darkestBlue);
+    text-align: center;
+    margin-right: 5.125rem;
+    margin-left: 1rem;
+  }
+  
+  .container .bottomContainer .bottomLeftContainer .inputContainer .formInputTextBox{
+    width: 27.9375rem;
+    height: 13.625rem;
+    background-color: var(--lightTan);
+    font-family: 'JetBrainsMono';
+    font-size: 1.875rem;
+    border-radius: 1.625rem;
+    color: var(--darkestBlue);
+    text-align: left;
+    margin-right: 6.875rem;
+    margin-left: 3.3125rem;
+  }
+  
+  .container .bottomContainer .bottomMiddleContainer{
+    height:100%;
+    width: 33.33vw;
+  
+  }
+  
+  
+  
+  .container .bottomContainer .bottomMiddleContainer h1{
+    margin-top: 1rem;
+  
+    font-family: 'JetBrainsMono';
+    font-size: 2.5rem;
+    color: var(--lightTan);
+    margin-right: 6rem;
+    margin-bottom: 2.3125rem;
+  }
+  
+  .container .bottomContainer .bottomMiddleContainer .inputContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 3.5rem;
+  }
+  
+  
+  .container .bottomContainer .bottomMiddleContainer .inputContainer h2{
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    color: var(--lightTan);
+  }
+  
+  .container .bottomContainer .bottomMiddleContainer .inputContainer .formInputBox{
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-left: 3rem;
+  }
+  
+  .container .bottomContainer .bottomMiddleContainer .inputContainer .formInputTime{
+    width: 8.1875rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    margin-left: 3rem;
+  }
+  
+  .container .bottomContainer .bottomRightContainer{
+    height:100%;
+    width: 33.33vw;
+  }
+  
+  .container .bottomContainer .bottomRightContainer h1{
+    font-family: 'JetBrainsMono';
+    font-size: 2.5rem;
+    color: var(--lightTan);
+    margin-right: 6rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    margin-right: 5.375rem;
+  
+  }
+  .container .bottomContainer .bottomRightContainer .inputContainerStack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 2.235rem;
+  
+  }
+  .container .bottomContainer .bottomRightContainer .linkLike{
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+  
+  
+    
+  }
+  
+  .container .bottomContainer .bottomRightContainer .inputContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2.235rem;
+    
+  }
+  
+  .container .bottomContainer .bottomRightContainer .inputContainer .formInput{
+    width: 8rem;
+    height: 4.1875rem;
+    background-color: var(--lightTan);
+    font-family: 'JetBrainsMono';
+    font-size: 1.875rem;
+    border-radius: 6.25rem;
+    color: var(--darkestBlue);
+    text-align: center;
+    margin-left: 2.3125rem;
+    margin-left: 3rem;
+  
+  }
+  
+  .container .bottomContainer .bottomRightContainer .inputContainer h2{
+    font-family: 'JetBrainsMono';
+    margin-left: 2.3125rem;
+    font-size: 1.75rem;
+    color: var(--lightTan);
+  }
+  
+  .container .bottomContainer .bottomRightContainer .inputContainer .formInputBox{
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-left: 3rem;
+  }
+  

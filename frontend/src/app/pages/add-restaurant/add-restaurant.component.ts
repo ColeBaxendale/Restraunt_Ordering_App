@@ -152,13 +152,6 @@ export class AddRestaurantComponent {
         this.errorMsg = error.error.message;
       },
     })
-
-    
-
-
-
-    
-
   }
 
 

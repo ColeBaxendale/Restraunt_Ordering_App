@@ -12,8 +12,8 @@ const RestaurantLocation = new mongoose.Schema({
 // Define a schema for operating hours
 const OperatingHoursSchema = new mongoose.Schema({
   isOpen: { type: Boolean, default: false},
-  open: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
-  close: { type: Number, required: function() { return this.isOpen; } }, // Only required if isOpen is true
+  open: { type: String, required: function() { return this.isOpen; } }, // Only required if isOpen is true
+  close: { type: String, required: function() { return this.isOpen; } }, // Only required if isOpen is true
 });
 
 // Define a schema for the restaurant's weekly operating hours
