@@ -75,6 +75,8 @@
 }
 
 .container .bottomContainer .bottomLeftContainer .inputContainer h1{
+  margin-top: 1rem;
+
   font-family: 'JetBrainsMono';
   font-size: 2.5rem;
   color: var(--lightTan);
@@ -91,6 +93,7 @@
   font-family: 'JetBrainsMono';
   font-size: 1.75rem;
   font-weight: 100;
+  margin-top: 1rem;
 
   color: var(--lightTan);
   text-decoration: none ;
@@ -147,13 +150,11 @@
 
 }
 
-.container .bottomContainer .bottomRightContainer{
-  height:100%;
-  width: 33.33vw;
-  background-color: rgb(2, 2, 2);
-}
+
 
 .container .bottomContainer .bottomMiddleContainer h1{
+  margin-top: 1rem;
+
   font-family: 'JetBrainsMono';
   font-size: 2.5rem;
   color: var(--lightTan);
@@ -165,7 +166,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 4.3125rem;
+  margin-bottom: 3.5rem;
 }
 
 
@@ -185,5 +186,71 @@
   width: 8.1875rem;
   height: 2.5rem;
 
+  margin-left: 3rem;
+}
+
+.container .bottomContainer .bottomRightContainer{
+  height:100%;
+  width: 33.33vw;
+}
+
+.container .bottomContainer .bottomRightContainer h1{
+  font-family: 'JetBrainsMono';
+  font-size: 2.5rem;
+  color: var(--lightTan);
+  margin-right: 6rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-right: 5.375rem;
+
+}
+.container .bottomContainer .bottomRightContainer .inputContainerStack {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 2.235rem;
+
+}
+.container .bottomContainer .bottomRightContainer .linkLike{
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+
+
+  
+}
+
+.container .bottomContainer .bottomRightContainer .inputContainer{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2.235rem;
+  
+}
+
+.container .bottomContainer .bottomRightContainer .inputContainer .formInput{
+  width: 8rem;
+  height: 4.1875rem;
+  background-color: var(--lightTan);
+  font-family: 'JetBrainsMono';
+  font-size: 1.875rem;
+  border-radius: 6.25rem;
+  color: var(--darkestBlue);
+  text-align: center;
+  margin-left: 2.3125rem;
+  margin-left: 3rem;
+
+}
+
+.container .bottomContainer .bottomRightContainer .inputContainer h2{
+  font-family: 'JetBrainsMono';
+  margin-left: 2.3125rem;
+  font-size: 1.75rem;
+  color: var(--lightTan);
+}
+
+.container .bottomContainer .bottomRightContainer .inputContainer .formInputBox{
+  height: 2.5rem;
+  width: 2.5rem;
   margin-left: 3rem;
 }

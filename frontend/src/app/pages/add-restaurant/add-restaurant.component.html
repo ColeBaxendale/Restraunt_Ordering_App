@@ -92,9 +92,7 @@
       </div>
     </div>
     <div class="bottomMiddleContainer">
-        <h1>HOURS:</h1>
-
-
+      <h1>HOURS:</h1>
 
       <div class="inputContainer">
         <h2>MON:</h2>
@@ -151,7 +149,9 @@
         <input
           type="checkbox"
           class="formInputBox"
-          [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.isOpen"
+          [(ngModel)]="
+            restaurantDetails.details.operatingHours.wednesday.isOpen
+          "
           name="wednesday.isOpen"
         />
         <input
@@ -159,7 +159,9 @@
           class="formInputTime"
           [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.open"
           name="wednesdayOpen"
-          [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+          [disabled]="
+            !restaurantDetails.details.operatingHours.wednesday.isOpen
+          "
         />
         <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
@@ -167,7 +169,9 @@
           class="formInputTime"
           [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.close"
           name="wednesdayClose"
-          [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+          [disabled]="
+            !restaurantDetails.details.operatingHours.wednesday.isOpen
+          "
         />
       </div>
 
@@ -270,12 +274,64 @@
           [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
         />
       </div>
-
-
-
-
+      <div class="inputContainer">
+        <h2>ORDERS ENABLED?</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.ordersEnabled"
+          name="ordersEnabled"
+        />
+        </div>
     </div>
 
-    <div class="bottomRightContainer"></div>
+    <div class="bottomRightContainer">
+      <h1>OWNERS:</h1>
+      <div class="inputContainerStack">
+        <a for="fileInput" class="linkLike">ADD OWNERS</a>
+        <a for="fileInput" class="linkLike">SHOW OWNERS</a>
+        <a for="fileInput" class="linkLike">DELETE OWNERS</a>
+      </div>
+      <h1>ADMIN:</h1>
+      <div class="inputContainer">
+        <h2>FIXED RATE:</h2>
+        <input
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.admin.fixedRate"
+          name="fixedRate"
+        />
+        </div>
+
+        <div class="inputContainer">
+          <h2>IS ACTIVE?</h2>
+          <input
+            type="checkbox"
+            class="formInputBox"
+            [(ngModel)]="restaurantDetails.admin.isActive"
+            name="isActive"
+          />
+          </div>
+      <h1>STRIPE:</h1>
+      <div class="inputContainer">
+        <h2>STRIPE ID:</h2>
+        <input
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
+          name="stripeAccountId"
+        />
+        </div>
+
+        <div class="inputContainer">
+          <h2>ADD FEES?</h2>
+          <input
+            type="checkbox"
+            class="formInputBox"
+            [(ngModel)]="restaurantDetails.stripe.addFees"
+            name="addFees"
+          />
+          </div>
+    </div>
   </div>
 </div>
