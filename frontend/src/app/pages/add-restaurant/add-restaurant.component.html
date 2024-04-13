@@ -4,62 +4,278 @@
       <h1>ADD NEW RESTAURANT</h1>
     </div>
     <div class="rightHeaderContainer">
-      <button class="buttonClass" (click)="submitForm()" >SUBMIT</button>
-      <button class="buttonClass" (click)="cancel()" >CANCEL</button>
-      <button class="buttonClass" (click)="logout()" >LOGOUT</button>
+      <button class="buttonClass" (click)="submitForm()">SUBMIT</button>
+      <button class="buttonClass" (click)="cancel()">CANCEL</button>
+      <button class="buttonClass" (click)="logout()">LOGOUT</button>
     </div>
   </div>
 
   <div class="bottomContainer">
     <div class="bottomLeftContainer">
       <div class="inputContainer">
-        <h1>DETAILS: </h1>
-        <input type="file" id="fileInput" class="hiddenInput" [(ngModel)]="restaurantDetails.details.logo" name="logo">
+        <h1>DETAILS:</h1>
+        <input
+          type="file"
+          id="fileInput"
+          class="hiddenInput"
+          [(ngModel)]="restaurantDetails.details.logo"
+          name="logo"
+        />
         <label for="fileInput" class="linkLike">Upload Logo</label>
       </div>
 
       <div class="inputContainer">
-        <h2>NAME: </h2>
-        <input type="text" class="formInput" [(ngModel)]="restaurantDetails.details.name" name="name" required>
+        <h2>NAME:</h2>
+        <input
+          type="text"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.name"
+          name="name"
+          required
+        />
       </div>
 
       <div class="inputContainer">
-        <h2>PHONE: </h2>
-        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.phone" name="phone">
+        <h2>PHONE:</h2>
+        <input
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.phone"
+          name="phone"
+        />
       </div>
 
       <div class="inputContainer">
-        <h2>DESC: </h2>
-        <textarea [(ngModel)]="restaurantDetails.details.description" name="inputName"  class="formInputTextBox"></textarea>
+        <h2>DESC:</h2>
+        <textarea
+          [(ngModel)]="restaurantDetails.details.description"
+          name="inputName"
+          class="formInputTextBox"
+        ></textarea>
       </div>
 
       <div class="inputContainer">
-        <h2>STREET: </h2>
-        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.location.address" name="address">
+        <h2>STREET:</h2>
+        <input
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.location.address"
+          name="address"
+        />
       </div>
 
       <div class="inputContainer">
-        <h2>CITY: </h2>
-        <input type="string" class="formInput" [(ngModel)]="restaurantDetails.details.location.city" name="city">
+        <h2>CITY:</h2>
+        <input
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.location.city"
+          name="city"
+        />
       </div>
 
       <div class="inputContainer">
-        <h2>STATE: </h2>
-        <input type="string" class="formInputSmall" [(ngModel)]="restaurantDetails.details.location.state" name="state">
-        <h2>ZIP: </h2>
-        <input type="string" class="formInputSmall" [(ngModel)]="restaurantDetails.details.location.zipCode" name="zipCode">
+        <h2>STATE:</h2>
+        <input
+          type="string"
+          class="formInputSmall"
+          [(ngModel)]="restaurantDetails.details.location.state"
+          name="state"
+        />
+        <h2>ZIP:</h2>
+        <input
+          type="string"
+          class="formInputSmall"
+          [(ngModel)]="restaurantDetails.details.location.zipCode"
+          name="zipCode"
+        />
       </div>
-
-
     </div>
     <div class="bottomMiddleContainer">
+        <h1>HOURS:</h1>
+
+
+
+      <div class="inputContainer">
+        <h2>MON:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.monday.isOpen"
+          name="monday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.monday.open"
+          name="mondayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.monday.close"
+          name="mondayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>TUES:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.isOpen"
+          name="tuesday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.open"
+          name="tuesdayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.tuesday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.close"
+          name="tuesdayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.tuesday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>WED:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.isOpen"
+          name="wednesday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.open"
+          name="wednesdayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.close"
+          name="wednesdayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>THUR:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.thursday.isOpen"
+          name="thursday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.thursday.open"
+          name="thursdayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.thursday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.thursday.close"
+          name="thursdayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.thursday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>FRI:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.friday.isOpen"
+          name="friday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.friday.open"
+          name="fridayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.friday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.friday.close"
+          name="fridayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.friday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>SAT:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.saturday.isOpen"
+          name="saturday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.saturday.open"
+          name="saturdayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.saturday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.saturday.close"
+          name="saturdayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.saturday.isOpen"
+        />
+      </div>
+
+      <div class="inputContainer">
+        <h2>SUN:</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.details.operatingHours.sunday.isOpen"
+          name="sunday.isOpen"
+        />
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.sunday.open"
+          name="sundayOpen"
+          [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
+        />
+        <!-- Input for closing time, enabled/disabled based on checkbox -->
+        <input
+          type="time"
+          class="formInputTime"
+          [(ngModel)]="restaurantDetails.details.operatingHours.sunday.close"
+          name="sundayClose"
+          [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
+        />
+      </div>
+
+
+
 
     </div>
 
-    <div class="bottomRightContainer">
-
-    </div>
+    <div class="bottomRightContainer"></div>
   </div>
-  
-
 </div>
