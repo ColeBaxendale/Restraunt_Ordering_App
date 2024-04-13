@@ -4,65 +4,57 @@ const bcrypt = require("bcryptjs");
 
 exports.createRestaurant = async (req, res, next) => {
   try {
-    const { name } = req.body; // Only name is provided in the request
-
-    // Check if name is provided
-    if (!name) {
-      return res.status(400).json({ message: "Restaurant name is required." });
+    // Extracting all properties under 'details', and 'admin' and 'stripe' separately
+    const { details, admin, stripe } = req.body;
+    if (!details.name || typeof details.name !== 'string' || details.name.trim().length === 0) {
+      return res.status(400).json({ message: "Restaurant name is required and must be a string." });
     }
 
-    // Check if `name` is provided and is a string
-    if (typeof name !== "string" || name.trim().length === 0) {
-      return res
-        .status(400)
-        .json({ message: "Restaurant name is required and must be a string." });
+    const nameLowerCase = details.name.toLowerCase();
+    const existingRestaurant = await Restaurant.findOne({ 'details.nameLowerCase': nameLowerCase }).exec();
+
+    if (existingRestaurant) {
+      return res.status(400).json({ message: "A restaurant with the same name already exists." });
     }
 
-    // Now it's safe to use .toLowerCase() since `name` is confirmed to be a string
-    const nameLowerCase = name.toLowerCase();
-    // Initialize the restaurant document with default values and provided name
+    // Constructing the restaurant object with structured validation and defaulting
     const restaurantDetails = {
       details: {
-        name,
-        nameLowerCase: name.toLowerCase(), // For case-insensitive uniqueness
-        logo: "", // Default or predefined value
-        description: "", // Default or predefined value
-        phone: "", // Default or predefined value
+        name: details.name,
+        nameLowerCase, // Lowercase version for case-insensitive operations
+        logo: details.logo || "",
+        description: details.description || "",
+        phone: details.phone || "",
         location: {
-          address: "",
-          city: "",
-          state: "",
-          zipCode: "",
+          address: details.location?.address || "",
+          city: details.location?.city || "",
+          state: details.location?.state.toUpperCase() || "",
+          zipCode: details.location?.zipCode || "",
         },
-        operatingHours: {
-          monday: { isOpen: false, open: null, close: null },
-          tuesday: { isOpen: false, open: null, close: null },
-          wednesday: { isOpen: false, open: null, close: null },
-          thursday: { isOpen: false, open: null, close: null },
-          friday: { isOpen: false, open: null, close: null },
-          saturday: { isOpen: false, open: null, close: null },
-          sunday: { isOpen: false, open: null, close: null },
-          // Add similar entries for other days...
+        operatingHours: details.operatingHours || {
+          monday: { isOpen: false, open: '', close: '' },
+          // Preset defaults for other days if needed
         },
-        ordersEnabled: false, // Default or predefined value
-        // Ensure 'owners' and 'menuSections' are initialized if they're arrays
-        owners: [],
-        menuSections: [],
+        ordersEnabled: details.ordersEnabled || false,
+        owners: details.owners || [],
+        menuSections: details.menuSections || []
       },
       admin: {
-        isActive: false, // Default or predefined value
-        overallIncome: 0.01, // Default or predefined value
-        fixedRate: 0.02, // Default or predefined value
+        isActive: admin?.isActive || false,
+        fixedRate: admin?.fixedRate || 0.02,
+        overallIncome: admin?.overallIncome || 0
       },
       stripe: {
-        stripeAccountId: "", // Default or predefined value
-        addFees: true, // Default or predefined value
-      },
+        stripeAccountId: stripe?.stripeAccountId || "",
+        addFees: stripe?.addFees || false
+      }
     };
 
+    // Create a new restaurant instance and save it to the database
     const newRestaurant = new Restaurant(restaurantDetails);
     await newRestaurant.save();
 
+    // Send success response
     res.status(201).json({
       message: "New restaurant added successfully",
       restaurant: newRestaurant,
@@ -70,17 +62,13 @@ exports.createRestaurant = async (req, res, next) => {
   } catch (error) {
     console.error("Failed to add new restaurant:", error);
     if (error.code === 11000) {
-      res
-        .status(400)
-        .json({ message: "A restaurant with the same name already exists." });
+      res.status(400).json({ message: "A restaurant with the same name already exists." });
     } else {
-      res.status(500).json({
-        message: "Failed to add new restaurant.",
-        error: error.message,
-      });
+      res.status(500).json({ message: "Failed to add new restaurant.", error: error.message });
     }
   }
 };
+
 
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;

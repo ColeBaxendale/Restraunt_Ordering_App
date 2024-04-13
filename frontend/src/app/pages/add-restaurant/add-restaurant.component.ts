@@ -1,17 +1,14 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RestaurantService } from '../../services/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import {
-  RestaurantUpdateDetails,
   RestaurantResponse,
-  RestaurantUpdateAdminStripe,
   Restaurant,
 } from '../../../../types';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgZone } from '@angular/core';
-import { response } from 'express';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { SessionService } from '../../services/session.service';
 
 
 @Component({
@@ -22,18 +19,14 @@ import { Router } from '@angular/router';
   styleUrl: './add-restaurant.component.css',
 })
 export class AddRestaurantComponent {
-cancel() {
-throw new Error('Method not implemented.');
-}
-logout() {
-throw new Error('Method not implemented.');
-}
+
   currentStep: number = 1;
   id: string | undefined;
   errorMsg = '';
   name: string = "";
   restaurantDetails: Restaurant = {
     details: {
+      name: '',
       logo: '',
       description: '',
       phone: '',
@@ -53,7 +46,6 @@ throw new Error('Method not implemented.');
         sunday: { isOpen: false, open: '', close: '' },
       },
       ordersEnabled: false,
-      name: '',
       owners: [],
       menuSections: []
     },
@@ -61,7 +53,7 @@ throw new Error('Method not implemented.');
     admin:{
       isActive: false,
       fixedRate: 0.02,
-      overallIncome: 0
+      overallIncome: 0.01
     },
 
     stripe: {
@@ -74,10 +66,8 @@ throw new Error('Method not implemented.');
 
   constructor(
     private restaurantService: RestaurantService,
-    private snackBar: MatSnackBar,
-    private zone: NgZone,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef,
+    private sessionService: SessionService
   ) {}
   
   submitForm() {
@@ -150,7 +140,19 @@ throw new Error('Method not implemented.');
         return;
     }
 
-    
+    this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
+      next: (response: RestaurantResponse) => {
+        console.log('Successfully created restaurant' + response.message);
+        this.router.navigate(['/admin']);
+
+      
+      },   
+      error: (error) => {
+        console.error('Login failed', error);
+        this.errorMsg = error.error.message;
+      },
+    })
+
     
 
 
@@ -251,4 +253,22 @@ throw new Error('Method not implemented.');
       }
     });
   }
+
+
+  cancel() {
+    this.router.navigate(['/admin']);
+  }
+  
+  
+  logout(): void {
+    this.sessionService
+      .logout()
+      .pipe(finalize(() => this.router.navigate(['/login'])))
+      .subscribe({
+        next: () => console.log('Logged out successfully'),
+        error: (error: any) => console.error('Logout failed:', error),
+      });
+  }
+
+
 }
