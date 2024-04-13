@@ -9,7 +9,7 @@
         <h3>{{ restaurant.details.name }}</h3>
         <h3><span *ngIf="restaurant.admin.isActive; else notLive">Live</span><ng-template #notLive>Not Live</ng-template></h3>
 
-        <h3>Overall Income: {{ restaurant.admin.overallIncome }}</h3>
+        <h3>Overall Income: {{ restaurant.admin.overallIncome - 0.01 }}</h3>
         <p>{{restaurant._id}}</p>
       </div>
     </div>

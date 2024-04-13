@@ -53,7 +53,7 @@ const RestaurantDetails = new mongoose.Schema({
 
 const AdminDetails = new mongoose.Schema({
   isActive: { type: Boolean, default: false},
-  overallIncome: { type: Number, default: 0 },
+  overallIncome: { type: Number, default: 0.02 },
   fixedRate: { type: Number, default: 0.02 },
 
 });

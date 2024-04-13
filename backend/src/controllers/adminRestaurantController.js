@@ -51,7 +51,7 @@ exports.createRestaurant = async (req, res, next) => {
       },
       admin: {
         isActive: false, // Default or predefined value
-        overallIncome: 0, // Default or predefined value
+        overallIncome: 0.01, // Default or predefined value
         fixedRate: 0.02, // Default or predefined value
       },
       stripe: {
