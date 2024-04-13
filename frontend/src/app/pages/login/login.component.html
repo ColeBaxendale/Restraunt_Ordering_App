@@ -7,7 +7,11 @@
                 <input type="email" class="formInput" [(ngModel)]="user.email" name="email" placeholder = "EMAIL" required>
                 <input type="password" class="formInput" [(ngModel)]="user.password" name="password" placeholder="PASSWORD" required>
             </form>
+            <div *ngIf="errorMsg != ''">
+                <p>{{ errorMsg }}</p>
+              </div>
             <button type="submit" (click)="onSubmit()" class="formInputLogin">LOGIN</button>
+
             <a class="forgotPassword" href="">FORGOT PASSWORD?</a>
         </div>
     </div>

@@ -3,15 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { SessionService } from '../../services/session.service';
 import { response } from 'express';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterOutlet],
+  imports: [NgIf, CommonModule, FormsModule, RouterOutlet],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  errorMsg = '';
   user = {
     email: '',
     password: '',
@@ -28,11 +30,14 @@ export class LoginComponent {
         else if (role === 'owner') this.router.navigate(['/owner']);
         else {
           console.error('Unexpected user role:', role);
+          this.errorMsg = 'Unexpected user role:' + role;
+
           this.router.navigate(['/']);
         }
       },
       error: (error) => {
         console.error('Login failed', error);
+        this.errorMsg = error.error.message;
         // Handle login error (show error message to user, etc.)
       },
     });
