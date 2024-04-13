@@ -68,6 +68,7 @@
   cursor: pointer;
   border: none;
   border:none;
+
 }
 
 .container .bottomContainer{
@@ -90,6 +91,8 @@
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 2.3125rem;
+  color: var(--lightTan);
+
 }
 
 .container .bottomContainer .bottomLeftContainer .inputContainer h1{
@@ -185,6 +188,8 @@
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 3.5rem;
+  color: var(--lightTan);
+
 }
 
 
@@ -198,6 +203,8 @@
   height: 2.5rem;
   width: 2.5rem;
   margin-left: 3rem;
+  color: var(--lightTan);
+
 }
 
 .container .bottomContainer .bottomMiddleContainer .inputContainer .formInputTime{
@@ -205,6 +212,8 @@
   height: 2.5rem;
   font-size: 1.2rem;
   margin-left: 3rem;
+  color: var(--lightTan);
+
 }
 
 .container .bottomContainer .bottomRightContainer{
@@ -233,6 +242,7 @@
 .container .bottomContainer .bottomRightContainer .linkLike{
   margin-left: 3rem;
   margin-bottom: 1rem;
+  color: var(--lightTan);
 
 
   
@@ -243,6 +253,7 @@
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 2.235rem;
+  color: var(--lightTan);
   
 }
 
@@ -271,4 +282,6 @@
   height: 2.5rem;
   width: 2.5rem;
   margin-left: 3rem;
+  color: var(--lightTan);
+
 }
