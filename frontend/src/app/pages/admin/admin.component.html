@@ -1,16 +1,32 @@
 <div class="container">
   <div class="leftContainer">
-    <input class="searchbar" type="text" placeholder="SEARCH FOR A RESTAURANT" (input)="searchRestaurants($any($event.target).value)">
+    <div class="searchBarContainer">
+      <input class="searchbar" type="text" placeholder="SEARCH FOR A RESTAURANT" (input)="searchRestaurants($any($event.target).value)">
+
+    </div>
     <div class="restaurantContainer">
       <div class="restaurantItem" *ngFor="let restaurant of restaurants">
         <h3>{{ restaurant.details.name }}</h3>
-        <p>Is active? {{ restaurant.admin.isActive }}</p>
-        <p>Overall Income: {{ restaurant.admin.overallIncome }}</p>
+        <h3><span *ngIf="restaurant.admin.isActive; else notLive">Live</span><ng-template #notLive>Not Live</ng-template></h3>
+
+        <h3>Overall Income: {{ restaurant.admin.overallIncome }}</h3>
+        <p>{{restaurant._id}}</p>
       </div>
     </div>
   </div>
   <div class="rightContainer">
+    <div class="buttonsContainer">
+      <button class="buttonClass" (click)="addRestaurant()" >ADD RESTAURANT</button>
+      <button class="buttonClass" (click)="ownerDashboard()"> OWNERS DASHBOARD</button>
+      <button class="buttonClass" (click)="logout()" >LOGOUT</button>
+    </div>
+    <h2>TOTAL LIVE RESTAURANTS: {{totalLiveRestaurants}}</h2>
+    <h2>TOTAL CASH MADE: $ {{totalAmountMade}}</h2>
 
+    <div class="branding">
+      <h1>ORDER<br>FEAST</h1>
+      <h2>SIMPLIFY ORDERING.<br>AMPLIFY YOUR SUCCESS.</h2>
+  </div>
   </div>
 
 
