@@ -33,8 +33,8 @@ export class RestaurantService {
     return this.http.put<RestaurantResponse>(`${this.baseUrl}/${id}`, restaurant,{withCredentials: true });
   }
 
-  deleteRestaurant(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`,{withCredentials: true });
+  deleteRestaurant(id: string): Observable<RestaurantResponse> {
+    return this.http.delete<RestaurantResponse>(`${this.baseUrl}/${id}`,{withCredentials: true });
   }
 
   getAllRestaurants(): Observable<Restaurant[]> {

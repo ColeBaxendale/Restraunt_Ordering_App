@@ -233,4 +233,18 @@ export class RestaurantComponent {
       });
   }
   
+
+  delete(): void {
+    this.restaurantService.deleteRestaurant(this.restaurantId).subscribe({
+      next: (response: RestaurantResponse) => {
+        console.log('Successfully deleted restaurant:', response.message);
+        this.router.navigate(['/admin']);
+      },
+      error: (error) => {
+        console.error('Delete failed', error);
+        this.errorMsg = error.error.message;
+      }
+    });
+  }
+  
 }

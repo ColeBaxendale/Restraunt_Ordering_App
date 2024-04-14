@@ -2,7 +2,10 @@
     <div class="headerContainer">
       <div class="leftHeaderContainer">
         <div class="leftHeaderContainerStack">
-          <h1>{{restaurant.details.name}}</h1>
+            <div class="leftHeaderRowContainer">
+                <h1>{{restaurant.details.name}}</h1>
+                <a (click)="delete()">DELETE</a>
+            </div>
           <h2>{{restaurant._id}}</h2>
           <div *ngIf="errorMsg != ''">
             <p>{{ errorMsg }}</p>
