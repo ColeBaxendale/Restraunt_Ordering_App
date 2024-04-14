@@ -32,15 +32,16 @@
   .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack .leftHeaderRowContainer{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
   }
 
-  .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack .leftHeaderRowContainer a{
-    font-size: 1.75rem;
+  .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack .leftHeaderRowContainer .material-icons{
+    font-size: 4rem;
     color:red;
-    font-family: 'JetBrainsMono';
-    font-weight: 100;
     margin-top: 1rem;
-    margin-left: 6rem;
+    margin-left: 4rem;
+    cursor: pointer;
   }
   .container .headerContainer .leftHeaderContainer .leftHeaderContainerStack p{
     margin-left: 5.375rem;
@@ -48,13 +49,13 @@
     color:red;
     font-family: 'JetBrainsMono';
     font-weight: 100;
-  
+    margin-bottom: .5rem;
     
     
   }
   
   .container .headerContainer .leftHeaderContainer h1{
-    margin-left: 5.375rem;
+    margin-left: 2rem;
     font-family: 'JetBrainsMono';
     font-size: 4.0625rem;
     color: var(--lightTan);
@@ -65,6 +66,8 @@
     font-family: 'JetBrainsMono';
     font-size: 1.25rem;
     color: var(--lightTan);
+    margin-bottom: .5rem;
+
   }
   .container .headerContainer .rightHeaderContainer{
     width: 48.49vw;
