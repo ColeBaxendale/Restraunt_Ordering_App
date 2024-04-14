@@ -1,0 +1,69 @@
+
+
+.container {
+    width: 600px;
+    height: 600px;
+    background-color: var(--darkestBlue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styles scoped to YourDialogComponent */
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+h1{
+    margin-top: 1rem;
+    font-family: 'JetBrainsMono';
+    font-size: 4.0625rem;
+    color: var(--lightTan);
+    margin-bottom: 2.3125rem;
+
+}
+.inputContainer{
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-end;
+    
+}
+h2{
+    margin-top: 1rem;
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    color: var(--lightTan);
+}
+
+.formInput{
+    width: 21.9375rem;
+    height: 4.1875rem;
+    background-color: var(--lightTan);
+    border: none;
+    border-radius: 6.25rem;
+    color: var(--darkestBlue);
+    font-family: 'JetBrainsMono';
+    font-size: 1.75rem;
+    text-align: center;
+    margin-left: 3.5625rem;
+    margin-bottom: 2.3125rem;
+
+    
+}
+.button{
+    border-radius: 6.25rem;
+    width: 12.125rem;
+    height: 4.875rem;
+    background-color: var(--darkerBlue);
+    font-family: 'JetBrainsMono';
+    font-size: 1.5rem;
+    color: var(--darkestBlue);
+    cursor: pointer;
+    border: none;
+    margin: 2rem;    
+}
+
+

@@ -11,7 +11,14 @@ export interface User {
   password?: string; // Optional in frontend models to avoid exposing sensitive data
   name: string;
   role: UserRole;
-  restaurants: Restaurant[] | string[]; // Array of restaurant documents or just their IDs
+  restaurant: Restaurant; // Array of restaurant documents or just their IDs
+}
+export interface UserAdd {
+  _id?: string; // Optional since it's assigned by MongoDB when a document is created
+  email: string;
+  password?: string; // Optional in frontend models to avoid exposing sensitive data
+  name: string;
+  role: UserRole;
 }
 
 export interface RestaurantLocation {
@@ -45,7 +52,7 @@ export interface RestaurantDetails {
   phone: string;
   location: RestaurantLocation;
   operatingHours: WeeklyOperatingHours;
-  owners: User[]; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
+  owner?: User; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
   menuSections: string[]; // Assuming these are MenuSection IDs. Adjust as necessary
   ordersEnabled: boolean;
 }

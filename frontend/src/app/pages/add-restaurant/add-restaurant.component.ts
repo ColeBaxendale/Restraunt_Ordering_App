@@ -5,10 +5,13 @@ import { FormsModule } from '@angular/forms';
 import {
   RestaurantResponse,
   Restaurant,
+  UserRole,
 } from '../../../../types';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { SessionService } from '../../services/session.service';
+import { AdminAddDialogComponent } from '../../components/admin-add-dialog/admin-add-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -46,7 +49,7 @@ export class AddRestaurantComponent {
         sunday: { isOpen: false, open: '', close: '' },
       },
       ordersEnabled: false,
-      owners: [],
+      owner: undefined,
       menuSections: []
     },
 
@@ -67,7 +70,8 @@ export class AddRestaurantComponent {
   constructor(
     private restaurantService: RestaurantService,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private dialog: MatDialog
   ) {}
   
   submitForm() {
@@ -263,5 +267,20 @@ export class AddRestaurantComponent {
       });
   }
 
+
+  openAddAdminDialog(): void {
+    const dialogRef = this.dialog.open(AdminAddDialogComponent, {
+      width: '600px', // Set the width
+      height: '600px', // Set the height
+      data: { /* data passed to the dialog */ }
+    });
+  
+    dialogRef.afterClosed().subscribe(newAdmin => {
+      if (newAdmin) {
+        this.restaurantDetails.details.owner = newAdmin;
+        // Optionally, update backend or state management if required
+      }
+    });
+  }
 
 }

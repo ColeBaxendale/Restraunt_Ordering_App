@@ -36,7 +36,7 @@ exports.createRestaurant = async (req, res, next) => {
           // Preset defaults for other days if needed
         },
         ordersEnabled: details.ordersEnabled || false,
-        owners: details.owners || [],
+        owner: details.owner,
         menuSections: details.menuSections || []
       },
       admin: {
