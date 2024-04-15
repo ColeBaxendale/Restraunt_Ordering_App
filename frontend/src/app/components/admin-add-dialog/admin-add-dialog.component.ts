@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  UserAdd, UserRole } from '../../../../types';
+import {  User, UserRole } from '../../../../types';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -18,9 +18,10 @@ throw new Error('Method not implemented.');
 submitForm() {
 throw new Error('Method not implemented.');
 }
-  user: UserAdd = {
+  user: User = {
     email: '',
     name: '',
     role: UserRole.Owner,
+    restaurant: '',
   }
 }

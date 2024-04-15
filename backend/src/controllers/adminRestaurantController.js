@@ -17,6 +17,11 @@ exports.createRestaurant = async (req, res, next) => {
       return res.status(400).json({ message: "A restaurant with the same name already exists." });
     }
 
+    let ownerId = null;
+    if (details.owner && details.owner.trim() !== '') {
+      ownerId = details.owner; // Only set if it's not an empty string
+    }
+
     // Constructing the restaurant object with structured validation and defaulting
     const restaurantDetails = {
       details: {
@@ -36,7 +41,7 @@ exports.createRestaurant = async (req, res, next) => {
           // Preset defaults for other days if needed
         },
         ordersEnabled: details.ordersEnabled || false,
-        owner: details.owner,
+        owner: ownerId,
         menuSections: details.menuSections || []
       },
       admin: {

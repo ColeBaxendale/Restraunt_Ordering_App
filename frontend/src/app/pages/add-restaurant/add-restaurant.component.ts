@@ -12,6 +12,7 @@ import { finalize } from 'rxjs';
 import { SessionService } from '../../services/session.service';
 import { AdminAddDialogComponent } from '../../components/admin-add-dialog/admin-add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { EditAdminDialogComponent } from '../../components/edit-admin-dialog/edit-admin-dialog.component';
 
 
 @Component({
@@ -269,18 +270,36 @@ export class AddRestaurantComponent {
 
 
   openAddAdminDialog(): void {
-    const dialogRef = this.dialog.open(AdminAddDialogComponent, {
-      width: '600px', // Set the width
-      height: '600px', // Set the height
-      data: { /* data passed to the dialog */ }
-    });
-  
-    dialogRef.afterClosed().subscribe(newAdmin => {
-      if (newAdmin) {
-        this.restaurantDetails.details.owner = newAdmin;
-        // Optionally, update backend or state management if required
-      }
-    });
+
+    if(this.restaurantDetails.details.owner != undefined){
+      const dialogRef = this.dialog.open(EditAdminDialogComponent, {
+        width: '600px', // Set the width
+        height: '600px', // Set the height
+        data: { /* data passed to the dialog */ }
+      });
+    
+      dialogRef.afterClosed().subscribe(newAdmin => {
+        if (newAdmin) {
+          this.restaurantDetails.details.owner = newAdmin;
+          // Optionally, update backend or state management if required
+        }
+      });
+    }
+    else{
+      const dialogRef = this.dialog.open(AdminAddDialogComponent, {
+        width: '600px', // Set the width
+        height: '600px', // Set the height
+        data: { /* data passed to the dialog */ }
+      });
+    
+      dialogRef.afterClosed().subscribe(newAdmin => {
+        if (newAdmin) {
+          this.restaurantDetails.details.owner = newAdmin;
+          // Optionally, update backend or state management if required
+        }
+      });
+    }
+
   }
 
 }

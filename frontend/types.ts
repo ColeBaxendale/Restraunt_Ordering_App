@@ -11,16 +11,8 @@ export interface User {
   password?: string; // Optional in frontend models to avoid exposing sensitive data
   name: string;
   role: UserRole;
-  restaurant: Restaurant; // Array of restaurant documents or just their IDs
+  restaurant: Restaurant["_id"]; // Array of restaurant documents or just their IDs
 }
-export interface UserAdd {
-  _id?: string; // Optional since it's assigned by MongoDB when a document is created
-  email: string;
-  password?: string; // Optional in frontend models to avoid exposing sensitive data
-  name: string;
-  role: UserRole;
-}
-
 export interface RestaurantLocation {
   address?: string;
   city?: string;
@@ -52,7 +44,7 @@ export interface RestaurantDetails {
   phone: string;
   location: RestaurantLocation;
   operatingHours: WeeklyOperatingHours;
-  owner?: User; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
+  owner: User["_id"]; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
   menuSections: string[]; // Assuming these are MenuSection IDs. Adjust as necessary
   ordersEnabled: boolean;
 }
@@ -80,27 +72,4 @@ export interface RestaurantResponse {
   restaurant: Restaurant;
 }
 
-
-export interface RestaurantUpdateDetails {
-  details: {
-    logo: string;
-    description: string;
-    phone: string;
-    location: RestaurantLocation;
-    operatingHours: WeeklyOperatingHours;
-    ordersEnabled: boolean;
-  };
-}
-
-
-export interface RestaurantUpdateAdminStripe {
-  admin: {
-    isActive: boolean;
-    fixedRate: number;
-  };
-  stripe: {
-    stripeAccountId: string;
-    addFees: boolean;
-  }
-}
 
