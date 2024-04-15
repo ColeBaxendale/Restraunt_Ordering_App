@@ -292,12 +292,11 @@
     </div>
 
     <div class="bottomRightContainer">
-      <h1>ADMINS:</h1>
-      <div class="inputContainerStack">
-        <a for="fileInput" class="linkLike" (click)="openAddAdminDialog()">ADD ADMINS</a>
-        <a for="fileInput" class="linkLike">SHOW ADMINS</a>
-      </div>
       <h1>BACKEND:</h1>
+      <div class="inputContainer">
+        <a for="fileInput" class="linkLike" (click)="openAddAdminDialog()">SHOW / ADD ADMINS</a>
+        </div>
+
       <div class="inputContainer">
         <h2>FIXED RATE:</h2>
         <input
@@ -307,6 +306,7 @@
           name="fixedRate"
         />
         </div>
+        
 
         <div class="inputContainer">
           <h2>IS ACTIVE?</h2>
