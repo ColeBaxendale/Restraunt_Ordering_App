@@ -50,7 +50,7 @@ export class AddRestaurantComponent {
         sunday: { isOpen: false, open: '', close: '' },
       },
       ordersEnabled: false,
-      owner: undefined,
+      owner: '',
       menuSections: []
     },
 
@@ -271,7 +271,7 @@ export class AddRestaurantComponent {
 
   openAddAdminDialog(): void {
 
-    if(this.restaurantDetails.details.owner != undefined){
+    if(this.restaurantDetails.details.owner != ''){
       const dialogRef = this.dialog.open(EditAdminDialogComponent, {
         width: '600px', // Set the width
         height: '600px', // Set the height

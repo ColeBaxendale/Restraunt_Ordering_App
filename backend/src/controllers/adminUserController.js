@@ -1,35 +1,59 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-exports.createUser = async (req, res) => {
-    try {
-      const { email, name } = req.body;
-      console.log(email, name);
-      const emailLower = email.toLowerCase();
-      console.log(emailLower);
-      // Hash password
-      const password = 'Welcome1'
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
-      let restaurants = [];
-  
-      // Create a new user instance and save it to the database
-      const newUser = await User.create({
-        email: emailLower,
-        password: hashedPassword,
-        name,
-        role: 'owner',
-        restaurants // This will be an empty array for 'owner' if not provided
-      });
-  
-      res.status(201).json({
-        message: 'User created successfully',
-        user: newUser,
-      });
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to create user', error: error.message });
+exports.createUser = async (req, res, next) => {
+  try {
+    // Extracting all properties under 'details', and 'admin' and 'stripe' separately
+    const { email, password, name, restaurant } = req.body;
+    if (!email || typeof email !== 'string' || email.trim().length === 0) {
+      return res.status(400).json({ message: "Email is required and must be a string." });
     }
-  };
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+        return res.status(400).json({ message: "Name is required and must be a string." });
+      }
+
+    if (!password) {
+        return res.status(400).json({ message: "Password is required and must be a string." });
+      }
+
+    const existingUser = await User.findOne({ 'email': email }).exec();
+
+    if (existingUser) {
+      return res.status(400).json({ message: "A User with the same email already exists." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    let restaurantId = null;
+    if (restaurant && restaurant.trim() !== "") {
+        restaurantId = restaurant 
+    }
+
+    // Constructing the restaurant object with structured validation and defaulting
+    const user = {
+      email,
+      password: hashedPassword,
+      role: 'owner',
+      name,
+      restaurant: restaurantId
+    };
+
+    // Create a new restaurant instance and save it to the database
+    const newUser = new User(user);
+    await newUser.save();
+
+    // Send success response
+    res.status(201).json({
+      message: "New User added successfully",
+      user: newUser,
+    });
+  } catch (error) {
+    console.error("Failed to add new User:", error);
+    if (error.code === 11000) {
+      res.status(400).json({ message: "A User with the same email already exists." });
+    } else {
+      res.status(500).json({ message: "Failed to add new User.", error: error.message });
+    }
+  }
+};
 
   
   exports.getAllUsers = async (req, res) => {
