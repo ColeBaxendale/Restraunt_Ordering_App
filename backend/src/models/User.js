@@ -11,20 +11,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
   role: {
     type: String,
     enum: ['admin', 'owner'],
     required: true,
   },
-  restaurant: { 
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Restaurant',
-    required: function() { return this.role === 'owner'; }
-  }
 });
 
 module.exports = mongoose.model('User', userSchema);

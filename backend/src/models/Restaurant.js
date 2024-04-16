@@ -35,18 +35,9 @@ const RestaurantDetails = new mongoose.Schema({
   phone: {type: String, default: ''},
   location: RestaurantLocation,
   operatingHours: WeeklyOperatingHoursSchema,
-  menuSections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuSection' }], 
   ordersEnabled: { type: Boolean, default: false },
-
-  owner: { 
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: function() { return this.role === 'owner'; }
-  },
-  menuSections: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'MenuSection' 
-  }],
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: function() { return this.role === 'owner'; }},
+  menuSections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MenuSection' }],
   ordersEnabled: { type: Boolean, default: false},
 });
 
