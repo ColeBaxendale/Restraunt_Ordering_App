@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 exports.createUser = async (req, res, next) => {
   try {
     // Extracting all properties under 'details', and 'admin' and 'stripe' separately
-    const { email, password, name, restaurant } = req.body;
+    const { email, password } = req.body;
     if (!email || typeof email !== 'string' || email.trim().length === 0) {
       return res.status(400).json({ message: "Email is required and must be a string." });
     }
