@@ -29,6 +29,7 @@ exports.createUser = async (req, res, next) => {
     const userInfo = {
       email,
       password: hashedPassword,
+      role: 'owner'
     };
 
     const newUser = new User(userInfo);
@@ -43,9 +44,11 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
+
+
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({'role': 'owner'});
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -58,6 +61,10 @@ exports.getUserById = async (req, res) => {
     if (user == null) {
       return res.status(404).json({ message: "User not found" });
     }
+    if(user.role == 'admin'){
+      return res.status(400).json({message: 'Can not get an admin account.'})
+    }
+
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
