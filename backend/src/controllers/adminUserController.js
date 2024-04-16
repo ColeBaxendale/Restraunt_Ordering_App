@@ -73,46 +73,75 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const userId = req.params.id;
-    const updateData = req.body;
+    const id = req.params.id;
+    const updateData = {...req.body};
 
-    // If updating password, hash the new password
+    // Fetch the current user to check their role
+    const currentUser = await User.findById(id);
+    if (!currentUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Prevent updating if the user is an admin
+    if (currentUser.role === 'admin') {
+      return res.status(400).json({ message: "Cannot update an admin account." });
+    }
+
+    // Hash the new password if it's being updated
     if (updateData.password) {
       updateData.password = await bcrypt.hash(updateData.password, 10);
     }
 
-    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
-      new: true,
-    });
+    // Update user details except the role to 'admin'
+    if (updateData.role && updateData.role === 'admin') {
+      return res.status(400).json({ message: "Role change to admin is not allowed." });
+    }
 
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found after update attempt." });
     }
 
     res.status(200).json({
       message: "User updated successfully",
-      user: updatedUser,
+      user: updatedUser
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to update user", error: error.message });
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({message: "Invalid user ID format"});
+    }
+    res.status(500).json({ message: "Failed to update user", error: error.message });
   }
 };
+
 
 exports.deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const deletedUser = await User.findByIdAndDelete(userId);
 
-    if (!deletedUser) {
+    // Fetch the user to check for existence and role
+    const user = await User.findById(userId);
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    // Prevent deletion if the user is an admin
+    if (user.role === 'admin') {
+      return res.status(400).json({ message: "Cannot delete an admin account." });
+    }
+
+    // Perform the deletion
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" }); // This might be redundant if user was found earlier
     }
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to delete user", error: error.message });
+    if (error.kind === 'ObjectId') {
+      return res.status(400).json({message: "Invalid user ID format"});
+    }
+    res.status(500).json({ message: "Failed to delete user", error: error.message });
   }
 };
+
