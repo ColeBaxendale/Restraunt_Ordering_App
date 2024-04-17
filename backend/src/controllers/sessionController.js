@@ -57,7 +57,6 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
     role = user.role;
     res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true }); 
-    console.log("success login");
     res.send({role});
 }
 
