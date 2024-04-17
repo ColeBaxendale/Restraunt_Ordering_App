@@ -276,7 +276,7 @@ export class AddRestaurantComponent {
       const dialogRef = this.dialog.open(EditAdminDialogComponent, {
         width: '600px', // Set the width
         height: '600px', // Set the height
-        data: { /* data passed to the dialog */ }
+        data: { owner: this.restaurantDetails.details.owner }
       });
     
       dialogRef.afterClosed().subscribe(newAdmin => {
