@@ -67,7 +67,9 @@ export interface Restaurant {
 
 export interface RestaurantResponse {
   message: string;
-  restaurant: Restaurant;
+  restaurant?: Restaurant;
+  error?: string; 
+
 }
 
 export interface UserResponse {
