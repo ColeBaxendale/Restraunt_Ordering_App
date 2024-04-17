@@ -34,10 +34,10 @@ export class AdminAddDialogComponent {
       next: (response: UserResponse) => {
         console.log('Successfully created user:', response.message);
         // Assuming response.user holds the created user data
-        console.log(response.user);
+        console.log(response.userId);
         
-        if (response.user) {
-          this.dialogRef.close(response.user);  // Pass the created user back
+        if (response.userId) {
+          this.dialogRef.close(response.userId);  // Pass the created user back
         } else {
           this.dialogRef.close(); // Close without data if user is not in the response
         }

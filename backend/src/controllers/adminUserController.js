@@ -29,14 +29,21 @@ exports.createUser = async (req, res, next) => {
     const userInfo = {
       email,
       password: hashedPassword,
-      role: 'owner'
+      role: "owner",
     };
 
     const newUser = new User(userInfo);
     await newUser.save();
+
+    // Fetch the user without the password and role fields
+    const userToSend = await User.findById(newUser._id).select(
+      "-password -role"
+    );
+
     res.status(201).json({
       message: "New User added successfully",
-      user: newUser,
+      userId: userToSend._id,
+      user: userToSend,
     });
   } catch (error) {
     res
@@ -45,27 +52,26 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
-
-
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({'role': 'owner'});
+    // Fetch all users with the role 'owner' excluding 'password' and 'role' fields
+    const users = await User.find({ role: "owner" }).select('-password -role');
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select('-password -role');
     if (user == null) {
       return res.status(404).json({ message: "User not found" });
     }
-    if(user.role == 'admin'){
-      return res.status(400).json({message: 'Can not get an admin account.'})
+    if (user.role == "admin") {
+      return res.status(400).json({ message: "Can not get an admin account." });
     }
-
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -75,7 +81,7 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const updateData = {...req.body};
+    const updateData = { ...req.body };
 
     // Fetch the current user to check their role
     const currentUser = await User.findById(id);
@@ -84,8 +90,10 @@ exports.updateUser = async (req, res) => {
     }
 
     // Prevent updating if the user is an admin
-    if (currentUser.role === 'admin') {
-      return res.status(400).json({ message: "Cannot update an admin account." });
+    if (currentUser.role === "admin") {
+      return res
+        .status(400)
+        .json({ message: "Cannot update an admin account." });
     }
 
     // Hash the new password if it's being updated
@@ -94,27 +102,35 @@ exports.updateUser = async (req, res) => {
     }
 
     // Update user details except the role to 'admin'
-    if (updateData.role && updateData.role === 'admin') {
-      return res.status(400).json({ message: "Role change to admin is not allowed." });
+    if (updateData.role && updateData.role === "admin") {
+      return res
+        .status(400)
+        .json({ message: "Role change to admin is not allowed." });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-password -role');;
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found after update attempt." });
+      return res
+        .status(404)
+        .json({ message: "User not found after update attempt." });
     }
 
     res.status(200).json({
       message: "User updated successfully",
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(404).json({message: "Invalid user ID format"});
+    if (error.kind === "ObjectId") {
+      return res.status(404).json({ message: "Invalid user ID format" });
     }
-    res.status(500).json({ message: "Failed to update user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to update user", error: error.message });
   }
 };
-
 
 exports.deleteUser = async (req, res) => {
   try {
@@ -127,8 +143,10 @@ exports.deleteUser = async (req, res) => {
     }
 
     // Prevent deletion if the user is an admin
-    if (user.role === 'admin') {
-      return res.status(400).json({ message: "Cannot delete an admin account." });
+    if (user.role === "admin") {
+      return res
+        .status(400)
+        .json({ message: "Cannot delete an admin account." });
     }
 
     // Perform the deletion
@@ -139,10 +157,11 @@ exports.deleteUser = async (req, res) => {
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({message: "Invalid user ID format"});
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid user ID format" });
     }
-    res.status(500).json({ message: "Failed to delete user", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to delete user", error: error.message });
   }
 };
-

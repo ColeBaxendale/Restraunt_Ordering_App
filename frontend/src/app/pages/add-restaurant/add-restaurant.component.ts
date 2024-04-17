@@ -254,6 +254,7 @@ export class AddRestaurantComponent {
 
 
   cancel() {
+    // DELETE THE USER IF THERE
     this.router.navigate(['/admin']);
   }
   
@@ -293,10 +294,10 @@ export class AddRestaurantComponent {
         data: { /* data passed to the dialog */ }
       });
     
-      dialogRef.afterClosed().subscribe(newAdmin => {
-        if (newAdmin) {
-          this.restaurantDetails.details.owner = newAdmin._id;
-          console.log(newAdmin);
+      dialogRef.afterClosed().subscribe(newAdminId => {
+        if (newAdminId) {
+          this.restaurantDetails.details.owner = newAdminId;
+          console.log(newAdminId);
 
         }
       });
