@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import {  User, UserRole } from '../../../../types';
+import { Component, Inject } from '@angular/core';
+import { User, UserResponse, UserRole } from '../../../../types';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { R3SelectorScopeMode } from '@angular/compiler';
 
 @Component({
   selector: 'app-admin-add-dialog',
@@ -9,19 +13,40 @@ import { FormsModule } from '@angular/forms';
   imports: [NgIf, FormsModule, CommonModule],
 
   templateUrl: './admin-add-dialog.component.html',
-  styleUrl: './admin-add-dialog.component.css'
+  styleUrl: './admin-add-dialog.component.css',
 })
 export class AdminAddDialogComponent {
-cancel() {
-throw new Error('Method not implemented.');
-}
-submitForm() {
-throw new Error('Method not implemented.');
-}
+  constructor(
+    public dialogRef: MatDialogRef<AdminAddDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private userService: UserService, private router: Router, ) {}
+  errorMsg = '';
   user: User = {
     email: '',
-    name: '',
-    role: UserRole.Owner,
-    restaurant: '',
+    password: '',
+  };
+
+  cancel() {
+    this.dialogRef.close();
   }
+
+  submitForm() {
+    this.userService.createUser(this.user).subscribe({
+      next: (response: UserResponse) => {
+        console.log('Successfully created user:', response.message);
+        // Assuming response.user holds the created user data
+        console.log(response.user);
+        
+        if (response.user) {
+          this.dialogRef.close(response.user);  // Pass the created user back
+        } else {
+          this.dialogRef.close(); // Close without data if user is not in the response
+        }
+      },   
+      error: (error) => {
+        console.error('Failed to create user:', error);
+        this.errorMsg = error.error ? error.error.message : 'An unknown error occurred';
+      },
+    });
+  }
+  
 }

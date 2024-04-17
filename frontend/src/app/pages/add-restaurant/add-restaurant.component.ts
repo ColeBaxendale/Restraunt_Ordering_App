@@ -281,7 +281,8 @@ export class AddRestaurantComponent {
       dialogRef.afterClosed().subscribe(newAdmin => {
         if (newAdmin) {
           this.restaurantDetails.details.owner = newAdmin;
-          // Optionally, update backend or state management if required
+          console.log(newAdmin);
+
         }
       });
     }
@@ -294,8 +295,9 @@ export class AddRestaurantComponent {
     
       dialogRef.afterClosed().subscribe(newAdmin => {
         if (newAdmin) {
-          this.restaurantDetails.details.owner = newAdmin;
-          // Optionally, update backend or state management if required
+          this.restaurantDetails.details.owner = newAdmin._id;
+          console.log(newAdmin);
+
         }
       });
     }

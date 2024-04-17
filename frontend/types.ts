@@ -9,9 +9,7 @@ export interface User {
   _id?: string; // Optional since it's assigned by MongoDB when a document is created
   email: string;
   password?: string; // Optional in frontend models to avoid exposing sensitive data
-  name: string;
-  role: UserRole;
-  restaurant: Restaurant["_id"]; // Array of restaurant documents or just their IDs
+  role?: UserRole;
 }
 export interface RestaurantLocation {
   address?: string;
@@ -72,4 +70,8 @@ export interface RestaurantResponse {
   restaurant: Restaurant;
 }
 
+export interface UserResponse {
+  message: string;
+  user: User;
+}
 
