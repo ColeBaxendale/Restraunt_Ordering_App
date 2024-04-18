@@ -3,18 +3,12 @@ const bcrypt = require("bcryptjs");
 
 exports.createUser = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     if (!email || typeof email !== "string" || email.trim().length === 0) {
       return res
         .status(400)
         .json({ message: "Email is required and must be a string." });
-    }
-
-    if (!password || typeof password !== "string" || password.trim() === 0) {
-      return res
-        .status(400)
-        .json({ message: "Password is required and must be a string." });
     }
 
     const existingUser = await User.findOne({ email: email }).exec();
@@ -24,7 +18,7 @@ exports.createUser = async (req, res, next) => {
         .json({ message: "A User with the same email already exists." });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash('Welcome1', 10);
 
     const userInfo = {
       email,

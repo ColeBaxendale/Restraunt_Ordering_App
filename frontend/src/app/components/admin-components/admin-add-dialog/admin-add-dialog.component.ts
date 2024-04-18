@@ -23,7 +23,6 @@ export class AdminAddDialogComponent {
   errorMsg = '';
   user: User = {
     email: '',
-    password: '',
   };
 
   cancel() {
@@ -34,7 +33,6 @@ export class AdminAddDialogComponent {
     this.userService.createUser(this.user).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully created user:', response.message);
-
         if (response.userId) {
           this.dialogRef.close(response.userId);
         } else {
