@@ -1,15 +1,15 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RestaurantResponse, Restaurant, UserRole } from '../../../../types';
+import { RestaurantResponse, Restaurant, UserRole } from '../../../../../types';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { AdminAddDialogComponent } from '../../components/admin-add-dialog/admin-add-dialog.component';
+import { AdminAddDialogComponent } from '../../../components/admin-components/admin-add-dialog/admin-add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditAdminDialogComponent } from '../../components/edit-admin-dialog/edit-admin-dialog.component';
-import { RestaurantService } from '../../services/restaurant/requests/restaurant.service';
-import { SessionService } from '../../services/session/session.service';
-import { RestaurantValidatorService } from '../../services/restaurant/validators/restaurant.validator.service';
+import { EditAdminDialogComponent } from '../../../components/admin-components/edit-admin-dialog/edit-admin-dialog.component';
+import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
+import { SessionService } from '../../../services/session/session.service';
+import { RestaurantValidatorService } from '../../../services/restaurant/validators/restaurant.validator.service';
 
 @Component({
   selector: 'app-add-restaurant',

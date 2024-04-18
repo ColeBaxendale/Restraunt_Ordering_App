@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
-import { Restaurant } from '../../../../types';
-import { RestaurantService } from '../../services/restaurant/requests/restaurant.service';
-import { SessionService } from '../../services/session/session.service';
+import { Restaurant } from '../../../../../types';
+import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
+import { SessionService } from '../../../services/session/session.service';
 
 @Component({
   selector: 'app-admin',

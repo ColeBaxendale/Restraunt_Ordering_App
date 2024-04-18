@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { UserService } from '../../services/owner/user.service';
+import { UserService } from '../../../services/owner/user.service';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from 'express';
-import { User } from '../../../../types';
+import { User } from '../../../../../types';
 import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
