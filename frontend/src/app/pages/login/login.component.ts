@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
-import { response } from 'express';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
@@ -38,7 +37,6 @@ export class LoginComponent {
       error: (error) => {
         console.error('Login failed', error);
         this.errorMsg = error.error.message;
-        // Handle login error (show error message to user, etc.)
       },
     });
   }
