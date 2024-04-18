@@ -160,7 +160,6 @@ export class AddRestaurantComponent {
       this.userService.deleteUser(this.restaurantDetails.details.owner).subscribe({
         next: (response: UserResponse) => {
           console.log('Successfully deleted restaurant:', response.message);
-          this.router.navigate(['/admin']);
         },
         error: (error) => {
           console.error('Delete failed', error);
@@ -168,6 +167,8 @@ export class AddRestaurantComponent {
         },
       });
     }
+    this.router.navigate(['/admin']);
+
   }
 
   logout(): void {
