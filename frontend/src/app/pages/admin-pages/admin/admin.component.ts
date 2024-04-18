@@ -40,8 +40,18 @@ export class AdminComponent implements OnInit {
       next: (response: any) => {
         if (response && response.restaurants) {
           this.restaurants = response.restaurants;
-          this.totalLiveRestaurants = this.restaurants.filter(r => r.admin && r.admin.isActive).length;
-          this.totalAmountMade = this.restaurants.reduce((acc, curr) => acc + (curr.admin && curr.admin.overallIncome ? curr.admin.overallIncome : 0) - .01, 0);
+          this.totalLiveRestaurants = this.restaurants.filter(
+            (r) => r.admin && r.admin.isActive
+          ).length;
+          this.totalAmountMade = this.restaurants.reduce(
+            (acc, curr) =>
+              acc +
+              (curr.admin && curr.admin.overallIncome
+                ? curr.admin.overallIncome
+                : 0) -
+              0.01,
+            0
+          );
         } else {
           console.error('Invalid data structure:', response);
         }
@@ -53,8 +63,8 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  restaurantPage(restaurantId: string){
-    this.router.navigate(['/restaurant/'+restaurantId]);
+  restaurantPage(restaurantId: string) {
+    this.router.navigate(['/restaurant/' + restaurantId]);
   }
 
   searchRestaurants(inputElement: HTMLInputElement): void {
