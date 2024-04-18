@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { RestaurantService } from '../../services/restaurant.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Restaurant, RestaurantResponse } from '../../../../types';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../services//session/session.service';
 import { finalize } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RestaurantService } from '../../services/restaurant/requests/restaurant.service';
 
 @Component({
   selector: 'app-restaurant',

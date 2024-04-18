@@ -1,18 +1,19 @@
-import { Component, Inject } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { UserService } from '../../services/owner/user.service';
 import { HttpClient } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from 'express';
 import { User } from '../../../../types';
+import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-admin-show-dialog',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NgFor],
   templateUrl: './admin-show-dialog.component.html',
   styleUrl: './admin-show-dialog.component.css'
 })
-export class AdminShowDialogComponent {
+export class AdminShowDialogComponent implements OnInit{
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
@@ -24,13 +25,13 @@ export class AdminShowDialogComponent {
 
 
   ngOnInit(): void {
-    console.log(this.data.owner.email);
-    console.log(this.data.owner._id);
+    this.loadUser();
 
     
   }
 
   loadUser(): void {
-
+    console.log(this.data.owner.email);
+    console.log(this.data.owner._id);
 }
 }

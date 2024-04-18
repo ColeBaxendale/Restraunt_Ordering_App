@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RestaurantService } from '../../services/restaurant.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
-import { SessionService } from '../../services/session.service';
 import { Restaurant } from '../../../../types';
+import { RestaurantService } from '../../services/restaurant/requests/restaurant.service';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-admin',

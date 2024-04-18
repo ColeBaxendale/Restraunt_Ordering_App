@@ -3,7 +3,7 @@ import { User, UserResponse, UserRole } from '../../../../types';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/owner/user.service';
 import { Router } from '@angular/router';
 import { R3SelectorScopeMode } from '@angular/compiler';
 

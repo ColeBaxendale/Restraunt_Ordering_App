@@ -12,10 +12,10 @@ export interface User {
   role?: UserRole;
 }
 export interface RestaurantLocation {
-  address?: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
 }
 
 export interface OperatingHours {
@@ -43,8 +43,8 @@ export interface RestaurantDetails {
   location: RestaurantLocation;
   operatingHours: WeeklyOperatingHours;
   owner: User["_id"]; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
-  menuSections: string[]; // Assuming these are MenuSection IDs. Adjust as necessary
-  ordersEnabled: boolean;
+  menuSections?: string[]; // Assuming these are MenuSection IDs. Adjust as necessary
+  ordersEnabled?: boolean;
 }
 
 export interface AdminDetails {
@@ -80,3 +80,7 @@ export interface UserResponse {
 }
 
 
+export interface ValidationResponse{
+  isValid: boolean;
+  message?: string;
+}
