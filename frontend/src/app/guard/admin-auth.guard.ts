@@ -1,9 +1,7 @@
 // src/app/admin-auth.guard.ts
 import { CanActivateFn, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthenticationService } from './auth.service';
 
 export const adminAuthGuard: CanActivateFn = (route, state) => {
