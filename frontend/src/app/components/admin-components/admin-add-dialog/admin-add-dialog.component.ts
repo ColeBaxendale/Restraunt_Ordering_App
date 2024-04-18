@@ -34,7 +34,6 @@ export class AdminAddDialogComponent {
     this.userService.createUser(this.user).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully created user:', response.message);
-        console.log(response.userId);
 
         if (response.userId) {
           this.dialogRef.close(response.userId);

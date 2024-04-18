@@ -1,7 +1,7 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RestaurantResponse, Restaurant, UserRole } from '../../../../../types';
+import { RestaurantResponse, Restaurant, UserResponse } from '../../../../../types';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AdminAddDialogComponent } from '../../../components/admin-components/admin-add-dialog/admin-add-dialog.component';
@@ -10,6 +10,7 @@ import { EditAdminDialogComponent } from '../../../components/admin-components/e
 import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
 import { RestaurantValidatorService } from '../../../services/restaurant/validators/restaurant.validator.service';
+import { UserService } from '../../../services/owner/user.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -63,10 +64,13 @@ export class AddRestaurantComponent {
     private router: Router,
     private sessionService: SessionService,
     private dialog: MatDialog,
-    private restaurantValidator: RestaurantValidatorService
+    private restaurantValidator: RestaurantValidatorService,
+    private userService: UserService
   ) {}
 
   submitForm() {
+    console.log(this.restaurantDetails);
+    
     this.resetTimesIfNeeded();
     this.errorMsg = '';
     const validationResult = this.restaurantValidator.isValidRestaurantInfo(
@@ -120,7 +124,8 @@ export class AddRestaurantComponent {
 
       dialogRef.afterClosed().subscribe((newAdmin) => {
         if (newAdmin) {
-          this.restaurantDetails.details.owner = newAdmin._id;
+          this.restaurantDetails.details.owner = newAdmin;
+          console.log("New owner set:", this.restaurantDetails.details.owner);
           console.log(newAdmin);
         }
       });
@@ -147,7 +152,22 @@ export class AddRestaurantComponent {
 
   cancel() {
     // DELETE OWNER IF ALREADY CREATED
-    this.router.navigate(['/admin']);
+    console.log(this.restaurantDetails.details.owner);
+
+    if(this.restaurantDetails.details.owner !== '' && this.restaurantDetails.details.owner !== undefined){
+      console.log('deleteAttempt');
+      
+      this.userService.deleteUser(this.restaurantDetails.details.owner).subscribe({
+        next: (response: UserResponse) => {
+          console.log('Successfully deleted restaurant:', response.message);
+          this.router.navigate(['/admin']);
+        },
+        error: (error) => {
+          console.error('Delete failed', error);
+          this.errorMsg = error.error.message;
+        },
+      });
+    }
   }
 
   logout(): void {
