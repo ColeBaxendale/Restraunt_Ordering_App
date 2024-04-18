@@ -7,7 +7,6 @@
           <p>{{ errorMsg }}</p>
         </div>
       </div>
-
     </div>
     <div class="rightHeaderContainer">
       <button class="buttonClass" (click)="submitForm()">SUBMIT</button>
@@ -115,7 +114,6 @@
           name="mondayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -140,7 +138,6 @@
           name="tuesdayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.tuesday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -169,7 +166,6 @@
             !restaurantDetails.details.operatingHours.wednesday.isOpen
           "
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -196,7 +192,6 @@
           name="thursdayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.thursday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -221,7 +216,6 @@
           name="fridayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.friday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -246,7 +240,6 @@
           name="saturdayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.saturday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -271,7 +264,6 @@
           name="sundayOpen"
           [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
         />
-        <!-- Input for closing time, enabled/disabled based on checkbox -->
         <input
           type="time"
           class="formInputTime"
@@ -288,12 +280,11 @@
           [(ngModel)]="restaurantDetails.details.ordersEnabled"
           name="ordersEnabled"
         />
-        </div>
+      </div>
     </div>
 
     <div class="bottomRightContainer">
       <h1>BACKEND:</h1>
-
 
       <div class="inputContainer">
         <h2>FIXED RATE:</h2>
@@ -303,18 +294,17 @@
           [(ngModel)]="restaurantDetails.admin.fixedRate"
           name="fixedRate"
         />
-        </div>
-        
+      </div>
 
-        <div class="inputContainer">
-          <h2>IS ACTIVE?</h2>
-          <input
-            type="checkbox"
-            class="formInputBox"
-            [(ngModel)]="restaurantDetails.admin.isActive"
-            name="isActive"
-          />
-          </div>
+      <div class="inputContainer">
+        <h2>IS ACTIVE?</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.admin.isActive"
+          name="isActive"
+        />
+      </div>
       <h1>STRIPE:</h1>
       <div class="inputContainer">
         <h2>STRIPE ID:</h2>
@@ -324,20 +314,22 @@
           [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
           name="stripeAccountId"
         />
-        </div>
+      </div>
 
-        <div class="inputContainer">
-          <h2>ADD FEES?</h2>
-          <input
-            type="checkbox"
-            class="formInputBox"
-            [(ngModel)]="restaurantDetails.stripe.addFees"
-            name="addFees"
-          />
-          </div>
-          <div class="inputContainer">
-            <a for="fileInput" class="linkLike" (click)="openAddAdminDialog()">ADMIN ADD / EDIT</a>
-            </div>
+      <div class="inputContainer">
+        <h2>ADD FEES?</h2>
+        <input
+          type="checkbox"
+          class="formInputBox"
+          [(ngModel)]="restaurantDetails.stripe.addFees"
+          name="addFees"
+        />
+      </div>
+      <div class="inputContainer">
+        <a for="fileInput" class="linkLike" (click)="openAddAdminDialog()"
+          >ADMIN ADD / EDIT</a
+        >
+      </div>
     </div>
   </div>
 </div>

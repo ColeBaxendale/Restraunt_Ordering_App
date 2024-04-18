@@ -69,13 +69,15 @@ export class AddRestaurantComponent {
   submitForm() {
     this.resetTimesIfNeeded();
     this.errorMsg = '';
-    const validationResult = this.restaurantValidator.isValidRestaurantInfo(this.restaurantDetails);
+    const validationResult = this.restaurantValidator.isValidRestaurantInfo(
+      this.restaurantDetails
+    );
     if (!validationResult.isValid) {
-      if(validationResult.message){
+      if (validationResult.message) {
         this.errorMsg = validationResult.message;
         return;
-      } else{
-        this.errorMsg = 'An unknown validation error occured.'
+      } else {
+        this.errorMsg = 'An unknown validation error occured.';
       }
     }
 
@@ -90,9 +92,6 @@ export class AddRestaurantComponent {
       },
     });
   }
-
-
-
 
   openAddAdminDialog(): void {
     if (this.restaurantDetails.details.owner != '') {
@@ -160,7 +159,4 @@ export class AddRestaurantComponent {
         error: (error: any) => console.error('Logout failed:', error),
       });
   }
-
 }
-
-
