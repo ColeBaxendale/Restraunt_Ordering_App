@@ -168,7 +168,6 @@ export class AddRestaurantComponent {
       });
     }
     this.router.navigate(['/admin']);
-
   }
 
   logout(): void {
