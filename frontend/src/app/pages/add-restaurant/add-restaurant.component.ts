@@ -19,10 +19,7 @@ import { RestaurantValidatorService } from '../../services/restaurant/validators
   styleUrl: './add-restaurant.component.css',
 })
 export class AddRestaurantComponent {
-  currentStep: number = 1;
-  id: string | undefined;
   errorMsg = '';
-  name: string = '';
   restaurantDetails: Restaurant = {
     details: {
       name: '',
@@ -70,7 +67,6 @@ export class AddRestaurantComponent {
   ) {}
 
   submitForm() {
-    console.log(this.restaurantDetails);
     this.resetTimesIfNeeded();
     this.errorMsg = '';
     const validationResult = this.restaurantValidator.isValidRestaurantInfo(this.restaurantDetails);
