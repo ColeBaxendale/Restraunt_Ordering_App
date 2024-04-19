@@ -162,7 +162,7 @@ export class AddRestaurantComponent {
         .deleteUser(this.restaurantDetails.details.owner)
         .subscribe({
           next: (response: UserResponse) => {
-            console.log('Successfully deleted restaurant:', response.message);
+            console.log(response.message);
           },
           error: (error) => {
             console.error('Delete failed', error);

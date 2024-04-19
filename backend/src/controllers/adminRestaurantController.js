@@ -124,7 +124,7 @@ exports.updateRestaurant = async (req, res) => {
       restaurant.details.nameLowerCase = updates.details.name.toLowerCase();
     }
 
-    if (updates.details && updates.details.owner === '') {
+    if (updates.details && updates.details.owner == undefined) {
       updates.details.owner = null; // Correctly set owner to null if empty string provided
     }
 

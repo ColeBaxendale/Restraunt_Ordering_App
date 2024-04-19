@@ -151,7 +151,7 @@ export class RestaurantComponent implements OnInit {
       dialogRef.afterClosed().subscribe((newOwner) => {
         if (newOwner) {
           console.log('Dialog closed. New owner:');
-          this.restaurant.details.owner = '';
+          this.restaurant.details.owner = undefined;
           console.log(this.restaurant.details.owner);
           
         }
