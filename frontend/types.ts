@@ -5,6 +5,17 @@ export enum UserRole {
   Owner = 'owner',
 }
 
+export interface LoginResponse {
+  message: string;
+  firstLogin: boolean; 
+  user: {
+    role: UserRole;
+    _id: string;
+  };
+}
+
+
+
 export interface User {
   _id?: string; // Optional since it's assigned by MongoDB when a document is created
   email: string;

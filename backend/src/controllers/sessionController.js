@@ -45,28 +45,31 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+    return res.status(401).json({ message: 'Invalid email or password' });
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+    return res.status(401).json({ message: 'Invalid email or password' });
   }
 
-  // Generate a JWT token for the user
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    role = user.role;
-    res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true }); 
-    const isNew = await bcrypt.compare('Welcome1', user.password);
-    if(!isNew){
-      res.send({role});
-    }
-    console.log('RESET PASSWORD');
-    res.send({role});
-    
-    // res.send({role} + 'reset')
+  const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
+  res.cookie('token', token, { httpOnly: true, sameSite: 'strict', secure: true });
 
+  const firstLogin = await bcrypt.compare('Welcome1', user.password);
+
+  const message = firstLogin ? 'First login detected, please change your password.' : 'Login successful';
+
+  res.status(200).json({
+    message,
+    firstLogin,
+    user: {
+      role: user.role,
+      _id: user._id
+    }
+  });
 }
+
 
 exports.authAdmin = (req, res) => {
   if (req.user.role === 'admin') {
