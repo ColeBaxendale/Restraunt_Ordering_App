@@ -9,13 +9,13 @@ import { UserService } from '../../../services/owner/user.service';
   standalone: true,
   imports: [NgIf, FormsModule, CommonModule],
   templateUrl: './owner-add-dialog.component.html',
-  styleUrl: './owner-add-dialog.component.css'
+  styleUrl: './owner-add-dialog.component.css',
 })
 export class OwnerAddDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<OwnerAddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private userService: UserService,
+    private userService: UserService
   ) {}
   errorMsg = '';
   user: User = {
