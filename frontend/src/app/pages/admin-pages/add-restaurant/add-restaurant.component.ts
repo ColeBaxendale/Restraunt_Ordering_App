@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
 import { RestaurantValidatorService } from '../../../services/restaurant/validators/restaurant.validator.service';
-import { UserService } from '../../../services/owner/user.service';
+import { UserService } from '../../../services/owner/requests/user.service';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
 import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
 
@@ -105,7 +105,7 @@ export class AddRestaurantComponent {
     if (this.restaurantDetails.details.owner != '') {
       const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
         width: '600px', // Set the width
-        height: '500px', // Set the height
+        height: '430px', // Set the height
         data: {
           owner: this.restaurantDetails.details.owner,
         },
@@ -119,7 +119,7 @@ export class AddRestaurantComponent {
     } else {
       const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
         width: '600px', // Set the width
-        height: '500px', // Set the height
+        height: '430px', // Set the height
         data: {
           /* data passed to the dialog */
         },

@@ -6,19 +6,29 @@ exports.createRestaurant = async (req, res, next) => {
   try {
     // Extracting all properties under 'details', and 'admin' and 'stripe' separately
     const { details, admin, stripe } = req.body;
-    if (!details.name || typeof details.name !== 'string' || details.name.trim().length === 0) {
-      return res.status(400).json({ message: "Restaurant name is required and must be a string." });
+    if (
+      !details.name ||
+      typeof details.name !== "string" ||
+      details.name.trim().length === 0
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Restaurant name is required and must be a string." });
     }
 
     const nameLowerCase = details.name.toLowerCase();
-    const existingRestaurant = await Restaurant.findOne({ 'details.nameLowerCase': nameLowerCase }).exec();
+    const existingRestaurant = await Restaurant.findOne({
+      "details.nameLowerCase": nameLowerCase,
+    }).exec();
 
     if (existingRestaurant) {
-      return res.status(400).json({ message: "A restaurant with the same name already exists." });
+      return res
+        .status(400)
+        .json({ message: "A restaurant with the same name already exists." });
     }
 
     let ownerId = null;
-    if (details.owner && details.owner.trim() !== '') {
+    if (details.owner && details.owner.trim() !== "") {
       ownerId = details.owner; // Only set if it's not an empty string
     }
 
@@ -37,22 +47,22 @@ exports.createRestaurant = async (req, res, next) => {
           zipCode: details.location?.zipCode || "",
         },
         operatingHours: details.operatingHours || {
-          monday: { isOpen: false, open: '', close: '' },
+          monday: { isOpen: false, open: "", close: "" },
           // Preset defaults for other days if needed
         },
         ordersEnabled: details.ordersEnabled || false,
         owner: ownerId,
-        menuSections: details.menuSections || []
+        menuSections: details.menuSections || [],
       },
       admin: {
         isActive: admin?.isActive || false,
         fixedRate: admin?.fixedRate || 0.02,
-        overallIncome: admin?.overallIncome || 0
+        overallIncome: admin?.overallIncome || 0,
       },
       stripe: {
         stripeAccountId: stripe?.stripeAccountId || "",
-        addFees: stripe?.addFees || false
-      }
+        addFees: stripe?.addFees || false,
+      },
     };
 
     // Create a new restaurant instance and save it to the database
@@ -67,13 +77,19 @@ exports.createRestaurant = async (req, res, next) => {
   } catch (error) {
     console.error("Failed to add new restaurant:", error);
     if (error.code === 11000) {
-      res.status(400).json({ message: "A restaurant with the same name already exists." });
+      res
+        .status(400)
+        .json({ message: "A restaurant with the same name already exists." });
     } else {
-      res.status(500).json({ message: "Failed to add new restaurant.", error: error.message });
+      res
+        .status(500)
+        .json({
+          message: "Failed to add new restaurant.",
+          error: error.message,
+        });
     }
   }
 };
-
 
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;
@@ -84,11 +100,12 @@ exports.getRestaurant = async (req, res, next) => {
     }
     res.status(200).json(restaurant);
   } catch (error) {
-    console.error('Failed to get restaurant:', error);
-    res.status(500).json({ message: "Failed to get restaurant", error: error.toString() });
+    console.error("Failed to get restaurant:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to get restaurant", error: error.toString() });
   }
 };
-
 
 exports.updateRestaurant = async (req, res) => {
   const { id } = req.params;
@@ -107,22 +124,23 @@ exports.updateRestaurant = async (req, res) => {
       restaurant.details.nameLowerCase = updates.details.name.toLowerCase();
     }
 
-    if (updates.details && typeof updates.details === 'object') {
-      Object.keys(updates.details).forEach(key => {
+    if (updates.details && typeof updates.details === "object") {
+      Object.keys(updates.details).forEach((key) => {
         restaurant.details[key] = updates.details[key];
       });
     }
 
     // Similarly, update admin and stripe fields if provided, excluding nameLowerCase
-    if (updates.admin && typeof updates.admin === 'object') {
-      Object.keys(updates.admin).forEach(key => {
-        if (key !== 'nameLowerCase') { // Still ensuring 'nameLowerCase' cannot be directly updated
+    if (updates.admin && typeof updates.admin === "object") {
+      Object.keys(updates.admin).forEach((key) => {
+        if (key !== "nameLowerCase") {
+          // Still ensuring 'nameLowerCase' cannot be directly updated
           restaurant.admin[key] = updates.admin[key];
         }
       });
     }
 
-    if (updates.stripe && typeof updates.stripe === 'object') {
+    if (updates.stripe && typeof updates.stripe === "object") {
       Object.keys(updates.stripe).forEach((key) => {
         restaurant.stripe[key] = updates.stripe[key];
       });
@@ -154,8 +172,13 @@ exports.deleteRestaurant = async (req, res, next) => {
     }
     res.status(200).json({ message: "Restaurant deleted successfully." });
   } catch (error) {
-    console.error('Failed to delete restaurant:', error);
-    res.status(500).json({ message: "Failed to delete restaurant", error: error.toString() });
+    console.error("Failed to delete restaurant:", error);
+    res
+      .status(500)
+      .json({
+        message: "Failed to delete restaurant",
+        error: error.toString(),
+      });
   }
 };
 
