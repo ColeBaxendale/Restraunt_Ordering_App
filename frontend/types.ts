@@ -7,14 +7,12 @@ export enum UserRole {
 
 export interface LoginResponse {
   message: string;
-  firstLogin: boolean; 
+  firstLogin: boolean;
   user: {
     role: UserRole;
     _id: string;
   };
 }
-
-
 
 export interface User {
   _id?: string; // Optional since it's assigned by MongoDB when a document is created
@@ -53,7 +51,7 @@ export interface RestaurantDetails {
   phone: string;
   location: RestaurantLocation;
   operatingHours: WeeklyOperatingHours;
-  owner: User["_id"]; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
+  owner: User['_id']; // Assuming these are Owner IDs. You could use an Owner interface instead if needed
   menuSections?: string[]; // Assuming these are MenuSection IDs. Adjust as necessary
   ordersEnabled?: boolean;
 }
@@ -79,8 +77,7 @@ export interface Restaurant {
 export interface RestaurantResponse {
   message: string;
   restaurant?: Restaurant;
-  error?: string; 
-
+  error?: string;
 }
 
 export interface UserResponse {
@@ -90,8 +87,7 @@ export interface UserResponse {
   error?: string; // Optional error message if something went wrong.
 }
 
-
-export interface ValidationResponse{
+export interface ValidationResponse {
   isValid: boolean;
   message?: string;
 }
