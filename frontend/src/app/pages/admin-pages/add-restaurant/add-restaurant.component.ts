@@ -1,7 +1,11 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RestaurantResponse, Restaurant, UserResponse } from '../../../../../types';
+import {
+  RestaurantResponse,
+  Restaurant,
+  UserResponse,
+} from '../../../../../types';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -68,11 +72,9 @@ export class AddRestaurantComponent {
     private userService: UserService
   ) {}
 
-
-  
   submitForm() {
     console.log(this.restaurantDetails);
-    
+
     this.resetTimesIfNeeded();
     this.errorMsg = '';
     const validationResult = this.restaurantValidator.isValidRestaurantInfo(
@@ -105,8 +107,7 @@ export class AddRestaurantComponent {
         width: '600px', // Set the width
         height: '500px', // Set the height
         data: {
-          owner: this.restaurantDetails.details.owner
-        
+          owner: this.restaurantDetails.details.owner,
         },
       });
 
@@ -127,7 +128,7 @@ export class AddRestaurantComponent {
       dialogRef.afterClosed().subscribe((newOwner) => {
         if (newOwner) {
           this.restaurantDetails.details.owner = newOwner;
-          console.log("New owner set:", this.restaurantDetails.details.owner);
+          console.log('New owner set:', this.restaurantDetails.details.owner);
           console.log(newOwner);
         }
       });
@@ -156,17 +157,21 @@ export class AddRestaurantComponent {
     // DELETE OWNER IF ALREADY CREATED
     console.log(this.restaurantDetails.details.owner);
 
-    if(this.restaurantDetails.details.owner !== '' && this.restaurantDetails.details.owner !== undefined){
-      
-      this.userService.deleteUser(this.restaurantDetails.details.owner).subscribe({
-        next: (response: UserResponse) => {
-          console.log('Successfully deleted restaurant:', response.message);
-        },
-        error: (error) => {
-          console.error('Delete failed', error);
-          this.errorMsg = error.error.message;
-        },
-      });
+    if (
+      this.restaurantDetails.details.owner !== '' &&
+      this.restaurantDetails.details.owner !== undefined
+    ) {
+      this.userService
+        .deleteUser(this.restaurantDetails.details.owner)
+        .subscribe({
+          next: (response: UserResponse) => {
+            console.log('Successfully deleted restaurant:', response.message);
+          },
+          error: (error) => {
+            console.error('Delete failed', error);
+            this.errorMsg = error.error.message;
+          },
+        });
     }
     this.router.navigate(['/admin']);
   }
