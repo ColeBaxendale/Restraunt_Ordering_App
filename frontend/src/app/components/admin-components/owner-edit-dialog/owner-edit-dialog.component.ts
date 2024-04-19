@@ -9,13 +9,13 @@ import { UserService } from '../../../services/owner/user.service';
   standalone: true,
   imports: [NgIf, FormsModule, CommonModule],
   templateUrl: './owner-edit-dialog.component.html',
-  styleUrl: './owner-edit-dialog.component.css'
+  styleUrl: './owner-edit-dialog.component.css',
 })
 export class OwnerEditDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<OwnerEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   errorMsg = '';
@@ -24,10 +24,6 @@ export class OwnerEditDialogComponent implements OnInit {
   user: User = {
     email: '',
   };
-
-  
-
-
 
   ngOnInit(): void {
     this.userService.getUserById(this.data.owner).subscribe({
@@ -48,7 +44,7 @@ export class OwnerEditDialogComponent implements OnInit {
 
   submitForm() {
     this.errorMsg = '';
-    if(this.user.email === this.orignalEmail){
+    if (this.user.email === this.orignalEmail) {
       this.dialogRef.close();
 
       return;
@@ -56,12 +52,12 @@ export class OwnerEditDialogComponent implements OnInit {
     this.userService.updateUser(this.data.owner, this.user).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully updated user:', response.message);
-        if(response.user){
-          this.user.email = response.user.email
-          this.orignalEmail = response.user.email
+        if (response.user) {
+          this.user.email = response.user.email;
+          this.orignalEmail = response.user.email;
           this.dialogRef.close();
 
-          return; 
+          return;
         }
       },
       error: (error) => {
@@ -73,12 +69,12 @@ export class OwnerEditDialogComponent implements OnInit {
     });
   }
 
-  delete(){
+  delete() {
     this.userService.deleteUser(this.data.owner).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully deleted restaurant:', response.message);
         this.dialogRef.close('deleted');
-        return; 
+        return;
       },
       error: (error) => {
         console.error('Delete failed', error);
