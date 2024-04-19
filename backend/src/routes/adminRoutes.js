@@ -15,7 +15,7 @@ router.get('/restaurants', verifyToken, isAdmin, adminRestaurantController.getAl
 router.post('/users', verifyToken, isAdmin, adminUserController.createUser);
 router.get('/users', verifyToken, isAdmin, adminUserController.getAllUsers);
 router.get('/users/:id', verifyToken, isAdmin, adminUserController.getUserById);
-router.patch('/users/:id', verifyToken, isAdmin, adminUserController.updateUser);
+router.put('/users/:id', verifyToken, isAdmin, adminUserController.updateUser);
 router.delete('/users/:id', verifyToken, isAdmin, adminUserController.deleteUser);
 
 module.exports = router;

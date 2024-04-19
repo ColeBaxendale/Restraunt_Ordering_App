@@ -18,7 +18,7 @@ exports.createUser = async (req, res, next) => {
         .json({ message: "A User with the same email already exists." });
     }
 
-    const hashedPassword = await bcrypt.hash('Welcome1', 10);
+    const hashedPassword = await bcrypt.hash("Welcome1", 10);
 
     const userInfo = {
       email,
@@ -49,24 +49,27 @@ exports.createUser = async (req, res, next) => {
 exports.getAllUsers = async (req, res) => {
   try {
     // Fetch all users with the role 'owner' excluding 'password' and 'role' fields
-    const users = await User.find({ role: "owner" }).select('-password -role');
+    const users = await User.find({ role: "owner" }).select("-password -role");
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-password -role');
+    const user = await User.findById(req.params.id).select("-password -role");
     if (user == null) {
       return res.status(404).json({ message: "User not found" });
     }
     if (user.role == "admin") {
       return res.status(400).json({ message: "Can not get an admin account." });
     }
-    res.json(user);
+    res.status(201).json({
+      message: "User found successfully",
+      userId: user._id,
+      user: user,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -76,7 +79,6 @@ exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
     const updateData = { ...req.body };
-
     // Fetch the current user to check their role
     const currentUser = await User.findById(id);
     if (!currentUser) {
@@ -88,6 +90,23 @@ exports.updateUser = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Cannot update an admin account." });
+    }
+
+    if (
+      !updateData.email ||
+      typeof updateData.email !== "string" ||
+      updateData.email.trim().length === 0
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Email is required and must be a string." });
+    }
+
+    const existingUser = await User.findOne({ email: updateData.email }).exec();
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "A User with the same email already exists." });
     }
 
     // Hash the new password if it's being updated
@@ -105,7 +124,7 @@ exports.updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
-    }).select('-password -role');;
+    }).select("-password -role");
     if (!updatedUser) {
       return res
         .status(404)

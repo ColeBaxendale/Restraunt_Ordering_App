@@ -27,6 +27,7 @@ export class OwnerAddDialogComponent {
   }
 
   submitForm() {
+    this.errorMsg = '';
     this.userService.createUser(this.user).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully created user:', response.message);

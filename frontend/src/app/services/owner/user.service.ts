@@ -23,7 +23,7 @@ export class UserService {
     });
   }
 
-  updateUser(id: string, user: UserResponse): Observable<UserResponse> {
+  updateUser(id: string, user: User): Observable<UserResponse> {
     return this.http.put<UserResponse>(`${this.baseUrl}/${id}`, user, {
       withCredentials: true,
     });

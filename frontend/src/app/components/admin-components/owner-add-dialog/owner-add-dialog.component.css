@@ -1,7 +1,7 @@
 .container {
     width: 600px;
     height: 600px;
-    background-color: var(--darkestBlue);
+    background-color: var(--darkerBlue);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,44 +18,71 @@
     margin-top: 1rem;
     font-family: "JetBrainsMono";
     font-size: 4.0625rem;
-    color: var(--lightTan);
-    margin-bottom: 2.3125rem;
+    color: var(--darkestBlue);
+    margin-bottom: 1rem;
   }
   .inputContainer {
     display: flex;
-    justify-content: space-between;
-    align-content: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    
   }
+
+  .inputContainer p {
+    font-family: "JetBrainsMono";
+    font-size: 1.5rem;
+    color: red;
+  }
+
   h2 {
     margin-top: 1rem;
     font-family: "JetBrainsMono";
     font-size: 1.75rem;
-    color: var(--lightTan);
+    color: var(--darkestBlue);
   }
   
   .formInput {
-    width: 21.9375rem;
+    width: 25.9375rem;
     height: 4.1875rem;
-    background-color: var(--lightTan);
+    background-color: var(--darkestBlue);
     border: none;
     border-radius: 6.25rem;
-    color: var(--darkestBlue);
+    color: var(--lightTan);
     font-family: "JetBrainsMono";
     font-size: 1.75rem;
     text-align: center;
-    margin-left: 3.5625rem;
-    margin-bottom: 2.3125rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
   .button {
     border-radius: 6.25rem;
     width: 12.125rem;
     height: 4.875rem;
-    background-color: var(--darkerBlue);
+    background-color: var(--darkestBlue);
     font-family: "JetBrainsMono";
     font-size: 1.5rem;
-    color: var(--darkestBlue);
+    color: var(--lightTan);
     cursor: pointer;
     border: none;
     margin: 2rem;
   }
   
+.textBox{
+   text-align: center;
+   margin-left: 1rem;
+   margin-right: 1rem;
+  }
+
+.textBox h2{
+    font-family: "JetBrainsMono";
+    font-size: 1.75rem;
+    color: var(--darkestBlue);
+
+  }

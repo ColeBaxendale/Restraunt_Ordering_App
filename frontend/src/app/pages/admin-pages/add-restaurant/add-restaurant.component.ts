@@ -68,6 +68,8 @@ export class AddRestaurantComponent {
     private userService: UserService
   ) {}
 
+
+  
   submitForm() {
     console.log(this.restaurantDetails);
     
@@ -101,32 +103,32 @@ export class AddRestaurantComponent {
     if (this.restaurantDetails.details.owner != '') {
       const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
         width: '600px', // Set the width
-        height: '600px', // Set the height
+        height: '500px', // Set the height
         data: {
-          /* data passed to the dialog */
+          owner: this.restaurantDetails.details.owner
+        
         },
       });
 
-      dialogRef.afterClosed().subscribe((newAdmin) => {
-        if (newAdmin) {
-          this.restaurantDetails.details.owner = newAdmin;
-          console.log(newAdmin);
+      dialogRef.afterClosed().subscribe((newOwner) => {
+        if (newOwner) {
+          this.restaurantDetails.details.owner = '';
         }
       });
     } else {
       const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
         width: '600px', // Set the width
-        height: '600px', // Set the height
+        height: '500px', // Set the height
         data: {
           /* data passed to the dialog */
         },
       });
 
-      dialogRef.afterClosed().subscribe((newAdmin) => {
-        if (newAdmin) {
-          this.restaurantDetails.details.owner = newAdmin;
+      dialogRef.afterClosed().subscribe((newOwner) => {
+        if (newOwner) {
+          this.restaurantDetails.details.owner = newOwner;
           console.log("New owner set:", this.restaurantDetails.details.owner);
-          console.log(newAdmin);
+          console.log(newOwner);
         }
       });
     }
@@ -155,7 +157,6 @@ export class AddRestaurantComponent {
     console.log(this.restaurantDetails.details.owner);
 
     if(this.restaurantDetails.details.owner !== '' && this.restaurantDetails.details.owner !== undefined){
-      console.log('deleteAttempt');
       
       this.userService.deleteUser(this.restaurantDetails.details.owner).subscribe({
         next: (response: UserResponse) => {
