@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminShowDialogComponent } from './admin-show-dialog.component';
+import { OwnerEditDialogComponent } from './owner-edit-dialog.component';
 
-describe('AdminShowDialogComponent', () => {
-  let component: AdminShowDialogComponent;
-  let fixture: ComponentFixture<AdminShowDialogComponent>;
+describe('OwnerEditDialogComponent', () => {
+  let component: OwnerEditDialogComponent;
+  let fixture: ComponentFixture<OwnerEditDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminShowDialogComponent]
+      imports: [OwnerEditDialogComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AdminShowDialogComponent);
+    fixture = TestBed.createComponent(OwnerEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

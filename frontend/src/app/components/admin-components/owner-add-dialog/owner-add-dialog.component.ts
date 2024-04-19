@@ -4,19 +4,16 @@ import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../../services/owner/user.service';
-import { Router } from '@angular/router';
-
 @Component({
-  selector: 'app-admin-add-dialog',
+  selector: 'app-owner-add-dialog',
   standalone: true,
   imports: [NgIf, FormsModule, CommonModule],
-
-  templateUrl: './admin-add-dialog.component.html',
-  styleUrl: './admin-add-dialog.component.css',
+  templateUrl: './owner-add-dialog.component.html',
+  styleUrl: './owner-add-dialog.component.css'
 })
-export class AdminAddDialogComponent {
+export class OwnerAddDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<AdminAddDialogComponent>,
+    public dialogRef: MatDialogRef<OwnerAddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService,
   ) {}
