@@ -36,7 +36,7 @@
 .leftContainer .searchbar:-webkit-autofill:hover,
 .leftContainer .searchbar:-webkit-autofill:focus,
 .leftContainer .searchbar:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s; 
+  transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: var(--lightTan) !important;
 }
 .leftContainer .searchbar:focus::placeholder {
@@ -128,7 +128,7 @@
   font-weight: 300;
   overflow: hidden;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    2px 1px 0 #000; 
+    2px 1px 0 #000;
 }
 
 .rightContainer .branding h2 {
