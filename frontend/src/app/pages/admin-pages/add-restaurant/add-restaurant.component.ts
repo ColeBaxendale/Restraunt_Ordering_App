@@ -105,7 +105,7 @@ export class AddRestaurantComponent {
     if (this.restaurantDetails.details.owner != '') {
       const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
         width: '600px', // Set the width
-        height: '430px', // Set the height
+        height: '470px', // Set the height
         data: {
           owner: this.restaurantDetails.details.owner,
         },
@@ -119,7 +119,7 @@ export class AddRestaurantComponent {
     } else {
       const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
         width: '600px', // Set the width
-        height: '430px', // Set the height
+        height: '470px', // Set the height
         data: {
           /* data passed to the dialog */
         },
@@ -154,9 +154,6 @@ export class AddRestaurantComponent {
   }
 
   cancel() {
-    // DELETE OWNER IF ALREADY CREATED
-    console.log(this.restaurantDetails.details.owner);
-
     if (
       this.restaurantDetails.details.owner !== '' &&
       this.restaurantDetails.details.owner !== undefined

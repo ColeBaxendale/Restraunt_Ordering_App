@@ -135,7 +135,7 @@
   font-weight: 100;
   margin-top: 1rem;
 
-  color: var(--lightTan);
+  color: var(--darkerBlue);
   text-decoration: none;
 }
 
@@ -268,7 +268,7 @@
 .container .bottomContainer .bottomRightContainer .linkLike {
   margin-left: 3rem;
   margin-bottom: 1rem;
-  color: var(--lightTan);
+  color: var(--darkerBlue);
 }
 
 .container .bottomContainer .bottomRightContainer .inputContainer {

@@ -322,11 +322,6 @@
     </div>
 
     <div class="bottomRightContainer">
-      <h1>ADMINS:</h1>
-      <div class="inputContainerStack">
-        <a for="fileInput" class="linkLike">ADD ADMINS</a>
-        <a for="fileInput" class="linkLike">SHOW ADMINS</a>
-      </div>
       <h1>BACKEND:</h1>
       <div class="inputContainer">
         <h2>FIXED RATE:</h2>
@@ -374,6 +369,11 @@
           [(ngModel)]="restaurant.stripe.addFees"
           name="addFees"
         />
+      </div>
+      <div class="inputContainer">
+        <a for="fileInput" class="linkLike" (click)="openOwnerDialog()"
+          >OWNER ADD / EDIT</a
+        >
       </div>
     </div>
   </div>
