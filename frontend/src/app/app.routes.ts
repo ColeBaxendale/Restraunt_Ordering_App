@@ -9,9 +9,14 @@ import { RestaurantComponent } from './pages/admin-pages/restaurant/restaurant.c
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
+
+
     { path: 'admin', component: AdminComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
     { path: 'addRestaurant', component: AddRestaurantComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
     { path: 'restaurant/:id', component: RestaurantComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
+
+
+
     { path: 'owner', component: OwnerComponent, canActivate: [ownerAuthGuard], pathMatch: 'full', },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
 

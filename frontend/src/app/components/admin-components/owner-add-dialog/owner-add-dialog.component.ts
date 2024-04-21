@@ -3,8 +3,8 @@ import { User, UserResponse, UserRole } from '../../../../../types';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserService } from '../../../services/owner/requests/user.service';
-import { UserValidatorService } from '../../../services/owner/validators/user.validator.service';
+import { UserService } from '../../../services/admin/owner/requests/user.service';
+import { UserValidatorService } from '../../../services/admin/owner/validators/user.validator.service';
 @Component({
   selector: 'app-owner-add-dialog',
   standalone: true,

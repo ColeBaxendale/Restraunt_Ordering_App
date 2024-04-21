@@ -223,7 +223,8 @@
   height: 2.5rem;
   font-size: 1.2rem;
   margin-left: 3rem;
-  color: var(--lightTan);
+  color: var(--darkestBlue);
+
 }
 
 .container .bottomContainer .bottomRightContainer {

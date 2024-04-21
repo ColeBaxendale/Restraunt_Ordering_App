@@ -30,7 +30,6 @@
       <button class="buttonClass" (click)="addRestaurant()">
         ADD RESTAURANT
       </button>
-      <button class="buttonClass" (click)="ownerDashboard()">OWNERS</button>
       <button class="buttonClass" (click)="logout()">LOGOUT</button>
     </div>
     <h2>TOTAL LIVE RESTAURANTS: {{ totalLiveRestaurants }}</h2>
@@ -42,35 +41,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="adminContainer">
-  <input class="searchbar" type="text" placeholder="Search by restaurant unique name..." (input)="searchRestaurants($any($event.target).value)">
-  <div class="topButtons">
-    
-    <button  class="button" aria-label="addRestaurant" (click)="addRestaurant()">Add New</button>
-    <button class="button" aria-label="logout" (click)="logout()">Logout</button>
-  </div>
-
-
-
-
-
-
-
-
-  
-  <div class="restaurants-container">
-    <div class="row">
-      <div class="restaurant-item" *ngFor="let restaurant of restaurants">
-        <h3>{{ restaurant.details.name }}</h3>
-        <p>Is active? {{ restaurant.admin.isActive }}</p>
-        <p>Overall Income: {{ restaurant.admin.overallIncome }}</p>
-      </div>
-    </div>
-    
-      <ng-template #noRestaurants>
-        <p>No restaurants available.</p>
-      </ng-template>
-    
-  </div>
-</div> -->

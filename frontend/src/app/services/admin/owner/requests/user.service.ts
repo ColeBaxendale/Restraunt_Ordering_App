@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { User, UserResponse } from '../../../../../types';
+import { User, UserResponse } from '../../../../../../types';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,12 @@ export class UserService {
 
   updateUser(id: string, user: User): Observable<UserResponse> {
     return this.http.put<UserResponse>(`${this.baseUrl}/${id}`, user, {
+      withCredentials: true,
+    });
+  }
+
+  resetUser(id: string): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`${this.baseUrl}/${id}/reset`, {
       withCredentials: true,
     });
   }

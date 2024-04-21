@@ -3,8 +3,8 @@ import { User, UserResponse, UserRole } from '../../../../../types';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserService } from '../../../services/owner/requests/user.service';
-import { UserValidatorService } from '../../../services/owner/validators/user.validator.service';
+import { UserService } from '../../../services/admin/owner/requests/user.service';
+import { UserValidatorService } from '../../../services/admin/owner/validators/user.validator.service';
 @Component({
   selector: 'app-owner-edit-dialog',
   standalone: true,
@@ -82,11 +82,25 @@ export class OwnerEditDialogComponent implements OnInit {
     });
   }
 
+  reset(){
+    this.userService.resetUser(this.data.owner).subscribe({
+      next: (response: UserResponse) => {
+        console.log('Successfully reset user:', response.message);
+        this.dialogRef.close(response.message);
+        return;
+      },
+      error: (error) => {
+        console.error('Reset failed', error);
+        this.errorMsg = error.error.message;
+      },
+    });
+  }
+
   delete() {
     this.userService.deleteUser(this.data.owner).subscribe({
       next: (response: UserResponse) => {
         console.log('Successfully deleted restaurant:', response.message);
-        this.dialogRef.close('deleted');
+        this.dialogRef.close(response.message);
         return;
       },
       error: (error) => {
@@ -95,6 +109,7 @@ export class OwnerEditDialogComponent implements OnInit {
       },
     });
   }
+
 
   cancel() {
     this.dialogRef.close();

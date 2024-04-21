@@ -3,7 +3,7 @@ import {
   OperatingHours,
   Restaurant,
   ValidationResponse,
-} from '../../../../../types';
+} from '../../../../../../types';
 
 @Injectable({
   providedIn: 'root',

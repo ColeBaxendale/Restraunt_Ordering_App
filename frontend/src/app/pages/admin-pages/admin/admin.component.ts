@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
 import { Restaurant } from '../../../../../types';
-import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
+import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
 
 @Component({
@@ -74,14 +74,6 @@ export class AdminComponent implements OnInit {
 
   addRestaurant(): void {
     this.router.navigate(['/addRestaurant']);
-  }
-
-  ownerDashboard(): void {
-    this.router.navigate(['/ownerdashboard']);
-  }
-
-  selectRestaurant(restaurant: Restaurant): void {
-    // Set selectedRestaurant for editing and show modal/form
   }
 
   logout(): void {

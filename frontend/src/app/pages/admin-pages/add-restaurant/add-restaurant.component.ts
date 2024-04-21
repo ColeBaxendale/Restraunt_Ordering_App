@@ -9,12 +9,12 @@ import {
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
+import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
-import { RestaurantValidatorService } from '../../../services/restaurant/validators/restaurant.validator.service';
-import { UserService } from '../../../services/owner/requests/user.service';
-import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
+import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
+import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
+import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -34,7 +34,7 @@ export class AddRestaurantComponent {
       location: {
         address: '',
         city: '',
-        state: ''.toUpperCase(),
+        state: '',
         zipCode: '',
       },
       operatingHours: {
@@ -78,6 +78,8 @@ export class AddRestaurantComponent {
 
     this.resetTimesIfNeeded();
     this.errorMsg = '';
+    if(this.restaurantDetails.details.location.state)
+        this.restaurantDetails.details.location.state = this.restaurantDetails.details.location.state.toUpperCase()
     const validationResult = this.restaurantValidator.isValidRestaurantInfo(
       this.restaurantDetails
     );
@@ -115,7 +117,13 @@ export class AddRestaurantComponent {
 
       dialogRef.afterClosed().subscribe((newOwner) => {
         if (newOwner) {
-          this.restaurantDetails.details.owner = '';
+          if (!/\d/.test(newOwner) || newOwner.length !== 24) {
+            this.errorMsg = newOwner
+            if(newOwner == 'User account deleted successfully'){
+              this.restaurantDetails.details.owner = '';
+              console.log(this.restaurantDetails.details.owner);
+            }
+          }          
         }
       });
     } else {

@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Restaurant, RestaurantResponse, UserResponse } from '../../../../../types';
+import {
+  Restaurant,
+  RestaurantResponse,
+  UserResponse,
+} from '../../../../../types';
 import { SessionService } from '../../../services/session/session.service';
 import { finalize } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RestaurantService } from '../../../services/restaurant/requests/restaurant.service';
-import { RestaurantValidatorService } from '../../../services/restaurant/validators/restaurant.validator.service';
+import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
+import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
 import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { UserService } from '../../../services/owner/requests/user.service';
+import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerEditRestaurantDialogComponent } from '../../../components/admin-components/owner-edit-restaurant-dialog/owner-edit-restaurant-dialog.component';
 
 @Component({
@@ -24,30 +28,29 @@ export class RestaurantComponent implements OnInit {
   restaurantId!: string; // Non-null assertion
   restaurant!: Restaurant; // Consider defining a more specific type
   errorMsg = '';
-  hasOwnerAtStart = false;
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private router: Router,
     private dialog: MatDialog,
     private sessionService: SessionService,
-    private restaurantValidator: RestaurantValidatorService,
+    private restaurantValidator: RestaurantValidatorService
   ) {}
 
   ngOnInit() {
     this.restaurantId = this.route.snapshot.paramMap.get('id')!;
-    this.fetchRestaurant().then(() => {
-
-    });
+    this.fetchRestaurant().then(() => {});
     console.log(this.restaurantId);
   }
 
   async fetchRestaurant() {
     if (this.restaurantId) {
       try {
-        const temp = await this.restaurantService.getRestaurantById(this.restaurantId).toPromise();
-        if(temp){
-          this.restaurant = temp
+        const temp = await this.restaurantService
+          .getRestaurantById(this.restaurantId)
+          .toPromise();
+        if (temp) {
+          this.restaurant = temp;
         }
         console.log(this.restaurant);
       } catch (error) {
@@ -62,7 +65,8 @@ export class RestaurantComponent implements OnInit {
     this.resetTimesIfNeeded();
     this.errorMsg = '';
     console.log(this.restaurant);
-    
+    if(this.restaurant.details.location.state)
+      this.restaurant.details.location.state = this.restaurant.details.location.state.toUpperCase()
     const validationResult = this.restaurantValidator.isValidRestaurantInfo(
       this.restaurant
     );
@@ -110,8 +114,6 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/admin']);
   }
 
-
-
   logout(): void {
     this.sessionService
       .logout()
@@ -135,11 +137,8 @@ export class RestaurantComponent implements OnInit {
     });
   }
 
-
   openOwnerDialog(): void {
-    
     if (this.restaurant.details.owner != undefined) {
-      
       const dialogRef = this.dialog.open(OwnerEditRestaurantDialogComponent, {
         width: '600px', // Set the width
         height: '600px', // Set the height
@@ -150,10 +149,28 @@ export class RestaurantComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((newOwner) => {
         if (newOwner) {
-          console.log('Dialog closed. New owner:');
-          this.restaurant.details.owner = undefined;
-          console.log(this.restaurant.details.owner);
-          
+          if (!/\d/.test(newOwner) || newOwner.length !== 24) {
+            this.errorMsg = newOwner;
+            if (newOwner == 'User account deleted successfully') {
+              console.log('Dialog closed. New owner:');
+              this.restaurant.details.owner = undefined;
+              console.log(this.restaurant.details.owner);
+              this.restaurantService
+                .updateRestaurant(this.restaurantId, this.restaurant)
+                .subscribe({
+                  next: (response: RestaurantResponse) => {
+                    console.log(
+                      'Successfully updated restaurant:',
+                      response.message
+                    );
+                  },
+                  error: (error) => {
+                    console.error('Update failed', error);
+                    this.errorMsg = error.error.message;
+                  },
+                });
+            }
+          }
         }
       });
     } else {
@@ -170,6 +187,20 @@ export class RestaurantComponent implements OnInit {
           this.restaurant.details.owner = newOwner;
           console.log('New owner set:', this.restaurant.details.owner);
           console.log(newOwner);
+          this.restaurantService
+            .updateRestaurant(this.restaurantId, this.restaurant)
+            .subscribe({
+              next: (response: RestaurantResponse) => {
+                console.log(
+                  'Successfully updated restaurant:',
+                  response.message
+                );
+              },
+              error: (error) => {
+                console.error('Update failed', error);
+                this.errorMsg = error.error.message;
+              },
+            });
         }
       });
     }

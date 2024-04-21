@@ -57,7 +57,7 @@ h2 {
 
 .buttonContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   text-align: center;
   align-content: center;
 }
@@ -71,7 +71,7 @@ h2 {
   color: var(--lightTan);
   cursor: pointer;
   border: none;
-  margin: 2rem;
+  margin: 1rem;
 }
 
 .textBox {
@@ -86,10 +86,16 @@ h2 {
   color: var(--darkestBlue);
 }
 
-.delete {
+.buttonDelete {
+  border-radius: 6.25rem;
+  width: 12.125rem;
+  height: 4.875rem;
+  background-color: var(--darkestBlue);
   font-family: "JetBrainsMono";
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: red;
   cursor: pointer;
-  text-align: center;
+  border: none;
+  margin: 1rem;
 }
+
