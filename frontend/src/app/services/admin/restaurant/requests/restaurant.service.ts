@@ -9,8 +9,17 @@ import { RestaurantResponse } from '../../../../../../types';
 })
 export class RestaurantService {
   private baseUrl = 'http://localhost:3000/admin/restaurants';
+  private currentId!: string;
 
   constructor(private http: HttpClient) {}
+
+  setCurrentId(id: string) {
+    this.currentId = id;
+  }
+
+  getCurrentId(): string {
+    return this.currentId;
+  }
 
   createRestaurant(restaurantData: any): Observable<RestaurantResponse> {
     return this.http.post<RestaurantResponse>(

@@ -8,6 +8,7 @@ import { LoginResponse } from '../../../../types';
 })
 export class SessionService {
   private apiUrl = 'http://localhost:3000/session/';
+  private currentId!: string;
 
   constructor(private http: HttpClient) {}
 
@@ -25,4 +26,13 @@ export class SessionService {
       withCredentials: true,
     });
   }
+
+  setCurrentId(id: string) {
+    this.currentId = id;
+  }
+
+  getCurrentId(): string {
+    return this.currentId;
+  }
 }
+

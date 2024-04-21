@@ -24,6 +24,7 @@ export class LoginComponent {
     this.sessionService.login(this.user.email, this.user.password).subscribe({
       next: (response) => {
         console.log('Login successful:', response.user.role + ' role' + response.firstLogin);
+        this.sessionService.setCurrentId(response.user._id);
         if (response.firstLogin && response.user.role === 'owner') {
           console.log('here');
           
