@@ -23,17 +23,20 @@ export class LoginComponent {
   onSubmit() {
     this.sessionService.login(this.user.email, this.user.password).subscribe({
       next: (response) => {
-        console.log('Login successful:', response.user.role + ' role');
+        console.log('Login successful:', response.user.role + ' role' + response.firstLogin);
         if (response.firstLogin && response.user.role === 'owner') {
-          this.router.navigate(['/owner']);
+          console.log('here');
+          
+          this.router.navigate(['/owner/reset/'+response.user._id]);
           return;
-        } else if (
-          response.user.role === 'admin' ||
-          response.user.role === 'owner'
-        ) {
-          this.router.navigate(['/' + response.user.role]);
+        } else if (response.user.role === 'owner') {
+          this.router.navigate(['/owner/' + response.user._id]);
           return;
-        } else {
+        } else if(response.user.role === 'admin' ) {
+          this.router.navigate(['/admin']);
+
+        }
+        else {
           console.error('Unexpected user role:', response.user.role);
           this.errorMsg = 'Unexpected user role:' + response.user.role;
           this.router.navigate(['/']);
