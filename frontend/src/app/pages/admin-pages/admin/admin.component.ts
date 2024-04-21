@@ -64,7 +64,8 @@ export class AdminComponent implements OnInit {
   }
 
   restaurantPage(restaurantId: string) {
-    this.router.navigate(['/restaurant/' + restaurantId]);
+    this.restaurantService.setCurrentId(restaurantId);
+    this.router.navigate(['/restaurant']);
   }
 
   searchRestaurants(inputElement: HTMLInputElement): void {

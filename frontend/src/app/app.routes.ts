@@ -14,7 +14,7 @@ export const routes: Routes = [
 
     { path: 'admin', component: AdminComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
     { path: 'addRestaurant', component: AddRestaurantComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
-    { path: 'restaurant/:id', component: RestaurantComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
+    { path: 'restaurant', component: RestaurantComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },
 
 
 

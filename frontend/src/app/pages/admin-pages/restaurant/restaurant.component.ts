@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  OperatingHours,
   Restaurant,
   RestaurantResponse,
   UserResponse,
+  WeeklyOperatingHours,
 } from '../../../../../types';
 import { SessionService } from '../../../services/session/session.service';
 import { finalize } from 'rxjs';
@@ -26,7 +28,7 @@ import { OwnerEditRestaurantDialogComponent } from '../../../components/admin-co
 })
 export class RestaurantComponent implements OnInit {
   restaurantId!: string; // Non-null assertion
-  restaurant!: Restaurant; // Consider defining a more specific type
+  restaurant: Restaurant = this.initializeRestaurant();
   errorMsg = '';
   constructor(
     private route: ActivatedRoute,
@@ -38,9 +40,67 @@ export class RestaurantComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.restaurantId = this.route.snapshot.paramMap.get('id')!;
+    this.restaurantId = this.restaurantService.getCurrentId();
     this.fetchRestaurant().then(() => {});
-    console.log(this.restaurantId);
+  }
+
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.handleFile(file); // Implement this method to process the file
+    }
+  }
+  
+  handleFile(file: File): void {
+    // Example: Read the file as a data URL (base64) and assign it to a model property
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.restaurant.details.logo = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  initializeRestaurant(): Restaurant {
+    return {
+      details: {
+        logo: '',
+        name: '',
+        description: '',
+        phone: '',
+        location: {
+          address: '',
+          city: '',
+          state: '',
+          zipCode: ''
+        },
+        operatingHours: this.initializeOperatingHours(),
+        owner: '',
+        menuSections: [],
+        ordersEnabled: false
+      },
+      admin: {
+        isActive: false,
+        overallIncome: 0,
+        fixedRate: 0
+      },
+      stripe: {
+        stripeAccountId: '',
+        addFees: false
+      }
+    };
+  }
+
+  private initializeOperatingHours(): WeeklyOperatingHours {
+    const defaultHours: OperatingHours = { isOpen: false, open: '', close: '' };
+    return {
+      monday: defaultHours,
+      tuesday: defaultHours,
+      wednesday: defaultHours,
+      thursday: defaultHours,
+      friday: defaultHours,
+      saturday: defaultHours,
+      sunday: defaultHours
+    };
   }
 
   async fetchRestaurant() {
@@ -62,6 +122,10 @@ export class RestaurantComponent implements OnInit {
   }
 
   submitForm() {
+    if (!this.restaurant || !this.restaurant.details) {
+    console.error('Restaurant data is not loaded');
+    return;
+  }
     this.resetTimesIfNeeded();
     this.errorMsg = '';
     console.log(this.restaurant);

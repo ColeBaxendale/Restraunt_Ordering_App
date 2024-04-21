@@ -25,12 +25,12 @@
       <div class="inputContainer">
         <h1>DETAILS:</h1>
         <input
-          type="file"
-          id="fileInput"
-          class="hiddenInput"
-          [(ngModel)]="restaurant.details.logo"
-          name="logo"
-        />
+        type="file"
+        id="fileInput"
+        class="hiddenInput"
+        (change)="onFileSelected($event)"
+        name="logo"
+      />
         <label for="fileInput" class="linkLike">Upload Logo</label>
       </div>
 
