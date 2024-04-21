@@ -98,6 +98,32 @@ exports.resetUserPassword = async (req, res) => {
   }
 };
 
+exports.isFirstLogin = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-password -role");
+    if (user == null) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user.role == "admin") {
+      return res.status(400).json({ message: "Can not get an admin account." });
+    }
+    const firstLogin = await bcrypt.compare('Welcome1', user.password);
+    if(!firstLogin){
+      res.status(201).json({
+        message: "User found successfully",
+        firstLoginBool: false
+      });
+    }
+    res.status(201).json({
+      message: "User found successfully",
+      firstLoginBool: true
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 
 exports.deleteUser = async (req, res) => {
   try {

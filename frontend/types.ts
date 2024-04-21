@@ -87,6 +87,11 @@ export interface UserResponse {
   error?: string; // Optional error message if something went wrong.
 }
 
+export interface UserFirstLogin {
+  message: string;
+  firstLoginBool: boolean;
+}
+
 export interface ValidationResponse {
   isValid: boolean;
   message?: string;
