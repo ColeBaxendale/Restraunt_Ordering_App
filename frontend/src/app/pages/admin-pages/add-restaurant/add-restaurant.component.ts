@@ -24,9 +24,7 @@ import { OwnerAddDialogComponent } from '../../../components/admin-components/ow
   styleUrl: './add-restaurant.component.css',
 })
 export class AddRestaurantComponent {
-  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement> | undefined;
   errorMsg = '';
-  selectedFile: File | null = null;
   restaurantDetails: Restaurant = {
     details: {
       name: '',
@@ -73,11 +71,7 @@ export class AddRestaurantComponent {
     private restaurantValidator: RestaurantValidatorService,
     private userService: UserService
   ) {}
-
-  onFileSelected(event: Event): void {
-    const element = event.target as HTMLInputElement;
-    this.selectedFile = element.files ? element.files[0] : null;
-  }
+  
 
   submitForm() {
     console.log(this.restaurantDetails);
@@ -96,14 +90,8 @@ export class AddRestaurantComponent {
       }
     }
 
-    const formData = new FormData();
-    formData.append('restaurantDetails', JSON.stringify(this.restaurantDetails.details));
-    
-    if (this.selectedFile) {
-      formData.append('logo', this.selectedFile);
-    }
 
-    this.restaurantService.createRestaurant(formData).subscribe({
+    this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
       next: (response: RestaurantResponse) => {
         console.log('Successfully created restaurant' + response.message);
         this.router.navigate(['/admin']);
