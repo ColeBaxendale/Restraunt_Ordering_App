@@ -80,7 +80,7 @@ export class AdminComponent implements OnInit {
   logout(): void {
     this.sessionService
       .logout()
-      .pipe(finalize(() => this.router.navigate(['/login'])))
+      .pipe(finalize(() => this.router.navigate(['/login/admin'])))
       .subscribe({
         next: () => console.log('Logged out successfully'),
         error: (error) => console.error('Logout failed:', error),

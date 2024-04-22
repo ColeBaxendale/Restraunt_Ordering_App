@@ -10,8 +10,10 @@ export const adminAuthGuard: CanActivateFn = (route, state) => {
   
   return authService.verifyAdminRole().pipe(
     map(authorized => {
+      console.log(authorized);
+      
       if (!authorized) {
-        router.navigate(['/login']);
+        router.navigate(['/login/admin']);
         return false;
       }
       return true;

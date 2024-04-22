@@ -7,9 +7,11 @@ import { AddRestaurantComponent } from './pages/admin-pages/add-restaurant/add-r
 import { RestaurantComponent } from './pages/admin-pages/restaurant/restaurant.component';
 import { OwnerDashboardComponent } from './pages/owner-pages/owner-dashboard/owner-dashboard.component';
 import { OwnerFirstLoginComponent } from './pages/owner-pages/owner-first-login/owner-first-login.component';
+import { AdminLoginComponent } from './pages/admin-pages/admin-login/admin-login.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
+    { path: 'login/admin', component: AdminLoginComponent, pathMatch: 'full' },
 
 
     { path: 'admin', component: AdminComponent, canActivate: [adminAuthGuard], pathMatch: 'full', },

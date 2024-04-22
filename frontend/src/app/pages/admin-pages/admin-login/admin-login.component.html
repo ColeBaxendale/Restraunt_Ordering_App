@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="loginContainer">
+      <div class="loginFormContainer">
+        <h1>ADMIN LOGIN</h1>
+        <form class="form" (ngSubmit)="onSubmit()">
+          <input
+            type="text"
+            class="formInput"
+            [(ngModel)]="adminCreds.username"
+            name="username"
+            placeholder="USERNAME"
+            required
+          />
+          <input
+            type="password"
+            class="formInput"
+            [(ngModel)]="adminCreds.password"
+            name="password"
+            placeholder="PASSWORD"
+            required
+          />
+        </form>
+
+        <button type="submit" (click)="onSubmit()" class="formInputLogin">
+          LOGIN
+        </button>
+  
+        <a class="forgotPassword" href="">BACK TO NORMAL LOGIN</a>
+        <div *ngIf="errorMsg != ''">
+          <p>{{ errorMsg }}</p>
+        </div>
+      </div>
+      
+    </div>
+    <div class="brandingContainer">
+      <div class="branding">
+        <h1>ORDER<br />FEAST</h1>
+        <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
+        <a href=""
+          >DISCOVER HOW TO HARNESS OUR SERVICES FOR YOUR RESTAURANT'S SUCCESS.</a
+        >
+      </div>
+    </div>
+  </div>
+  

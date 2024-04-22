@@ -5,6 +5,15 @@ const {verifyToken} = require('../middleware/authenticate');
 
 router.post('/login', login);
 router.post('/register', register);
+
+
+
+
+
+
+
+
+
 router.get('/auth/admin', verifyToken,authAdmin);
 router.get('/auth/owner', verifyToken,authOwner);
 router.get('/logout', (req, res) => {

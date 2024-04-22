@@ -4,9 +4,31 @@
     --darkestBlue: #0E1C36;
     --lightTan: #F9FBF2;
     --lightOrange: #FFEDE1;
+
+
+
+
+    --light: #b8bfbc;
+    --middle: #A5AFAB;
+    --dark: #7A8581;
+    --darker: #111312;
+
+    --black: #000000;
+    --white: #ffffff;
+
+
+
+
 }
 
-
+/* Right Section Background: --lightest for a light background that is easy on the eyes.
+Left Section Background: --middleDark for a moderate contrast with the login box and right section.
+Login Box Background: --dark for the login form to stand out against the left section background.
+Input Fields Background: --middle so that they are distinguishable within the login box.
+Text: --lightest for good readability against the darker backgrounds.
+Buttons Background: --darker for a solid, contrasting call-to-action.
+Button Text: --lightest to stand out against the button background.
+General Text and Headings: --darkest for a strong presence on the lighter background of the right section. */
 *{
     margin:0;
 }

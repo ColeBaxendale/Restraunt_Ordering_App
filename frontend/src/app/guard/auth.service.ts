@@ -13,7 +13,7 @@ export class AuthenticationService {
   verifyAdminRole() {
     return this.http
       .get<{ authorized: boolean }>(
-        'http://localhost:3000/session/auth/admin',
+        'http://localhost:3000/admin/verify-admin',
         { withCredentials: true }
       )
       .pipe(

@@ -1,5 +1,5 @@
-const Restaurant = require("../models/Restaurant"); // Adjust the path as necessary
-const User = require("../models/User");
+const Restaurant = require("../../models/Restaurant"); // Adjust the path as necessary
+const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 
 exports.createRestaurant = async (req, res, next) => {

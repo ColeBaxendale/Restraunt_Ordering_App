@@ -1,0 +1,185 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .loginContainer {
+    width: 45vw;
+    height: 100vh;
+    background-color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loginFormContainer {
+    background-color: var(--dark);
+    width: 36.9375rem;
+    height: 49.4375rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 1.25rem 0.125rem #7A8581;
+  }
+  
+  .loginFormContainer h1 {
+    font-family: "JetBrainsMono";
+    font-size: 4.4375rem;
+    color: var(--darker);
+    font-weight: 100;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+
+
+  }
+  
+  .loginFormContainer .formInput {
+    border-radius: 6.25rem;
+    width: 28.5625rem;
+    height: 5.125rem;
+    background-color: var(--middle);
+    border: 0.1875rem solid var(--middle);
+    text-align: center;
+    font-family: "JetBrainsMono";
+    font-size: 1.5rem;
+    letter-spacing: -0.043125rem;
+    color: var(--darker) !important;
+    caret-color: var(--darker);
+    margin-bottom: 3rem;
+
+  }
+  
+  .loginFormContainer .formInputLogin {
+    border-radius: 6.25rem;
+    width: 20.375rem;
+    height: 5.125rem;
+    background-color: var(--middle);
+    text-align: center;
+    font-family: "JetBrainsMono";
+    font-size: 2rem;
+    letter-spacing: -0.043125rem;
+    color: var(--darker) !important;
+    margin-bottom: 3rem;
+    
+
+
+    cursor: pointer;
+  }
+  
+  .loginFormContainer .forgotPassword {
+    text-align: center;
+    font-family: "JetBrainsMono";
+    font-weight: 100;
+    font-size: 1.6875rem;
+    letter-spacing: -0.043125rem;
+    text-decoration: none;
+    color: var(--darker) !important;
+    margin-bottom: 3rem;
+
+  }
+  
+  .loginFormContainer p {
+    text-align: center;
+    font-family: "JetBrainsMono";
+    font-weight: 100;
+    font-size: 1.4rem;
+    color: rgb(123, 0, 0);
+    letter-spacing: -0.043125rem;
+  }
+  
+  .loginFormContainer .formInput::placeholder {
+    color: var(--darker);
+    font-size: 2rem;
+    
+  }
+  .loginFormContainer .formInput:focus {
+    outline: none;
+  }
+  .loginFormContainer .formInput:-webkit-autofill,
+  .loginFormContainer .formInput:-webkit-autofill:hover,
+  .loginFormContainer .formInput:-webkit-autofill:focus,
+  .loginFormContainer .formInput:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--darker) !important;
+    font-family: "JetBrainsMono", sans-serif;
+    font-size: 1.5rem;
+  }
+
+  .loginFormContainer .formInput:-webkit-autofill::first-line {
+    font-family: "JetBrainsMono", sans-serif;
+    font-size: 1.5rem;
+  }
+  
+
+  .loginFormContainer .formInput:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px var(--middle) inset;
+    -webkit-text-fill-color: var(--darker) !important;
+    font-family: "JetBrainsMono", sans-serif;
+    font-size: 1.5rem;
+  }
+  
+  .loginFormContainer .formInput:focus::placeholder {
+    color: transparent;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .brandingContainer {
+    width: 55vw;
+    height: 100vh;
+    background-color: var(--middle);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .brandingContainer .branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 49.4375rem;
+
+  }
+  
+  .brandingContainer .branding h1 {
+    font-family: "JetBrainsMono";
+    font-size: 8.0625rem;
+    line-height: 9.375rem;
+    text-align: center;
+    letter-spacing: 1.45125rem;
+    color: var(--darker);
+    font-weight: 300;
+    overflow: hidden;
+    margin-bottom: 2.75rem;
+
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      2px 1px 0 #000;
+  }
+  
+  .brandingContainer .branding h2 {
+    font-family: "JetBrainsMono";
+    font-size: 2.1875rem;
+    line-height: 4.875rem;
+    text-align: center;
+    letter-spacing: 0.48125rem;
+    color: var(--darker);
+    font-weight: 100;
+    margin-bottom: 3rem;
+  }
+  .brandingContainer .branding a {
+    font-family: "JetBrainsMono";
+    font-size: 1.375rem;
+    text-decoration: none;
+    line-height: 4.875rem;
+    text-align: center;
+    color: var(--darker);
+    font-weight: 100;
+  }
+  

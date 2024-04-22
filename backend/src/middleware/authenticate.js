@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 exports.verifyToken = (req, res, next) => {
+  const token = req.cookies['token'];  // Ensure you are using cookie-parser middleware if you use cookies
 
-  const token = req.cookies['token'];
-
-  if (!token) return res.status(401).send("Access denied. No token provided.");
+  if (!token) {
+    return res.status(401).send("Access denied. No token provided.");
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -15,11 +16,13 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-exports.isAdmin = (req, res,next) => {
-  if (req.user.role === 'admin') {
-    next()  
+
+exports.checkRole = (roles) => (req, res, next) => {
+  if (req.user && roles.includes(req.user.role)) {
+    next();
   } else {
-    res.status(403).json({ message: "Access denied. Requires owner role." });
+    res.status(403).json({ message: "Access denied. Not sufficient permissions." });
   }
 };
+
 
