@@ -1,4 +1,75 @@
 <div class="container">
+
+
+
+  <div class="loginContainer">
+    <h1>ADMIN LOGIN</h1>
+    <form class="form" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        class="formInput"
+        [(ngModel)]="adminCreds.username"
+        name="username"
+        placeholder="USERNAME"
+        required
+      />
+      <input
+        type="password"
+        class="formInput"
+        [(ngModel)]="adminCreds.password"
+        name="password"
+        placeholder="PASSWORD"
+        required
+      />
+    </form>
+  </div>
+
+
+
+
+
+  <div class="brandingContainer">
+    <div class="header">
+      <h1>ORDER<br/>FEAST</h1>
+      <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
+    </div>
+
+
+
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="container">
     <div class="loginContainer">
       <div class="loginFormContainer">
         <h1>ADMIN LOGIN</h1>
@@ -34,7 +105,7 @@
     </div>
     <div class="brandingContainer">
       <div class="branding">
-        <h1>ORDER<br />FEAST</h1>
+        <h1>ORDER<br/>FEAST</h1>
         <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
         <a href=""
           >DISCOVER HOW TO HARNESS OUR SERVICES FOR YOUR RESTAURANT'S SUCCESS.</a
@@ -42,4 +113,4 @@
       </div>
     </div>
   </div>
-  
+   -->
