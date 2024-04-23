@@ -50,7 +50,7 @@ a {
   text-align: left;
   font-family: "JetBrainsMono";
   font-size: 1.25rem;
-  letter-spacing: -0.043125rem;
+  letter-spacing: .043125rem;
   color: var(--darkestBlue) !important;
   caret-color: var(--darkestBlue);
   margin-bottom: 3rem;
@@ -67,8 +67,9 @@ a {
 .loginContainer .formInput:-webkit-autofill:hover,
 .loginContainer .formInput:-webkit-autofill:focus,
 .loginContainer .formInput:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: 0 0 0 30px white inset !important;
   -webkit-text-fill-color: var(--darkestBlue) !important;
+  transition: background-color 5000s ease-in-out 0s;
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
 }
@@ -80,6 +81,7 @@ a {
 
 .loginContainer .formInput:-webkit-autofill {
   -webkit-box-shadow: none;
+  background-color: none;
   font-family: "JetBrainsMono" !important;
   font-size: 1.25rem !important;
 }

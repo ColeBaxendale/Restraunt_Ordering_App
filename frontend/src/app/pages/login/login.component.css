@@ -82,6 +82,7 @@ a {
   -webkit-box-shadow: none;
   font-family: "JetBrainsMono" !important;
   font-size: 1.25rem !important;
+  background-color: none;
 }
 
 .loginFormContainer .formInput:focus::placeholder {

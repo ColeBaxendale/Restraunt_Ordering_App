@@ -1,4 +1,32 @@
+h1,
+h2,
+h3,
+h4,
+p,
+a {
+  font-family: "JetBrainsMono";
+}
+
 .container {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to top,
+    var(--lightBlue2),
+    var(--darkestBlue)
+  );
+}
+
+
+
+
+
+
+
+
+
+/* .container {
   display: flex;
   min-height: 100vh;
   background-color: var(--darkestBlue);
@@ -139,4 +167,4 @@
   letter-spacing: 0.48125rem;
   color: var(--lightTan);
   font-weight: 100;
-}
+} */

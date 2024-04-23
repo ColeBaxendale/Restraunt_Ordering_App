@@ -1,4 +1,35 @@
 <div class="container">
+  <div class="header">
+    <form [formGroup]="formGroup">
+      <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
+    </form>
+  </div>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="container">
   <div class="leftContainer">
     <div class="searchBarContainer">
       <input
@@ -40,4 +71,4 @@
       <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
     </div>
   </div>
-</div>
+</div> -->

@@ -7,32 +7,47 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Restaurant } from '../../../../../types';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
+import { FormGroup, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, NgFor],
+  imports: [CommonModule, NgFor,AutoCompleteModule,ReactiveFormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
 export class AdminComponent implements OnInit {
   restaurants: Restaurant[] = [];
-  filteredRestaurants: Restaurant[] = [];
   selectedRestaurant: Restaurant | null = null;
   totalIncome: number = 0;
   totalLiveRestaurants: number = 0;
   totalAmountMade: number = 0;
 
+  formGroup: FormGroup;
+  filteredRestaurants: Restaurant[] = [];
+
   constructor(
+    private fb: FormBuilder,
     private restaurantService: RestaurantService,
     public dialog: MatDialog,
     private http: HttpClient,
     private router: Router,
     private sessionService: SessionService
-  ) {}
+  ) {
+    this.formGroup = this.fb.group({
+      selectedRestaurant: new FormControl()
+    });
+  }
 
   ngOnInit(): void {
     this.loadRestaurants();
+  }
+
+  filterRestaurants(event: any): void {
+    let query = event.query;
+    this.filteredRestaurants = this.restaurants.filter(restaurant => 
+      restaurant.details.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
   }
 
   loadRestaurants(): void {
