@@ -1,6 +1,6 @@
 <div class="container">
   <div class="loginContainer">
-    <div class="loginFormContainer">
+    <div class="loginInsideContainer">
       <h1>LOGIN</h1>
       <form class="form" (ngSubmit)="onSubmit()">
         <input
@@ -8,7 +8,7 @@
           class="formInput"
           [(ngModel)]="user.email"
           name="email"
-          placeholder="EMAIL"
+          placeholder="Email"
           required
         />
         <input
@@ -16,27 +16,28 @@
           class="formInput"
           [(ngModel)]="user.password"
           name="password"
-          placeholder="PASSWORD"
+          placeholder="Password"
           required
         />
       </form>
-      <div *ngIf="errorMsg != ''">
-        <p>{{ errorMsg }}</p>
+      <div class="errorMessageContainer">
+        <div *ngIf="errorMsg != ''">
+          <p>{{ errorMsg }}</p>
+        </div>
       </div>
       <button type="submit" (click)="onSubmit()" class="formInputLogin">
         LOGIN
       </button>
-
-      <a class="forgotPassword" href="">FORGOT PASSWORD?</a>
+      <div>
+        <a class="forgotPassword" href="">Forgot Password?</a>
+      </div>
     </div>
   </div>
+
   <div class="brandingContainer">
-    <div class="branding">
+    <div class="header">
       <h1>ORDER<br />FEAST</h1>
       <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
-      <a href=""
-        >DISCOVER HOW TO HARNESS OUR SERVICES FOR YOUR RESTAURANT'S SUCCESS.</a
-      >
     </div>
   </div>
 </div>

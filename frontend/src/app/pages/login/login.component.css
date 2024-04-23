@@ -1,157 +1,318 @@
+h1,
+h2,
+h3,
+h4,
+p,
+a {
+  font-family: "JetBrainsMono";
+}
+
 .container {
   display: flex;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .loginContainer {
-  width: 42vw;
+  width: 40vw;
   height: 100vh;
-  background-color: var(--darkerBlue);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loginFormContainer {
-  background-color: var(--darkestBlue);
-  width: 36.9375rem;
-  height: 49.4375rem;
+  background-image: linear-gradient(to bottom, var(--offWhite), #ffffff);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 0 1.25rem 0.125rem rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  text-align: left;
 }
 
-.loginFormContainer h1 {
-  font-family: "JetBrainsMono";
-  font-size: 5.4375rem;
-  letter-spacing: 0.435rem;
-  color: var(--lightTan);
+.loginContainer h1 {
+  font-size: 2.5rem;
+  color: var(--darkestBlue);
   font-weight: 100;
-  margin-top: 5.5625rem;
-  margin-bottom: 5.25rem;
+  margin-bottom: 3rem;
 }
 
-.loginFormContainer .formInput {
-  border-radius: 6.25rem;
-  width: 23.5625rem;
-  height: 5.125rem;
-  background-color: var(--darkestBlue);
-  border: 0.1875rem solid var(--lightTan);
+.loginContainer .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-family: "JetBrainsMono";
-  font-size: 2rem;
-  letter-spacing: -0.043125rem;
-  color: var(--lightTan) !important;
-  caret-color: var(--lightBlue);
-  margin-bottom: 3.25rem;
+  margin-bottom: -1.6rem;
 }
 
-.loginFormContainer .formInputLogin {
-  border-radius: 6.25rem;
-  width: 20.375rem;
-  height: 5.125rem;
-  background-color: var(--darkerBlue);
-  text-align: center;
+.loginContainer .formInput {
+  width: 24rem;
+  height: 2.5rem;
+  border-bottom: 0.15rem solid var(--lightBlue2);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-align: left;
   font-family: "JetBrainsMono";
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   letter-spacing: -0.043125rem;
   color: var(--darkestBlue) !important;
-  margin-bottom: 2rem;
-  cursor: pointer;
+  caret-color: var(--darkestBlue);
+  margin-bottom: 3rem;
 }
 
-.loginFormContainer .forgotPassword {
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-weight: 100;
-  font-size: 1.6875rem;
-  letter-spacing: -0.043125rem;
-  text-decoration: none;
-  color: var(--darkerBlue) !important;
-  margin-bottom: 3.25rem;
+.loginContainer .formInput::placeholder {
+  color: var(--darkestBlue);
+  font-size: 1.25rem;
 }
-
-.loginFormContainer p {
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-weight: 100;
-  font-size: 1.2rem;
-  color: red;
-  margin-top: -2rem;
-  letter-spacing: -0.043125rem;
-
-  margin-bottom: 1rem;
-}
-
-.loginFormContainer .formInput::placeholder {
-  color: var(--lightTan);
-  font-size: 2rem;
-}
-.loginFormContainer .formInput:focus {
+.loginContainer .formInput:focus {
   outline: none;
 }
-.loginFormContainer .formInput:-webkit-autofill,
-.loginFormContainer .formInput:-webkit-autofill:hover,
-.loginFormContainer .formInput:-webkit-autofill:focus,
-.loginFormContainer .formInput:-webkit-autofill:active {
+.loginContainer .formInput:-webkit-autofill,
+.loginContainer .formInput:-webkit-autofill:hover,
+.loginContainer .formInput:-webkit-autofill:focus,
+.loginContainer .formInput:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: var(--lightTan) !important;
+  -webkit-text-fill-color: var(--darkestBlue) !important;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: 1.25rem;
 }
+
+.loginContainer .formInput:-webkit-autofill::first-line {
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: 1.25rem;
+}
+
+.loginContainer .formInput:-webkit-autofill {
+  -webkit-box-shadow: none;
+  font-family: "JetBrainsMono" !important;
+  font-size: 1.25rem !important;
+}
+
 .loginFormContainer .formInput:focus::placeholder {
   color: transparent;
 }
+.loginContainer .errorMessageContainer {
+  width: 100%;
+  height: 1rem;
+  margin-bottom: 1.4rem;
+}
 
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.loginContainer .errorMessageContainer p {
+  font-weight: 100;
+  font-size: 0.8rem;
+  color: rgb(233, 0, 0);
+  letter-spacing: -0.043125rem;
+}
+
+.loginContainer .formInputLogin {
+  border-radius: 1.25rem;
+  width: 8rem;
+  height: 3rem;
+  background-color: var(--lightBlue);
+  border: 0.1rem solid var(--lightBlue2);
+  text-align: center;
+  font-family: "JetBrainsMono";
+  font-size: 1rem;
+  color: var(--darkestBlue) !important;
+  cursor: pointer;
+  margin-bottom: 3rem;
+}
+
+.loginContainer .formInputLogin:hover {
+  border: 0.1rem solid var(--darkestBlue);
+}
+
+.loginContainer .forgotPassword {
+  text-align: left;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  text-decoration: none;
+  color: var(--darkestBlue) !important;
+  margin-bottom: 3rem;
+}
+
+.loginContainer .forgotPassword:hover {
+  color: var(--lightBlue2) !important;
 }
 
 .brandingContainer {
-  width: 58vw;
-
+  width: 60vw;
   height: 100vh;
-  background-color: var(--darkestBlue);
-}
-
-.brandingContainer .branding {
+  background-image: linear-gradient(
+    to top,
+    var(--lightBlue2),
+    var(--darkestBlue)
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.brandingContainer .branding h1 {
-  font-family: "JetBrainsMono";
-  font-size: 8.0625rem;
-  line-height: 9.375rem;
-  text-align: center;
-  margin-top: 9rem;
+.brandingContainer h1 {
+  font-size: 6.5rem;
+  line-height: 7.75rem;
   letter-spacing: 1.45125rem;
-  color: var(--lightBlue);
-  margin-bottom: 4.75rem;
-  font-weight: 300;
-  overflow: hidden;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    2px 1px 0 #000;
+  color: var(--offWhite);
+  font-weight: 400;
+  margin-bottom: 2.5rem;
 }
 
-.brandingContainer .branding h2 {
-  font-family: "JetBrainsMono";
-  font-size: 2.1875rem;
-  line-height: 4.875rem;
-  text-align: center;
+.brandingContainer h2 {
+  font-size: 2rem;
+  line-height: 4rem;
   letter-spacing: 0.48125rem;
-  color: var(--lightTan);
+  color: var(--darkestBlue);
   font-weight: 100;
-  margin-bottom: 4.75rem;
+  margin-bottom: 3rem;
 }
-.brandingContainer .branding a {
-  font-family: "JetBrainsMono";
-  font-size: 1.375rem;
-  text-decoration: none;
-  line-height: 4.875rem;
-  text-align: center;
-  color: var(--darkerBlue);
-  font-weight: 100;
+
+
+
+@media (max-width: 1024px) {
+  .loginContainer .formInput {
+    width: 20rem;
+  }
+  .brandingContainer h1 {
+    font-size: 6.2rem;
+    line-height: 7.45rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1.7rem;
+    line-height: 3.7rem;
+  }
+
+
+}
+
+@media (max-width: 843px) {
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100vh;
+  }
+  .loginContainer{
+    width: 100vw;
+    height: 55vh;
+    text-align: center;
+    justify-content: flex-start;
+  }
+
+  .loginContainer h1 {
+    font-size: 2.5rem;
+    color: var(--darkestBlue);
+    font-weight: 100;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .loginContainer .formInput {
+    text-align: center;
+    width: 24rem;
+    margin-bottom: 2rem;
+
+
+  }
+
+  .loginContainer .formInputLogin{
+    margin-bottom: 1.5rem;
+  }
+  
+  .brandingContainer{
+    width: 100vw;
+    height: 45vh;
+  }
+
+  .brandingContainer h1 {
+    font-size: 4.5rem;
+    line-height: 5.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1.5rem;
+    line-height: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 435px) {
+
+  .loginContainer .formInput {
+    width: 20rem;
+
+  }
+
+  .loginContainer .formInputLogin {
+    margin-bottom: 1rem;
+  }
+
+  .loginContainer h1{
+    margin-top: 0.5rem;
+
+  }
+
+  .brandingContainer h1 {
+    font-size: 3.5rem;
+    line-height: 4.75rem;
+    
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1rem;
+    line-height: 3rem;
+  letter-spacing: 0.38125rem;
+
+  }
+}
+
+@media (max-width: 380px) {
+  .loginContainer{
+    height: 70vh;
+  }
+  .brandingContainer{
+    height: 30vh;
+  }
+
+  .loginContainer h1{
+    margin-top: 0.5rem;
+
+  }
+  .brandingContainer h1 {
+    font-size:2rem;
+    line-height: 4.65rem;
+    margin-bottom: .5rem;
+    letter-spacing: 1rem;
+    line-height: 3rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: .8rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.28125rem;
+    margin-bottom: 1rem;
+
+  }
+}
+
+@media (max-width: 320px) {
+  .loginContainer .formInput {
+    width: 16rem;
+
+  }
+
+  .brandingContainer h1 {
+    font-size: 2.5rem;
+    line-height: 2.65rem;
+    margin-top: 0.5rem;
+
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1rem;
+    line-height: 1.9rem;
+  letter-spacing: 0.18125rem;
+
+  }
 }

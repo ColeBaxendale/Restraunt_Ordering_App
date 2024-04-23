@@ -172,6 +172,16 @@ a {
   .loginContainer .formInput {
     width: 20rem;
   }
+  .brandingContainer h1 {
+    font-size: 6.2rem;
+    line-height: 7.45rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1.7rem;
+    line-height: 3.7rem;
+  }
+
 
 }
 
