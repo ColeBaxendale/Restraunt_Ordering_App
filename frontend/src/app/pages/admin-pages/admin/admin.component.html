@@ -29,6 +29,10 @@
     <h1>No Restaurants Have Been Added Yet...</h1>
   </div>
 
+  <div class="notAdded" *ngIf="filteredRestaurants.length < 1">
+    <h1>No Restaurants Have Been Found With That Search...</h1>
+  </div>
+
 </div>
 
 
