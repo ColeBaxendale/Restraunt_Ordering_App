@@ -1,30 +1,32 @@
 <div class="container">
   <div class="header">
-    <input class="searchbar" type="text" placeholder="Search for a restaurant"(input)="searchRestaurants($any($event.target).value)" />
-    <h1>ORDER FEAST ADMIN</h1>
+    <input class="searchbar" type="text" placeholder="Search For Restaurant Name..." (input)="searchRestaurants($any($event.target).value)" />
     <div class="buttonContainer">
       <button class="buttonClass" (click)="addRestaurant()">New Restaurant</button>
       <button class="buttonClass" (click)="logout()">Logout</button>
     </div>
   </div>
 
-  <div class="restaurantContainer">
-
+  <!-- Fixed ngIf directive below -->
+  <div class="restaurantContainer" *ngIf="restaurants.length > 0">
     <div
-      class="restaurantItem"
+      class="restaurantCard"
       *ngFor="let restaurant of restaurants"
       (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
     >
       <h3>{{ restaurant.details.name }}</h3>
       <h4>
-        <span *ngIf="restaurant.admin.isActive; else notLive">Live</span
-        ><ng-template #notLive>Not Live</ng-template>
+        <span *ngIf="restaurant.admin.isActive; else notLive">Live</span>
+        <ng-template #notLive>Not Live</ng-template>
       </h4>
-
-      <h5>Overall Income: {{ restaurant.admin.overallIncome - 0.01 }}</h5>
-      
+      <h5>Overall Income: ${{ restaurant.admin.overallIncome - 0.01 | number:'1.2-2'  }}</h5>
+      <h6>ID: {{ restaurant._id }}</h6>
     </div>
   </div>
+  <div class="notAdded" *ngIf="restaurants.length < 1">
+    <h1>No Restaurants Have Been Added Yet...</h1>
+  </div>
+
 </div>
 
 
@@ -34,48 +36,3 @@
       <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
     </form> -->
 
-
-<!-- 
-<div class="container">
-  <div class="leftContainer">
-    <div class="searchBarContainer">
-      <input
-        class="searchbar"
-        type="text"
-        placeholder="SEARCH FOR A RESTAURANT"
-        (input)="searchRestaurants($any($event.target).value)"
-      />
-    </div>
-    <div class="restaurantContainer">
-      <div
-        class="restaurantItem"
-        *ngFor="let restaurant of restaurants"
-        (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
-      >
-        <h3>{{ restaurant.details.name }}</h3>
-        <h3>
-          <span *ngIf="restaurant.admin.isActive; else notLive">Live</span
-          ><ng-template #notLive>Not Live</ng-template>
-        </h3>
-
-        <h3>Overall Income: {{ restaurant.admin.overallIncome - 0.01 }}</h3>
-        <p>{{ restaurant._id }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="rightContainer">
-    <div class="buttonsContainer">
-      <button class="buttonClass" (click)="addRestaurant()">
-        ADD RESTAURANT
-      </button>
-      <button class="buttonClass" (click)="logout()">LOGOUT</button>
-    </div>
-    <h2>TOTAL LIVE RESTAURANTS: {{ totalLiveRestaurants }}</h2>
-    <h2>TOTAL CASH MADE: $ {{ totalAmountMade }}</h2>
-
-    <div class="branding">
-      <h1>ORDER<br />FEAST</h1>
-      <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
-    </div>
-  </div>
-</div> -->

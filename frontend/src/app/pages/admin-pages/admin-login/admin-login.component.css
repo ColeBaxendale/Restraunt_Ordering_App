@@ -115,10 +115,12 @@ a {
   margin-bottom: 3rem;
   border: none;
   text-shadow:
-  -0.3px -0.3px 0 var(--lightBlue2),  
-  0.3px 0.3px 0 var(--lightBlue2),
-  -0.3px -0.3px 0 var(--lightBlue2),
-  0.3px 0.3px 0 var(--lightBlue2);
+  -0.1px -0.1px 0 var(--lightBlue2),  
+  0.1px 0.1px 0 var(--lightBlue2),
+  -0.1px -0.1px 0 var(--lightBlue2),
+  0.1px 0.1px 0 var(--lightBlue2);
+  text-underline-offset: .5rem;
+
 }
 
 .loginContainer .formInputLogin:hover {

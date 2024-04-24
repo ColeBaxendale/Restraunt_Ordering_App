@@ -12,7 +12,11 @@ a {
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
-  background-color: var(--offWhite);
+  background-image: linear-gradient(
+    to top,
+    var(--lightBlue2),
+    var(--darkestBlue)
+  );
 }
 
 .header{
@@ -35,14 +39,11 @@ a {
   text-align: center;
   font-family: "JetBrainsMono";
   font-size: 1.5rem;
-  color: var(--darkestBlue) !important;
+  font-weight: 100;
+  color: var(--offWhite) !important;
   cursor: pointer;
   border: none;
-  text-shadow:
-  -0.3px -0.3px 0 var(--lightBlue2),  
-  0.3px 0.3px 0 var(--lightBlue2),
-  -0.3px -0.3px 0 var(--lightBlue2),
-  0.3px 0.3px 0 var(--lightBlue2);
+
 }
 .header .buttonContainer{
   display: flex;
@@ -53,13 +54,14 @@ a {
 
 .header .buttonClass:hover {
   text-decoration: underline;
+  text-underline-offset: .5rem;
 
 }
 
 .header .searchbar{
   width: 28rem;
   height: 2.5rem;
-  border-bottom: 0.15rem solid var(--darkestBlue);
+  border-bottom: 0.15rem solid var(--offWhite);
   border-top: none;
   border-left: none;
   border-right: none;
@@ -67,12 +69,14 @@ a {
   font-family: "JetBrainsMono";
   font-size: 1.25rem;
   letter-spacing: .043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
+  color: var(--offWhite) !important;
+  caret-color: var(--offWhite);
+  background-color: inherit;
+
 }
 
 .header .searchbar::placeholder {
-  color: var(--darkestBlue) !important;
+  color: var(--offWhite) !important;
   font-size: 1.25rem;
 }
 .header .searchbar:focus {
@@ -83,7 +87,7 @@ a {
 .header .searchbar:-webkit-autofill:focus,
 .header .searchbar:-webkit-autofill:active {
   box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
+  -webkit-text-fill-color: var(--offWhite) !important;
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
 }
@@ -105,7 +109,7 @@ a {
 }
 
 .header .searchbar::placeholder {
-  color: var(--darkestBlue);
+  color: var(--offWhite);
   font-size: 1rem;
 }
 .header .searchbar:focus {
@@ -116,7 +120,7 @@ a {
 .header .searchbar:-webkit-autofill:focus,
 .header .searchbar:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: var(--lightTan) !important;
+  -webkit-text-fill-color: var(--offWhite) !important;
 }
 .header .searchbar:focus::placeholder {
   color: transparent;
@@ -125,37 +129,64 @@ a {
 .restaurantContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Space between to handle multiple cards */
+  justify-content: flex-start; /* Space between to handle multiple cards */
   gap: 20px; /* Space between cards */
   padding-top: 1.5rem;
-  margin-left: 1.5rem;
+  margin-left: 3rem;
   margin-right: 1.5rem;
+  text-align: center;
 }
 
-/* Individual restaurant item styling */
-.restaurantContainer .restaurantItem {
-  background-color: #fff;
-  border: 1px solid #ccc;
+.restaurantContainer .restaurantCard {
+  background-color: var(--offWhite2);
+  border: 1px solid var(--lightTan);
   border-radius: 5px;
-  width: 30%; /* Card width to fit three cards per row */
-  padding: 20px;
-  font-weight: 100;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  width: 16rem; 
+  height: 10rem;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1); /* Subtle shadow for depth */
   cursor: pointer;
   transition: transform 0.3s ease; /* Smooth transform on hover */
   font-family: "JetBrainsMono";
+  font-weight: 100;
   justify-content: center;
   align-items: center;
 
 }
 
-.restaurantContainer .restaurantItem:hover {
-  transform: translateY(-5px); /* Slight raise effect on hover */
+.restaurantContainer .restaurantCard:hover {
+  transform: translateY(-8px); /* Slight raise effect on hover */
   background-color: var(--offWhite2);
+  border: 1px solid var(--lightOrange);
+
 }
 
-.restaurantItem h3{
-  font-size: 1.5rem;
+.restaurantCard h3{
+  margin: 1rem;
+  font-size: 1rem;
+}
+
+.restaurantCard h4{
+  margin: 1rem;
+  font-size: .9rem;
+}
+
+.restaurantCard h5{
+  margin: 1rem;
+  font-size: .8rem;
+}
+
+.restaurantCard h6{
+  margin: 1rem;
+  font-size: .7em;
+}
+
+.notAdded h1{ 
+  color: var(--offWhite);
+  font-weight: 100;
+  font-family: "JetBrainsMono" !important;
+  margin-left: 3rem;
+  margin-top: 3rem;
+
 }
 
 @media (max-width: 660px) {
