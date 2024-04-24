@@ -1,31 +1,38 @@
 <div class="container">
   <div class="header">
-    <form [formGroup]="formGroup">
-      <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
-    </form>
+    <input class="searchbar" type="text" placeholder="Search for a restaurant"(input)="searchRestaurants($any($event.target).value)" />
+    <h1>ORDER FEAST ADMIN</h1>
+    <div class="buttonContainer">
+      <button class="buttonClass" (click)="addRestaurant()">New Restaurant</button>
+      <button class="buttonClass" (click)="logout()">Logout</button>
+    </div>
   </div>
 
-  
+  <div class="restaurantContainer">
+
+    <div
+      class="restaurantItem"
+      *ngFor="let restaurant of restaurants"
+      (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
+    >
+      <h3>{{ restaurant.details.name }}</h3>
+      <h4>
+        <span *ngIf="restaurant.admin.isActive; else notLive">Live</span
+        ><ng-template #notLive>Not Live</ng-template>
+      </h4>
+
+      <h5>Overall Income: {{ restaurant.admin.overallIncome - 0.01 }}</h5>
+      
+    </div>
+  </div>
 </div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- <form [formGroup]="formGroup">
+      <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
+    </form> -->
 
 
 <!-- 

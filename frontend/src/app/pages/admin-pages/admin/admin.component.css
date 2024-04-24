@@ -9,20 +9,178 @@ a {
 
 .container {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
-  background-image: linear-gradient(
-    to top,
-    var(--lightBlue2),
-    var(--darkestBlue)
-  );
+  background-color: var(--offWhite);
 }
 
+.header{
+  height: 5vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 1.5rem;
+}
 
+.header .buttonClass{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
+  font-family: "JetBrainsMono";
+  font-size: 1.5rem;
+  color: var(--darkestBlue) !important;
+  cursor: pointer;
+  border: none;
+  text-shadow:
+  -0.3px -0.3px 0 var(--lightBlue2),  
+  0.3px 0.3px 0 var(--lightBlue2),
+  -0.3px -0.3px 0 var(--lightBlue2),
+  0.3px 0.3px 0 var(--lightBlue2);
+}
+.header .buttonContainer{
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  margin-right: 6rem;
+}
 
+.header .buttonClass:hover {
+  text-decoration: underline;
 
+}
 
+.header .searchbar{
+  width: 28rem;
+  height: 2.5rem;
+  border-bottom: 0.15rem solid var(--darkestBlue);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-align: left;
+  font-family: "JetBrainsMono";
+  font-size: 1.25rem;
+  letter-spacing: .043125rem;
+  color: var(--darkestBlue) !important;
+  caret-color: var(--darkestBlue);
+}
 
+.header .searchbar::placeholder {
+  color: var(--darkestBlue) !important;
+  font-size: 1.25rem;
+}
+.header .searchbar:focus {
+  outline: none;
+}
+.header .searchbar:-webkit-autofill,
+.header .searchbar:-webkit-autofill:hover,
+.header .searchbar:-webkit-autofill:focus,
+.header .searchbar:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: var(--darkestBlue) !important;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: 1.25rem;
+}
+
+.header .searchbar:-webkit-autofill::first-line {
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: 1.25rem;
+}
+
+.header .searchbar:-webkit-autofill {
+  -webkit-box-shadow: none;
+  background-color: none;
+  font-family: "JetBrainsMono" !important;
+  font-size: 1.25rem !important;
+}
+
+.header .searchbar:focus::placeholder {
+  color: transparent;
+}
+
+.header .searchbar::placeholder {
+  color: var(--darkestBlue);
+  font-size: 1rem;
+}
+.header .searchbar:focus {
+  outline: none;
+}
+.header .searchbar:-webkit-autofill,
+.header .searchbar:-webkit-autofill:hover,
+.header .searchbar:-webkit-autofill:focus,
+.header .searchbar:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: var(--lightTan) !important;
+}
+.header .searchbar:focus::placeholder {
+  color: transparent;
+}
+
+.restaurantContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Space between to handle multiple cards */
+  gap: 20px; /* Space between cards */
+  padding-top: 1.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* Individual restaurant item styling */
+.restaurantContainer .restaurantItem {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 30%; /* Card width to fit three cards per row */
+  padding: 20px;
+  font-weight: 100;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth transform on hover */
+  font-family: "JetBrainsMono";
+  justify-content: center;
+  align-items: center;
+
+}
+
+.restaurantContainer .restaurantItem:hover {
+  transform: translateY(-5px); /* Slight raise effect on hover */
+  background-color: var(--offWhite2);
+}
+
+.restaurantItem h3{
+  font-size: 1.5rem;
+}
+
+@media (max-width: 660px) {
+  .header{
+    height: 10vh;
+    flex-direction: column;
+  }
+
+  .header .searchbar{
+    margin-bottom: 1rem;
+  }
+
+  .header .buttonContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-left: 0rem;
+  }
+}
+
+@media (max-width: 440px) {
+  .header .searchbar{
+    width: 15rem;
+  }
+}
 
 
 

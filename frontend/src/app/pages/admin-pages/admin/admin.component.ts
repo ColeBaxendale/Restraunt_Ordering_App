@@ -9,11 +9,12 @@ import { RestaurantService } from '../../../services/admin/restaurant/requests/r
 import { SessionService } from '../../../services/session/session.service';
 import { FormGroup, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import { DividerModule } from 'primeng/divider';
+import {MatCardModule} from '@angular/material/card';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, NgFor,AutoCompleteModule,ReactiveFormsModule],
+  imports: [CommonModule, NgFor,AutoCompleteModule,ReactiveFormsModule,MatCardModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
