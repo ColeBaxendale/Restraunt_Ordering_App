@@ -1,300 +1,302 @@
+h1,
+h2,
+h3,
+h4,
+p,
+a {
+  font-family: "JetBrainsMono";
+}
+
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--darkestBlue);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-image: linear-gradient(
+    to top,
+    var(--lightBlue2),
+    var(--darkestBlue)
+  );
 }
 
-.container .headerContainer {
+.header{
+  height: 5vh;
+  width: 100vw;
   display: flex;
-  height: 13.61vh;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.container .headerContainer .leftHeaderContainer {
-  width: 51.51vw;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 1.5rem;
 }
 
-.container .headerContainer .leftHeaderContainer .leftHeaderContainerStack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.header h1{
+  font-size: 1.8rem;
+  font-weight: 100;
+  color: var(--offWhite) !important;
+
 }
-.container .headerContainer .leftHeaderContainer .leftHeaderContainerStack p {
-  margin-left: 5.375rem;
-  font-size: 1.5rem;
+
+.header p{  
+  margin-left: 2.375rem;
+  font-size: 1 rem;
   color: red;
   font-family: "JetBrainsMono";
   font-weight: 100;
   font-weight: 100;
+  margin-top: .45rem;
 }
 
-.container .headerContainer .leftHeaderContainer h1 {
-  margin-left: 5.375rem;
+.header .buttonClass{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
   font-family: "JetBrainsMono";
-  font-size: 4.0625rem;
-  color: var(--lightTan);
+  font-size: 1.5rem;
   font-weight: 100;
-}
-
-.container .headerContainer .rightHeaderContainer {
-  width: 48.49vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.container .headerContainer .buttonClass {
-  border-radius: 6.25rem;
-  width: 14.9375rem;
-  height: 6rem;
-  background-color: var(--darkerBlue);
-  font-family: "JetBrainsMono";
-  font-size: 1.375rem;
-  color: var(--darkestBlue);
+  color: var(--offWhite) !important;
   cursor: pointer;
   border: none;
-  border: none;
-  font-weight: 100;
-}
 
-.container .bottomContainer {
-  width: 100%;
-  height: 86.39vh;
+}
+.header .buttonContainer{
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.container .bottomContainer .bottomLeftContainer {
-  height: 100%;
-  width: 33.33vw;
-  margin-left: 5.375rem;
-}
-
-.container .bottomContainer .bottomLeftContainer .inputContainer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 2.3125rem;
-  color: var(--lightTan);
-  font-weight: 100;
-}
-
-.container .bottomContainer .bottomLeftContainer .inputContainer h1 {
-  margin-top: 1rem;
-
-  font-family: "JetBrainsMono";
-  font-size: 2.5rem;
-  color: var(--lightTan);
+  flex-direction: row;
+  gap: 4rem;
   margin-right: 6rem;
-  font-weight: 100;
 }
 
-.hiddenInput {
-  display: none;
+.header .buttonClass:hover {
+  text-decoration: underline;
+  text-underline-offset: .5rem;
 }
 
-.linkLike {
-  cursor: pointer;
-  font-family: "JetBrainsMono";
-  font-size: 1.75rem;
-  font-weight: 100;
-  margin-top: 1rem;
-  cursor: pointer;
-  font-weight: 100;
-
-  color: var(--darkerBlue);
-  text-decoration: none;
-}
-
-.container .bottomContainer .bottomLeftContainer .inputContainer h2 {
-  font-family: "JetBrainsMono";
-  font-size: 1.75rem;
-  font-weight: 100;
-
-  color: var(--lightTan);
-}
-
-.container .bottomContainer .bottomLeftContainer .inputContainer .formInput {
-  width: 27.9375rem;
-  height: 4.1875rem;
-  background-color: var(--lightTan);
-  font-family: "JetBrainsMono";
-  font-size: 1.875rem;
-  border-radius: 6.25rem;
-  color: var(--darkestBlue);
+.mainContainer {
+  display: flex;
+  justify-content: center; /* Space between to handle multiple cards */
+  padding-top: 1.5rem;
   text-align: center;
-  margin-right: 6.875rem;
-  margin-left: 3.3125rem;
-  font-weight: 100;
 }
 
-.container
-  .bottomContainer
-  .bottomLeftContainer
-  .inputContainer
-  .formInputSmall {
-  width: 8rem;
-  height: 4.1875rem;
-  background-color: var(--lightTan);
-  font-family: "JetBrainsMono";
-  font-size: 1.875rem;
-  border-radius: 6.25rem;
-  color: var(--darkestBlue);
-  text-align: center;
-  margin-right: 5.125rem;
-  margin-left: 1rem;
-  font-weight: 100;
-}
-
-.container
-  .bottomContainer
-  .bottomLeftContainer
-  .inputContainer
-  .formInputTextBox {
-  width: 27.9375rem;
-  height: 13.625rem;
-  background-color: var(--lightTan);
-  font-family: "JetBrainsMono";
-  font-size: 1.875rem;
-  border-radius: 1.625rem;
-  color: var(--darkestBlue);
-  text-align: left;
-  margin-right: 6.875rem;
-  margin-left: 3.3125rem;
-  font-weight: 100;
-}
-
-.container .bottomContainer .bottomMiddleContainer {
-  height: 100%;
-  width: 33.33vw;
-}
-
-.container .bottomContainer .bottomMiddleContainer h1 {
-  margin-top: 1rem;
-
-  font-family: "JetBrainsMono";
-  font-size: 2.5rem;
-  color: var(--lightTan);
-  margin-right: 6rem;
-  margin-bottom: 2.3125rem;
-  font-weight: 100;
-}
-
-.container .bottomContainer .bottomMiddleContainer .inputContainer {
+.mainContainer .card {
+  background-color: var(--offWhite);
+  border: 1px solid var(--lightTan);
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 3.5rem;
-  color: var(--lightTan);
-}
-
-.container .bottomContainer .bottomMiddleContainer .inputContainer h2 {
+  flex-direction: row;
+  border-radius: 5px;
+  width: 95vw; 
+  height: 82vh;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1); /* Subtle shadow for depth */
   font-family: "JetBrainsMono";
-  font-size: 1.75rem;
-  color: var(--lightTan);
   font-weight: 100;
-}
-
-.container
-  .bottomContainer
-  .bottomMiddleContainer
-  .inputContainer
-  .formInputBox {
-  height: 2.5rem;
-  width: 2.5rem;
-  margin-left: 3rem;
-  color: var(--lightTan);
-}
-
-.container
-  .bottomContainer
-  .bottomMiddleContainer
-  .inputContainer
-  .formInputTime {
-  width: 8.1875rem;
-  height: 2.5rem;
-  font-size: 1.2rem;
-  margin-left: 3rem;
-  color: var(--darkestBlue);
+  justify-content: center;
 
 }
 
-.container .bottomContainer .bottomRightContainer {
-  height: 100%;
-  width: 33.33vw;
-}
-
-.container .bottomContainer .bottomRightContainer h1 {
-  font-family: "JetBrainsMono";
-  font-size: 2.5rem;
-  color: var(--lightTan);
-  margin-right: 6rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  margin-right: 5.375rem;
-  font-weight: 100;
-}
-.container .bottomContainer .bottomRightContainer .inputContainerStack {
+.section{
+  width: 30vw;
+  height:80vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 2.235rem;
-}
-.container .bottomContainer .bottomRightContainer .linkLike {
-  margin-left: 3rem;
-  margin-bottom: 1rem;
-  color: var(--darkerBlue);
-  cursor: pointer;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 1rem;
 }
 
-.container .bottomContainer .bottomRightContainer .inputContainer {
+.section2{
+  width: 30vw;
+  height:80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+
+.inputContainer {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 2.235rem;
-  color: var(--lightTan);
-  font-weight: 100;
-}
-
-.container .bottomContainer .bottomRightContainer .inputContainer .formInput {
-  width: 8rem;
-  height: 4.1875rem;
-  background-color: var(--lightTan);
-  font-family: "JetBrainsMono";
-  font-size: 1.875rem;
-  border-radius: 6.25rem;
+  margin-top: 1.5rem;
   color: var(--darkestBlue);
-  text-align: center;
-  margin-left: 2.3125rem;
-  margin-left: 3rem;
+  gap: .5rem;
   font-weight: 100;
 }
 
-.container .bottomContainer .bottomRightContainer .inputContainer h2 {
-  font-family: "JetBrainsMono";
-  margin-left: 2.3125rem;
-  font-size: 1.75rem;
-  color: var(--lightTan);
+.inputContainer2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1.5rem;
+  color: var(--darkestBlue);
+  gap: .5rem;
   font-weight: 100;
 }
 
-.container
-  .bottomContainer
-  .bottomRightContainer
-  .inputContainer
-  .formInputBox {
+.inputContainerTime {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 3.5rem;
+  color: var(--darkestBlue);
+  gap: .5rem;
+  font-weight: 100;
+}
+
+
+ h5{
+  margin-top: .1rem;
+  font-size: .8rem;
+
+}
+
+.inputContainer2 h5{
+  margin-top: 2rem;
+  font-size: .8rem;
+}
+.formInputSmall {
+  background-color: var(--offWhite);
+  width: 10rem;
   height: 2.5rem;
-  width: 2.5rem;
-  margin-left: 3rem;
-  color: var(--lightTan);
+  border-bottom: 0.15rem solid var(--lightBlue2);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-align: left;
+  font-family: "JetBrainsMono";
+  font-size: .8rem;
+  letter-spacing: -.043125rem;
+  color: var(--darkestBlue) !important;
+  caret-color: var(--darkestBlue);
+  background-color: inherit;
+  margin-top: 1.5rem;
+}
+
+ .formInput {
+  background-color: var(--offWhite);
+  width: 15rem;
+  height: 2.5rem;
+  border-bottom: 0.15rem solid var(--lightBlue2);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  text-align: left;
+  font-family: "JetBrainsMono";
+  font-size: .8rem;
+  letter-spacing: -.043125rem;
+  color: var(--darkestBlue) !important;
+  caret-color: var(--darkestBlue);
+  background-color: inherit;
+  margin-top: 1.5rem;
+}
+ .formInput::placeholder {
+  color: var(--darkestBlue) !important;
+  font-size: .8rem;
+
+}
+ .formInput:focus {
+  outline: none;
+}
+ .formInput:-webkit-autofill,
+ .formInput:-webkit-autofill:hover,
+ .formInput:-webkit-autofill:focus,
+ .formInput:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: var(--darkestBlue) !important;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: .8rem;
+
+}
+
+ .formInput:-webkit-autofill::first-line {
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: .8rem;
+
+}
+
+ .formInput:-webkit-autofill {
+  -webkit-box-shadow: none;
+  background-color: none;
+  font-family: "JetBrainsMono" !important;
+  font-size: .8rem !important;
+}
+
+ .formInput:focus::placeholder {
+  color: transparent;
+}
+
+.formInputTextBox {
+  background-color: var(--offWhite);
+  width: 15rem;
+  height: 8.5rem;
+  border: 0.10rem solid var(--lightBlue2);
+  text-align: left;
+  font-family: "JetBrainsMono";
+  font-size: .8rem;
+  letter-spacing: -.043125rem;
+  color: var(--darkestBlue) !important;
+  caret-color: var(--darkestBlue);
+  background-color: inherit;
+  margin-top: 1.5rem;
+}
+ .formInputTextBox::placeholder {
+  color: var(--darkestBlue) !important;
+  font-size: .8rem;
+
+}
+ .formInputTextBox:focus {
+  outline: none;
+}formInputTextBox
+ .formInputTextBox:-webkit-autofill,
+ .formInputTextBox:-webkit-autofill:hover,
+ .formInputTextBox:-webkit-autofill:focus,
+ .formInputTextBox:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: var(--darkestBlue) !important;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: .8rem;
+
+}
+
+ .formInputTextBox:-webkit-autofill::first-line {
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: .8rem;
+
+}
+
+ .formInputTextBox:-webkit-autofill {
+  -webkit-box-shadow: none;
+  background-color: none;
+  font-family: "JetBrainsMono" !important;
+  font-size: .8rem !important;
+}
+
+ .formInputTextBox:focus::placeholder {
+  color: transparent;
+}
+
+.linkLike:hover {
+  text-decoration: underline;
+  text-underline-offset: .5rem;
+}
+
+.linkLike{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
+  font-family: "JetBrainsMono";
+  font-size: 1rem;
   font-weight: 100;
+  color: var(--darkestBlue) !important;
+  cursor: pointer;
+  border: none;
+  margin-top: 2rem;
+
 }

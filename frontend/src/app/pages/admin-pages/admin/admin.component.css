@@ -112,19 +112,7 @@ a {
   color: var(--offWhite);
   font-size: 1rem;
 }
-.header .searchbar:focus {
-  outline: none;
-}
-.header .searchbar:-webkit-autofill,
-.header .searchbar:-webkit-autofill:hover,
-.header .searchbar:-webkit-autofill:focus,
-.header .searchbar:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: var(--offWhite) !important;
-}
-.header .searchbar:focus::placeholder {
-  color: transparent;
-}
+
 
 .restaurantContainer {
   display: flex;
