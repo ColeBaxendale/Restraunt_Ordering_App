@@ -1,6 +1,5 @@
 <div class="container">
   <div class="header">
-    
     <h1>Adding New Restaurant</h1>
 
     <div class="buttonContainer">
@@ -9,22 +8,21 @@
       </div>
       <button class="buttonClass" (click)="submitForm()">Submit</button>
       <button class="buttonClass" (click)="cancel()">Cancel</button>
-
     </div>
   </div>
 
   <div class="mainContainer">
     <div class="card">
       <div class="section">
-          <input
-            type="text"
-            class="formInput"
-            [(ngModel)]="restaurantDetails.details.name"
-            name="name"
-            placeholder="Enter Restaurant Name"
-            required
-          />
-          <input
+        <input
+          type="text"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.name"
+          name="name"
+          placeholder="Enter Restaurant Name"
+          required
+        />
+        <input
           type="string"
           class="formInput"
           [(ngModel)]="restaurantDetails.details.phone"
@@ -32,13 +30,12 @@
           placeholder="Enter Restaurant Phone Number"
         />
         <textarea
-        [(ngModel)]="restaurantDetails.details.description"
-        name="inputName"
-        class="formInputTextBox"
-        placeholder="Enter Restaurant Description"
-
-      ></textarea>
-      <input
+          [(ngModel)]="restaurantDetails.details.description"
+          name="inputName"
+          class="formInputTextBox"
+          placeholder="Enter Restaurant Description"
+        ></textarea>
+        <input
           type="string"
           class="formInput"
           [(ngModel)]="restaurantDetails.details.location.address"
@@ -46,12 +43,12 @@
           placeholder="Enter Restaurant Address"
         />
         <input
-        type="string"
-        class="formInput"
-        [(ngModel)]="restaurantDetails.details.location.city"
-        name="city"
-      placeholder="Enter Restaurant City"
-      />
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.details.location.city"
+          name="city"
+          placeholder="Enter Restaurant City"
+        />
         <input
           type="string"
           class="formInput"
@@ -65,7 +62,6 @@
           [(ngModel)]="restaurantDetails.details.location.zipCode"
           name="zipCode"
           placeholder="Enter Restaurant Zip Code"
-
         />
         <div class="inputContainer">
           <h5>Enable Orders?</h5>
@@ -76,7 +72,6 @@
             name="ordersEnabled"
           />
         </div>
-
       </div>
       <div class="section">
         <div class="inputContainerTime">
@@ -107,7 +102,9 @@
           <input
             type="checkbox"
             class="formInputBox"
-            [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.isOpen"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.tuesday.isOpen
+            "
             name="tuesday.isOpen"
           />
           <input
@@ -115,14 +112,18 @@
             class="formInputTime"
             [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.open"
             name="tuesdayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.tuesday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.tuesday.isOpen
+            "
           />
           <input
             type="time"
             class="formInputTime"
             [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.close"
             name="tuesdayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.tuesday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.tuesday.isOpen
+            "
           />
         </div>
         <div class="inputContainerTime">
@@ -130,22 +131,32 @@
           <input
             type="checkbox"
             class="formInputBox"
-            [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.isOpen"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.wednesday.isOpen
+            "
             name="wednesday.isOpen"
           />
           <input
             type="time"
             class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.open"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.wednesday.open
+            "
             name="wednesdayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.wednesday.isOpen
+            "
           />
           <input
             type="time"
             class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.wednesday.close"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.wednesday.close
+            "
             name="wednesdayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.wednesday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.wednesday.isOpen
+            "
           />
         </div>
         <div class="inputContainerTime">
@@ -153,7 +164,9 @@
           <input
             type="checkbox"
             class="formInputBox"
-            [(ngModel)]="restaurantDetails.details.operatingHours.thursday.isOpen"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.thursday.isOpen
+            "
             name="thursday.isOpen"
           />
           <input
@@ -161,14 +174,20 @@
             class="formInputTime"
             [(ngModel)]="restaurantDetails.details.operatingHours.thursday.open"
             name="thursdayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.thursday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.thursday.isOpen
+            "
           />
           <input
             type="time"
             class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.thursday.close"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.thursday.close
+            "
             name="thursdayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.thursday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.thursday.isOpen
+            "
           />
         </div>
         <div class="inputContainerTime">
@@ -199,7 +218,9 @@
           <input
             type="checkbox"
             class="formInputBox"
-            [(ngModel)]="restaurantDetails.details.operatingHours.saturday.isOpen"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.saturday.isOpen
+            "
             name="saturday.isOpen"
           />
           <input
@@ -207,14 +228,20 @@
             class="formInputTime"
             [(ngModel)]="restaurantDetails.details.operatingHours.saturday.open"
             name="saturdayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.saturday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.saturday.isOpen
+            "
           />
           <input
             type="time"
             class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.saturday.close"
+            [(ngModel)]="
+              restaurantDetails.details.operatingHours.saturday.close
+            "
             name="saturdayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.saturday.isOpen"
+            [disabled]="
+              !restaurantDetails.details.operatingHours.saturday.isOpen
+            "
           />
         </div>
         <div class="inputContainerTime">
@@ -240,62 +267,48 @@
             [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
           />
         </div>
-
       </div>
       <div class="section2">
-
-
-      <input
-      type="string"
-      class="formInput"
-      [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
-      name="stripeAccountId"
-      placeholder="Enter Restaurant's Stripe ID"
-    />
-    <div class="inputContainer2">
-      <h5>FIXED RATE:</h5>
-      <input
-        type="string"
-        class="formInputSmall"
-        [(ngModel)]="restaurantDetails.admin.fixedRate"
-        name="fixedRate"
-      />
-      
-    </div>
-      <div class="inputContainer">
-        <h5>IS ACTIVE?</h5>
         <input
-          type="checkbox"
-          class="formInputBox"
-          [(ngModel)]="restaurantDetails.admin.isActive"
-          name="isActive"
+          type="string"
+          class="formInput"
+          [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
+          name="stripeAccountId"
+          placeholder="Enter Restaurant's Stripe ID"
         />
+        <div class="inputContainer2">
+          <h5>Fixed Rate:</h5>
+          <input
+            type="string"
+            class="formInputSmall"
+            [(ngModel)]="restaurantDetails.admin.fixedRate"
+            name="fixedRate"
+          />
+        </div>
+        <div class="inputContainer">
+          <h5>Is Restaurant Active?</h5>
+          <input
+            type="checkbox"
+            class="formInputBox"
+            [(ngModel)]="restaurantDetails.admin.isActive"
+            name="isActive"
+          />
+        </div>
+
+        <div class="inputContainer">
+          <h5>Add Fees To Customer?</h5>
+          <input
+            type="checkbox"
+            class="formInputBox"
+            [(ngModel)]="restaurantDetails.stripe.addFees"
+            name="addFees"
+          />
+        </div>
+        <a for="fileInput" class="linkLike" (click)="openOwnerDialog()"
+        >Owner Add / Edit</a
+
+        >
       </div>
-      
-
-
-    <div class="inputContainer">
-      <h5>Add Fees To Customer?</h5>
-      <input
-        type="checkbox"
-        class="formInputBox"
-        [(ngModel)]="restaurantDetails.stripe.addFees"
-        name="addFees"
-      />
     </div>
-    <a for="fileInput" class="linkLike" (click)="openOwnerDialog()"
-    >OWNER ADD / EDIT</a
-  >
-      </div>
-
-    </div>
-
   </div>
-
 </div>
-
-
-
-
-
-
