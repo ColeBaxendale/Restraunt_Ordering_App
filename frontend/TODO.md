@@ -14,5 +14,6 @@
     - Finish looking over all funcitonality and styles for interview on Friday to show off the skills in this program. 
     - Possibly update flow charts
     - Write down all skills used to make sure I do not leave anything out. 
-    
-
+    - Check over all input validaiton
+    - Check over naming conventions and make it all consistent
+    - Check over all files and add some comments here and there (mainly functionality comments not styling, backend + ts files on front end.)
