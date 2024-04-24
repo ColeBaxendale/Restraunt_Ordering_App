@@ -1,6 +1,8 @@
 <div class="container">
   <div class="header">
-    <input class="searchbar" type="text" placeholder="Search For Restaurant Name..." (input)="searchRestaurants($any($event.target).value)" />
+    <input class="searchbar" type="text" placeholder="Search For Restaurant Name..." [(ngModel)]="searchTerm" (input)="searchRestaurants(searchTerm)" />
+
+    
     <div class="buttonContainer">
       <button class="buttonClass" (click)="addRestaurant()">New Restaurant</button>
       <button class="buttonClass" (click)="logout()">Logout</button>
@@ -11,7 +13,7 @@
   <div class="restaurantContainer" *ngIf="restaurants.length > 0">
     <div
       class="restaurantCard"
-      *ngFor="let restaurant of restaurants"
+      *ngFor="let restaurant of filteredRestaurants"
       (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
     >
       <h3>{{ restaurant.details.name }}</h3>
