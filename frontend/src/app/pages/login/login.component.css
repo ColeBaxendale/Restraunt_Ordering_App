@@ -102,21 +102,27 @@ a {
 }
 
 .loginContainer .formInputLogin {
-  border-radius: 1.25rem;
-  width: 8rem;
-  height: 3rem;
-  background-color: var(--lightBlue);
-  border: 0.1rem solid var(--lightBlue2);
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
   text-align: center;
   font-family: "JetBrainsMono";
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: var(--darkestBlue) !important;
   cursor: pointer;
   margin-bottom: 3rem;
-}
+  border: none;
+  text-shadow:
+  -0.1px -0.1px 0 var(--lightBlue2),  
+  0.1px 0.1px 0 var(--lightBlue2),
+  -0.1px -0.1px 0 var(--lightBlue2),
+  0.1px 0.1px 0 var(--lightBlue2);
+  text-underline-offset: .5rem;
 
+}
 .loginContainer .formInputLogin:hover {
-  border: 0.1rem solid var(--darkestBlue);
+  text-decoration: underline;
 }
 
 .loginContainer .forgotPassword {
