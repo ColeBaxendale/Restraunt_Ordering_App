@@ -9,6 +9,8 @@
 
 ## NOT DONE YET
     - Start work on the owner side of things where they can start editing how their restaurant looks and what items they will have / charge
+    - Prep for interview
+
 
 ## NOT DONE YET
     - Finish looking over all funcitonality and styles for interview on Friday to show off the skills in this program. 
