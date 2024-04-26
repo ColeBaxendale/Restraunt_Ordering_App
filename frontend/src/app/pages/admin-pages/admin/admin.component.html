@@ -1,44 +1,76 @@
 <div class="container">
   <div class="header">
-    <input class="searchbar" type="text" placeholder="Search For Restaurant Name..." [(ngModel)]="searchTerm" (input)="searchRestaurants(searchTerm)" />
+    <div class="searchAndLoading">
+      <input
+      class="searchbar"
+      type="text"
+      placeholder="Search For Restaurant Name..."
+      [(ngModel)]="searchTerm"
+      (input)="searchRestaurants(searchTerm)"
+    />
+    <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
 
-    
+
+    </div>
+
     <div class="buttonContainer">
-      <button class="buttonClass" (click)="addRestaurant()">New Restaurant</button>
+      <button class="buttonClass" (click)="addRestaurant()">
+        New Restaurant
+      </button>
       <button class="buttonClass" (click)="logout()">Logout</button>
     </div>
   </div>
 
   <!-- Fixed ngIf directive below -->
-  <div class="restaurantContainer" *ngIf="restaurants.length > 0">
-    <div
-      class="restaurantCard"
-      *ngFor="let restaurant of filteredRestaurants"
-      (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
-    >
-      <h3>{{ restaurant.details.name }}</h3>
-      <h4>
+  <div class="restaurantContainer" *ngIf="restaurants.length > 0 && !loadingService.getLoading()">
+    <mat-card class="card" *ngFor="let restaurant of filteredRestaurants">
+      <mat-card-subtitle
+        ><p>{{ restaurant._id }}</p></mat-card-subtitle
+      >
+      <mat-card-title class="cardHeader"
+        ><p>{{ restaurant.details.name }}</p></mat-card-title
+      >
+      <mat-divider></mat-divider>
+      <mat-card-content>
         <span *ngIf="restaurant.admin.isActive; else notLive">Live</span>
         <ng-template #notLive>Not Live</ng-template>
-      </h4>
-      <h5>Overall Income: ${{ restaurant.admin.overallIncome - 0.01 | number:'1.2-2'  }}</h5>
-      <h6>ID: {{ restaurant._id }}</h6>
+      </mat-card-content>
+      <mat-card-content
+        >Overall Income: ${{
+          restaurant.admin.overallIncome - 0.01 | number : "1.2-2"
+        }}</mat-card-content
+      >
+      <mat-divider></mat-divider>
+
+      <mat-card-actions align="end">
+        <button
+          class="cardButton"
+          (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
+          mat-button
+        >
+          Edit
+        </button>
+        <button class="cardButton" mat-button>Delete</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'edit'" mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <div class="notAdded" *ngIf="restaurants.length < 1">
+      <h1>No Restaurants Have Been Added Yet...</h1>
+    </div>
+
+    <div class="notAdded" *ngIf="filteredRestaurants.length < 1">
+      <h1>No Restaurants Have Been Found With That Search...</h1>
     </div>
   </div>
-  <div class="notAdded" *ngIf="restaurants.length < 1">
-    <h1>No Restaurants Have Been Added Yet...</h1>
-  </div>
 
-  <div class="notAdded" *ngIf="filteredRestaurants.length < 1">
-    <h1>No Restaurants Have Been Found With That Search...</h1>
-  </div>
-
-</div>
-
-
-
-
-    <!-- <form [formGroup]="formGroup">
+  <!-- <form [formGroup]="formGroup">
       <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
     </form> -->
+    <div class="loadingContainer" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'restaurants'">
+    <mat-spinner [diameter]="100"mode="indeterminate"></mat-spinner>
 
+    </div>
+</div>

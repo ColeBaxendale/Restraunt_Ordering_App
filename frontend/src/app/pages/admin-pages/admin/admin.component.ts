@@ -12,10 +12,15 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DividerModule } from 'primeng/divider';
 import {MatCardModule} from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { LoadingService } from '../../../services/loading/loading.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, NgFor,AutoCompleteModule,ReactiveFormsModule,MatCardModule,FormsModule, MatIcon],
+  imports: [CommonModule, NgFor,AutoCompleteModule,ReactiveFormsModule,MatCardModule, MatButtonModule,FormsModule, MatIcon,MatDividerModule,MatProgressBarModule,MatProgressSpinnerModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
@@ -26,6 +31,7 @@ export class AdminComponent implements OnInit {
   totalLiveRestaurants: number = 0;
   totalAmountMade: number = 0;
   searchTerm: string = '';
+  editingRestaurantId: string | null = null;
 
   formGroup: FormGroup;
   filteredRestaurants: Restaurant[] = [];
@@ -36,7 +42,8 @@ export class AdminComponent implements OnInit {
     public dialog: MatDialog,
     private http: HttpClient,
     private router: Router,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    public loadingService: LoadingService
   ) {
     this.formGroup = this.fb.group({
       selectedRestaurant: new FormControl()
@@ -53,6 +60,7 @@ export class AdminComponent implements OnInit {
   }
   
   loadRestaurants(): void {
+    this.loadingService.setLoading(true, 'restaurants')
     this.restaurantService.getAllRestaurants().subscribe({
       next: (response: any) => {
         if (response && response.restaurants) {
@@ -79,14 +87,23 @@ export class AdminComponent implements OnInit {
         console.error('Error loading restaurants:', err);
       },
     });
+    this.loadingService.setLoading(false, '')
+
   }
 
   restaurantPage(restaurantId: string) {
+
+    this.loadingService.setLoading(true, 'edit');
+    console.log(this.loadingService.getLoadingItem());
+    
+    this.editingRestaurantId = restaurantId;
     this.restaurantService.setCurrentId(restaurantId);
     this.router.navigate(['/restaurant']);
+    this.loadingService.setLoading(false, '');
   }
 
   searchRestaurants(searchTerm: string): void {
+    this.loadingService.setLoading(true, 'search');
     if (searchTerm) {
       this.filteredRestaurants = this.restaurants.filter(restaurant =>
         restaurant.details.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -95,6 +112,8 @@ export class AdminComponent implements OnInit {
       // If no search term is provided, show all restaurants
       this.filteredRestaurants = this.restaurants;
     }
+    this.loadingService.setLoading(false, '');
+
   }
 
   addRestaurant(): void {
