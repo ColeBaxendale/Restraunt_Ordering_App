@@ -10,7 +10,7 @@ import {
 import { SessionService } from '../../../services/session/session.service';
 import { finalize } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
@@ -18,11 +18,16 @@ import { OwnerAddDialogComponent } from '../../../components/admin-components/ow
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerEditRestaurantDialogComponent } from '../../../components/admin-components/owner-edit-restaurant-dialog/owner-edit-restaurant-dialog.component';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {merge} from 'rxjs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
-  imports: [NgIf, FormsModule, CommonModule],
+  imports: [NgIf, FormsModule,CommonModule,MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule,MatCheckboxModule],
   templateUrl: './restaurant.component.html',
   styleUrl: './restaurant.component.css',
 })
@@ -30,6 +35,9 @@ export class RestaurantComponent implements OnInit {
   restaurantId!: string; // Non-null assertion
   restaurant: Restaurant = this.initializeRestaurant();
   errorMsg = '';
+  name = new FormControl('', [Validators.required, this.restaurantValidator.isValidNameValidation()]);
+  inputErrorMessage = '';
+
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
@@ -37,7 +45,20 @@ export class RestaurantComponent implements OnInit {
     private dialog: MatDialog,
     private sessionService: SessionService,
     private restaurantValidator: RestaurantValidatorService
-  ) {}
+  ) { merge(this.name.statusChanges, this.name.valueChanges)
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => this.updateNameErrorMessage());}
+
+    updateNameErrorMessage() {
+      this.inputErrorMessage = '';
+      if (this.name.errors) {
+        if (this.name.errors['required']) {
+          this.inputErrorMessage = 'Name is required.';
+        } else if (this.name.errors['invalidName']) {
+          this.inputErrorMessage = this.name.errors['invalidName'].value;
+        }
+      }
+    }
 
   ngOnInit() {
     this.restaurantId = this.restaurantService.getCurrentId();
