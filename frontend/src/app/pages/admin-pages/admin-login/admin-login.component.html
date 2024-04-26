@@ -25,10 +25,14 @@
           <p>{{ errorMsg }}</p>
         </div>
       </div>
-      <button type="submit" (click)="onSubmit()" class="formInputLogin">
-        Login
-      </button>
-      <div>
+      <div class="loginLoader">
+        <button type="submit" (click)="onSubmit()" class="formInputLogin">
+          Login
+        </button>
+        <mat-spinner [diameter]="30" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'login'" mode="indeterminate"></mat-spinner>
+  
+      </div>
+           <div>
         <a class="forgotPassword" href="">Not Supposed To Be Here?</a>
       </div>
     </div>

@@ -16,7 +16,7 @@ a {
 .loginContainer {
   width: 40vw;
   height: 100vh;
-  background-image: linear-gradient(to bottom, var(--offWhite), #ffffff);
+  background-color: var(--offWhite3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +27,7 @@ a {
 .loginContainer h1 {
   font-size: 2.5rem;
   color: var(--darkestBlue);
+
   font-weight: 100;
   margin-bottom: 3rem;
 }
@@ -38,6 +39,7 @@ a {
   justify-content: center;
   text-align: center;
   margin-bottom: -1.6rem;
+  
 }
 
 .loginContainer .formInput {
@@ -54,14 +56,20 @@ a {
   color: var(--darkestBlue) !important;
   caret-color: var(--darkestBlue);
   margin-bottom: 3rem;
+  background-color: var(--offWhite3);
+
 }
 
 .loginContainer .formInput::placeholder {
   color: var(--darkestBlue);
   font-size: 1.25rem;
+  background-color: var(--offWhite3);
+
 }
 .loginContainer .formInput:focus {
   outline: none;
+  background-color: var(--offWhite3);
+
 }
 .loginContainer .formInput:-webkit-autofill,
 .loginContainer .formInput:-webkit-autofill:hover,
@@ -72,22 +80,29 @@ a {
   transition: background-color 5000s ease-in-out 0s;
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
+  background-color: var(--offWhite3);
+
 }
 
 .loginContainer .formInput:-webkit-autofill::first-line {
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
+  background-color: var(--offWhite3);
+
 }
 
 .loginContainer .formInput:-webkit-autofill {
   -webkit-box-shadow: none;
-  background-color: none;
+  background-color: var(--offWhite3);
+
   font-family: "JetBrainsMono" !important;
   font-size: 1.25rem !important;
 }
 
 .loginFormContainer .formInput:focus::placeholder {
   color: transparent;
+  background-color: var(--offWhite3);
+
 }
 .loginContainer .errorMessageContainer {
   width: 100%;
@@ -125,6 +140,9 @@ a {
 
 .loginContainer .formInputLogin:hover {
   text-decoration: underline;
+  text-underline-offset: .5rem;
+  color: var(--lightBlue2) !important;
+
 }
 
 .loginContainer .forgotPassword {
@@ -140,6 +158,8 @@ a {
 
 .loginContainer .forgotPassword:hover {
   color: var(--lightBlue2) !important;
+  text-decoration: underline;
+  text-underline-offset: .5rem;
 }
 
 .brandingContainer {
@@ -173,6 +193,11 @@ a {
   color: var(--darkestBlue);
   font-weight: 100;
   margin-bottom: 3rem;
+}
+
+.loginLoader{
+  display: flex;
+  gap: 1rem;
 }
 
 
