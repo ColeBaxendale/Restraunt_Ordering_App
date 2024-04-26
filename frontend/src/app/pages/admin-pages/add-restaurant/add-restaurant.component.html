@@ -14,74 +14,153 @@
   <div class="mainContainer">
     <div class="card">
       <div class="section">
-        <input
-          type="text"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.name"
-          name="name"
-          placeholder="Enter Restaurant Name"
-          required
-        />
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.phone"
-          name="phone"
-          placeholder="Enter Restaurant Phone Number"
-        />
-        <textarea
-          [(ngModel)]="restaurantDetails.details.description"
-          name="inputName"
-          class="formInputTextBox"
-          placeholder="Enter Restaurant Description"
-        ></textarea>
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.location.address"
-          name="address"
-          placeholder="Enter Restaurant Address"
-        />
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.location.city"
-          name="city"
-          placeholder="Enter Restaurant City"
-        />
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.location.state"
-          name="state"
-          placeholder="Enter Restaurant State"
-        />
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.details.location.zipCode"
-          name="zipCode"
-          placeholder="Enter Restaurant Zip Code"
-        />
-        <div class="inputContainer">
-          <h5>Enable Orders?</h5>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Restaurant Name</mat-label>
           <input
-            type="checkbox"
-            class="formInputBox"
-            [(ngModel)]="restaurantDetails.details.ordersEnabled"
-            name="ordersEnabled"
+            matInput
+            [(ngModel)]="restaurantDetails.details.name"
+            [formControl]="name"
+            (blur)="updateNameErrorMessage()"
+            required
           />
-        </div>
+          @if (name.invalid) {
+          <mat-error>{{ inputErrorMessage }}</mat-error>
+          } @if (restaurantDetails.details.name) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.name = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telephone</mat-label>
+          <span matTextPrefix>+1 &nbsp;</span>
+          <input
+            type="tel"
+            matInput
+            placeholder="555-555-1234"
+            [(ngModel)]="restaurantDetails.details.phone"
+          />
+          @if (restaurantDetails.details.phone) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.phone = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label [(ngModel)]="restaurantDetails.details.description"
+            >Enter Restaurant Description</mat-label
+          >
+          <textarea
+            matInput
+            placeholder="Ex. Here at xxx we serve..."
+          ></textarea>
+          <!-- @if (restaurantDetails.details.description) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="restaurantDetails.details.description=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          } -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Address</mat-label>
+          <input
+            matInput
+            placeholder="123 Main Street"
+            [(ngModel)]="restaurantDetails.details.location.address"
+          />
+          @if (restaurantDetails.details.location.address) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.location.address = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>City</mat-label>
+          <input
+            [(ngModel)]="restaurantDetails.details.location.city"
+            matInput
+            placeholder="Ex. San Francisco"
+          />
+          @if (restaurantDetails.details.location.city) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.location.city = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>State</mat-label>
+          <input
+            [(ngModel)]="restaurantDetails.details.location.state"
+            matInput
+            placeholder="Ex. CA"
+          />
+          @if (restaurantDetails.details.location.state) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.location.state = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Postal Code</mat-label>
+          <input
+            [(ngModel)]="restaurantDetails.details.location.zipCode"
+            matInput
+            #postalCode
+            maxlength="10"
+            placeholder="Ex. 94105"
+          />
+          @if (restaurantDetails.details.location.zipCode) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.details.location.zipCode = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <mat-hint align="end">{{ postalCode.value.length }} / 8</mat-hint>
+        </mat-form-field>
+
+        <mat-checkbox [(ngModel)]="restaurantDetails.details.ordersEnabled"
+          >Enable Orders?</mat-checkbox
+        >
       </div>
       <div class="section">
         <div class="inputContainerTime">
-          <h5>Monday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="restaurantDetails.details.operatingHours.monday.isOpen"
-            name="monday.isOpen"
-          />
+            >Monday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -97,16 +176,15 @@
             [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
           />
         </div>
+
         <div class="inputContainerTime">
-          <h5>Tuesday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="
               restaurantDetails.details.operatingHours.tuesday.isOpen
             "
-            name="tuesday.isOpen"
-          />
+            >Tuesday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -126,16 +204,14 @@
             "
           />
         </div>
+
         <div class="inputContainerTime">
-          <h5>Wednesday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="
               restaurantDetails.details.operatingHours.wednesday.isOpen
             "
-            name="wednesday.isOpen"
-          />
+            >Wednesday</mat-checkbox
+          >
           <input
             type="time"
             class="formInputTime"
@@ -160,15 +236,13 @@
           />
         </div>
         <div class="inputContainerTime">
-          <h5>Thursday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="
               restaurantDetails.details.operatingHours.thursday.isOpen
             "
-            name="thursday.isOpen"
-          />
+            >Thursday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -191,13 +265,11 @@
           />
         </div>
         <div class="inputContainerTime">
-          <h5>Friday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="restaurantDetails.details.operatingHours.friday.isOpen"
-            name="friday.isOpen"
-          />
+            >Friday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -214,15 +286,13 @@
           />
         </div>
         <div class="inputContainerTime">
-          <h5>Saturday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="
               restaurantDetails.details.operatingHours.saturday.isOpen
             "
-            name="saturday.isOpen"
-          />
+            >Saturday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -245,13 +315,11 @@
           />
         </div>
         <div class="inputContainerTime">
-          <h5>Sunday:</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
+          <mat-checkbox
             [(ngModel)]="restaurantDetails.details.operatingHours.sunday.isOpen"
-            name="sunday.isOpen"
-          />
+            >Sunday</mat-checkbox
+          >
+
           <input
             type="time"
             class="formInputTime"
@@ -268,45 +336,58 @@
           />
         </div>
       </div>
+
       <div class="section2">
-        <input
-          type="string"
-          class="formInput"
-          [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
-          name="stripeAccountId"
-          placeholder="Enter Restaurant's Stripe ID"
-        />
-        <div class="inputContainer2">
-          <h5>Fixed Rate:</h5>
+        <mat-form-field appearance="outline">
+          <mat-label>Stripe ID</mat-label>
           <input
-            type="string"
-            class="formInputSmall"
+            [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
+            matInput
+            placeholder="Ex. 123few34q32"
+          />
+          @if (restaurantDetails.stripe.stripeAccountId) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.stripe.stripeAccountId = ''"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fixed Rate</mat-label>
+          <input
             [(ngModel)]="restaurantDetails.admin.fixedRate"
-            name="fixedRate"
+            matInput
+            placeholder="Ex. 0.02"
           />
-        </div>
-        <div class="inputContainer">
-          <h5>Is Restaurant Active?</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
-            [(ngModel)]="restaurantDetails.admin.isActive"
-            name="isActive"
-          />
-        </div>
+          @if (restaurantDetails.admin.fixedRate) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="restaurantDetails.admin.fixedRate = 0.0"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          }
+          <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
+        </mat-form-field>
 
-        <div class="inputContainer">
-          <h5>Add Fees To Customer?</h5>
-          <input
-            type="checkbox"
-            class="formInputBox"
-            [(ngModel)]="restaurantDetails.stripe.addFees"
-            name="addFees"
-          />
-        </div>
+        <mat-checkbox [(ngModel)]="restaurantDetails.admin.isActive"
+          >Is Restaurant Active?</mat-checkbox
+        >
+
+        <mat-checkbox [(ngModel)]="restaurantDetails.stripe.addFees"
+          >Add Fees To Customer?</mat-checkbox
+        >
+
         <a for="fileInput" class="linkLike" (click)="openOwnerDialog()"
-        >Owner Add / Edit</a
-
+          >Owner Add / Edit</a
         >
       </div>
     </div>

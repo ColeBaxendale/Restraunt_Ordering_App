@@ -4,6 +4,7 @@ import {
   Restaurant,
   ValidationResponse,
 } from '../../../../../../types';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,37 @@ export class RestaurantValidatorService {
     'saturday',
     'sunday',
   ];
+  @Injectable({ providedIn: 'root' })
+  isValidNameValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;  
+      }
+      const validationResult = this.isValidNameValidation2(value);
+      return validationResult.isValid ? null : { invalidName: { value: validationResult.message } };
+    };
+  }
+
+  isValidNameValidation2(name:string): ValidationResponse{
+    if (
+      !name ||
+      name === ''
+    )
+      return { isValid: false, message: 'Name must be filled in' };
+    else if (!this.isValidName(name)) {
+      return {
+        isValid: false,
+        message: 'Between 4 & 50 characters',
+      };
+    }
+    return { isValid: true };
+  }
+
+  
+
+
+
 
   isValidRestaurantInfo(restaurantDetails: Restaurant): ValidationResponse {
     if (

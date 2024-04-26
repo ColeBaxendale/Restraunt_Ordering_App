@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   RestaurantResponse,
   Restaurant,
@@ -15,16 +15,23 @@ import { RestaurantValidatorService } from '../../../services/admin/restaurant/v
 import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {merge} from 'rxjs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
-  imports: [NgIf, FormsModule, CommonModule],
+  imports: [NgIf, FormsModule, CommonModule,MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule,MatCheckboxModule],
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css',
 })
 export class AddRestaurantComponent {
   errorMsg = '';
+  inputErrorMessage = '';
+
   restaurantDetails: Restaurant = {
     details: {
       name: '',
@@ -62,6 +69,8 @@ export class AddRestaurantComponent {
       addFees: false,
     },
   };
+  name = new FormControl('', [Validators.required, this.restaurantValidator.isValidNameValidation()]);
+
 
   constructor(
     private restaurantService: RestaurantService,
@@ -69,9 +78,24 @@ export class AddRestaurantComponent {
     private sessionService: SessionService,
     private dialog: MatDialog,
     private restaurantValidator: RestaurantValidatorService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    
+  ) {
+    merge(this.name.statusChanges, this.name.valueChanges)
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => this.updateNameErrorMessage());
+  }
   
+  updateNameErrorMessage() {
+    this.inputErrorMessage = '';
+    if (this.name.errors) {
+      if (this.name.errors['required']) {
+        this.inputErrorMessage = 'Name is required.';
+      } else if (this.name.errors['invalidName']) {
+        this.inputErrorMessage = this.name.errors['invalidName'].value;
+      }
+    }
+  }
 
   submitForm() {
     console.log(this.restaurantDetails);
