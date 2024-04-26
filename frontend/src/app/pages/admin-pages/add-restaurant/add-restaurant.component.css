@@ -13,7 +13,11 @@ a {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
-background-color: var(--offWhite3);
+  background-image: linear-gradient(
+    to top,
+    var(--lightBlue2),
+    var(--darkestBlue)
+  );
 }
 
 .header{
@@ -31,7 +35,7 @@ background-color: var(--offWhite3);
 .header h1{
   font-size: 1.8rem;
   font-weight: 100;
-  color: var(--darkestBlue) !important;
+  color: var(--offWhite) !important;
 
 }
 
@@ -54,7 +58,7 @@ background-color: var(--offWhite3);
   font-family: "JetBrainsMono";
   font-size: 1.5rem;
   font-weight: 100;
-  color: var(--darkestBlue) !important;
+  color: var(--offWhite) !important;
   cursor: pointer;
   border: none;
 
