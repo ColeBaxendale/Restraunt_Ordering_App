@@ -152,7 +152,20 @@ mat-card-title{
   color: var(--darkestBlue);
   margin-top: 0rem;
   padding-top: 0;
+}
 
+.cardButtonDelete{
+  cursor: pointer;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: .8rem;
+  color: var(--darkestBlue);
+  margin-top: 0rem;
+  padding-top: 0;
+}
+
+.cardButtonDelete:hover{
+  cursor: pointer;
+  background-color: red;
 }
 
 
@@ -199,8 +212,30 @@ mat-card-title{
   font-size: 1.25rem;
 }
 
+mat-progress-bar{
 
+  margin-top: 1rem;
+}
 
+.deleteConfirm{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "JetBrainsMono", sans-serif;
+  font-weight: 100;
+  font-size: .8rem;
+}
+.buttonContainer{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: .5rem;
+
+}
 
 
 
