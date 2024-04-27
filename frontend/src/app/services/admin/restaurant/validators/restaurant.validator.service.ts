@@ -47,6 +47,20 @@ export class RestaurantValidatorService {
     return { isValid: true };
   }
 
+  isValidPhoneValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      // If there's no value and input is not required, return null indicating no error.
+      if (!value && value === '') {
+        return null;
+      }
+      // Inline regex to check the format.
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+      const isValid = phoneRegex.test(value);
+      return isValid ? null : { invalidPhoneNumber: { value: 'Phone number must be in the format 111-111-1111' } };
+    };
+  }
+
   
 
 

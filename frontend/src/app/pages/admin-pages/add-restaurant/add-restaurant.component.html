@@ -11,52 +11,48 @@
     </div>
   </div>
 
-  <div class="mainContainer">
-    <div class="card">
-      <div class="section">
+    <form [formGroup]="form" class="mainContainer">
+
+
+      <div formGroupName="details" class="subContainer">
         <mat-form-field appearance="outline">
           <mat-label>Enter Restaurant Name</mat-label>
-          <input
-            matInput
-            [(ngModel)]="restaurantDetails.details.name"
-            [formControl]="name"
-            (blur)="updateNameErrorMessage()"
-            required
-          />
-          @if (name.invalid) {
-          <mat-error>{{ inputErrorMessage }}</mat-error>
-          } @if (restaurantDetails.details.name) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.name = ''"
-          >
+          <input matInput formControlName="name" required />
+          <mat-error *ngIf="form.get(['details', 'name'])?.errors">
+            {{ getErrorMessage('details.name') }}
+          </mat-error>
+          <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'name'])?.value"
+                  (click)="clearInput('details.name')">
             <mat-icon>close</mat-icon>
           </button>
-          }
         </mat-form-field>
-
+    
         <mat-form-field appearance="outline">
           <mat-label>Telephone</mat-label>
-          <span matTextPrefix>+1 &nbsp;</span>
-          <input
-            type="tel"
-            matInput
-            placeholder="555-555-1234"
-            [(ngModel)]="restaurantDetails.details.phone"
-          />
-          @if (restaurantDetails.details.phone) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.phone = ''"
-          >
+          <input matInput formControlName="phone" />
+          <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
+            {{ getErrorMessage('details.phone') }}
+          </mat-error>
+          <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'phone'])?.value"
+                  (click)="clearInput('details.phone')">
             <mat-icon>close</mat-icon>
           </button>
-          }
         </mat-form-field>
+
+        
+
+
+      </div>
+      
+      
+    </form>
+
+
+
+
+
+    <!-- <div class="card">
+      <div class="section">
 
         <mat-form-field appearance="outline">
           <mat-label [(ngModel)]="restaurantDetails.details.description"
@@ -70,7 +66,7 @@
             <button matSuffix mat-icon-button aria-label="Clear" (click)="restaurantDetails.details.description=''">
               <mat-icon>close</mat-icon>
             </button>
-          } -->
+          } 
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -355,7 +351,6 @@
             <mat-icon>close</mat-icon>
           </button>
           }
-          <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -375,7 +370,6 @@
             <mat-icon>close</mat-icon>
           </button>
           }
-          <!-- <mat-hint align="end">{{postalCode.value.length}} / 8</mat-hint> -->
         </mat-form-field>
 
         <mat-checkbox [(ngModel)]="restaurantDetails.admin.isActive"
@@ -390,6 +384,6 @@
           >Owner Add / Edit</a
         >
       </div>
-    </div>
-  </div>
+    </div> -->
+  
 </div>

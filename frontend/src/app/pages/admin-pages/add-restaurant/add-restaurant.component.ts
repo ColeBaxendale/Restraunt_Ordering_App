@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import {
   RestaurantResponse,
   Restaurant,
@@ -28,192 +28,217 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css',
 })
-export class AddRestaurantComponent {
+export class AddRestaurantComponent implements OnInit {
+  form!: FormGroup;
   errorMsg = '';
-  inputErrorMessage = '';
-
-  restaurantDetails: Restaurant = {
-    details: {
-      name: '',
-      logo: '',
-      description: '',
-      phone: '',
-      location: {
-        address: '',
-        city: '',
-        state: '',
-        zipCode: '',
-      },
-      operatingHours: {
-        monday: { isOpen: false, open: '', close: '' },
-        tuesday: { isOpen: false, open: '', close: '' },
-        wednesday: { isOpen: false, open: '', close: '' },
-        thursday: { isOpen: false, open: '', close: '' },
-        friday: { isOpen: false, open: '', close: '' },
-        saturday: { isOpen: false, open: '', close: '' },
-        sunday: { isOpen: false, open: '', close: '' },
-      },
-      ordersEnabled: false,
-      owner: '',
-      menuSections: [],
-    },
-
-    admin: {
-      isActive: false,
-      fixedRate: 0.02,
-      overallIncome: 0.01,
-    },
-
-    stripe: {
-      stripeAccountId: '',
-      addFees: false,
-    },
-  };
-  name = new FormControl('', [Validators.required, this.restaurantValidator.isValidNameValidation()]);
-
 
   constructor(
+    private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private router: Router,
     private sessionService: SessionService,
     private dialog: MatDialog,
     private restaurantValidator: RestaurantValidatorService,
     private userService: UserService,
+  ) {}
+  
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      details: this.fb.group({
+        logo: [''],
+        name: ['', [Validators.required, this.restaurantValidator.isValidNameValidation()]],
+        description: [''],
+        phone: ['', this.restaurantValidator.isValidPhoneValidation()],
+        location: this.fb.group({
+          address: [''],
+          city: [''],
+          state: [''],
+          zipCode: ['']
+        }),
+        operatingHours: this.fb.group({
+          monday: this.initDay(),
+          tuesday: this.initDay(),
+          wednesday: this.initDay(),
+          thursday: this.initDay(),
+          friday: this.initDay(),
+          saturday: this.initDay(),
+          sunday: this.initDay(),
+        }),
+        ordersEnabled: [false],
+        owner: [''],
+        menuSections: this.fb.array([])
+      }),
+      admin: this.fb.group({
+        isActive: [false],
+        fixedRate: [0.02],
+        overallIncome: [0.01],
+      }),
+      stripe: this.fb.group({
+        stripeAccountId: [''],
+        addFees: [false],
+      }),
+    });
+
+    console.log(this.form);
     
-  ) {
-    merge(this.name.statusChanges, this.name.valueChanges)
-    .pipe(takeUntilDestroyed())
-    .subscribe(() => this.updateNameErrorMessage());
+  }
+
+  private initDay() {
+    return this.fb.group({
+      isOpen: [false],
+      open: [{value: '', disabled: true}, Validators.required],
+      close: [{value: '', disabled: true}, Validators.required]
+    });
   }
   
-  updateNameErrorMessage() {
-    this.inputErrorMessage = '';
-    if (this.name.errors) {
-      if (this.name.errors['required']) {
-        this.inputErrorMessage = 'Name is required.';
-      } else if (this.name.errors['invalidName']) {
-        this.inputErrorMessage = this.name.errors['invalidName'].value;
+  getErrorMessage(field: string) {
+    const control = this.form.get(field);
+    if(control){
+      if (control.hasError('required')) {
+        return 'This field is required.';
+      } else if (control.hasError('invalidName')) {
+        return control.getError('invalidName').value;
+      } else if (control.hasError('invalidPhoneNumber')) {
+        return control.getError('invalidPhoneNumber').value;
       }
+      return '';
     }
+    return '';
   }
+  
+  clearInput(path: string | Array<string | number>) {
+    const control = this.form.get(path);
+    
+    if (control) {
+    console.log(control);
+      control.reset(''); // Reset without value to clear to `null` or use `''` to reset to empty string
+      control.markAsPristine();
+      control.markAsUntouched();
+    console.log(control);
 
-  submitForm() {
-    console.log(this.restaurantDetails);
-
-    this.resetTimesIfNeeded();
-    this.errorMsg = '';
-    if(this.restaurantDetails.details.location.state)
-        this.restaurantDetails.details.location.state = this.restaurantDetails.details.location.state.toUpperCase()
-    const validationResult = this.restaurantValidator.isValidRestaurantInfo(
-      this.restaurantDetails
-    );
-    if (!validationResult.isValid) {
-      if (validationResult.message) {
-        this.errorMsg = validationResult.message;
-        return;
-      } else {
-        this.errorMsg = 'An unknown validation error occured.';
-      }
     }
+    else
+    console.log(control);
+    
+  }
+  
+  submitForm() {
+    // console.log(this.restaurantDetails);
+
+    // this.resetTimesIfNeeded();
+    // this.errorMsg = '';
+    // if(this.restaurantDetails.details.location.state)
+    //     this.restaurantDetails.details.location.state = this.restaurantDetails.details.location.state.toUpperCase()
+    // const validationResult = this.restaurantValidator.isValidRestaurantInfo(
+    //   this.restaurantDetails
+    // );
+    // if (!validationResult.isValid) {
+    //   if (validationResult.message) {
+    //     this.errorMsg = validationResult.message;
+    //     return;
+    //   } else {
+    //     this.errorMsg = 'An unknown validation error occured.';
+    //   }
+    // }
 
 
-    this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
-      next: (response: RestaurantResponse) => {
-        console.log('Successfully created restaurant' + response.message);
-        this.router.navigate(['/admin']);
-      },
-      error: (error) => {
-        console.error('Login failed', error);
-        this.errorMsg = error.error.message;
-      },
-    });
+    // this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
+    //   next: (response: RestaurantResponse) => {
+    //     console.log('Successfully created restaurant' + response.message);
+    //     this.router.navigate(['/admin']);
+    //   },
+    //   error: (error) => {
+    //     console.error('Login failed', error);
+    //     this.errorMsg = error.error.message;
+    //   },
+    // });
   }
 
   openOwnerDialog(): void {
-    if (this.restaurantDetails.details.owner != '') {
-      const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
-        width: '600px', // Set the width
-        height: '470px', // Set the height
-        data: {
-          owner: this.restaurantDetails.details.owner,
-        },
-      });
+    // if (this.restaurantDetails.details.owner != '') {
+    //   const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
+    //     width: '600px', // Set the width
+    //     height: '470px', // Set the height
+    //     data: {
+    //       owner: this.restaurantDetails.details.owner,
+    //     },
+    //   });
 
-      dialogRef.afterClosed().subscribe((newOwner) => {
-        if (newOwner) {
-          if (!/\d/.test(newOwner) || newOwner.length !== 24) {
-            this.errorMsg = newOwner
-            if(newOwner == 'User account deleted successfully'){
-              this.restaurantDetails.details.owner = '';
-              console.log(this.restaurantDetails.details.owner);
-            }
-          }          
-        }
-      });
-    } else {
-      const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
-        width: '600px', // Set the width
-        height: '470px', // Set the height
-        data: {
-          /* data passed to the dialog */
-        },
-      });
+    //   dialogRef.afterClosed().subscribe((newOwner) => {
+    //     if (newOwner) {
+    //       if (!/\d/.test(newOwner) || newOwner.length !== 24) {
+    //         this.errorMsg = newOwner
+    //         if(newOwner == 'User account deleted successfully'){
+    //           this.restaurantDetails.details.owner = '';
+    //           console.log(this.restaurantDetails.details.owner);
+    //         }
+    //       }          
+    //     }
+    //   });
+    // } else {
+    //   const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
+    //     width: '600px', // Set the width
+    //     height: '470px', // Set the height
+    //     data: {
+    //       /* data passed to the dialog */
+    //     },
+    //   });
 
-      dialogRef.afterClosed().subscribe((newOwner) => {
-        if (newOwner) {
-          this.restaurantDetails.details.owner = newOwner;
-          console.log('New owner set:', this.restaurantDetails.details.owner);
-          console.log(newOwner);
-        }
-      });
-    }
+    //   dialogRef.afterClosed().subscribe((newOwner) => {
+    //     if (newOwner) {
+    //       this.restaurantDetails.details.owner = newOwner;
+    //       console.log('New owner set:', this.restaurantDetails.details.owner);
+    //       console.log(newOwner);
+    //     }
+    //   });
+    // }
   }
 
   resetTimesIfNeeded() {
-    const days = [
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday',
-      'sunday',
-    ];
-    days.forEach((day) => {
-      if (!this.restaurantDetails.details.operatingHours[day].isOpen) {
-        this.restaurantDetails.details.operatingHours[day].open = '';
-        this.restaurantDetails.details.operatingHours[day].close = '';
-      }
-    });
+    // const days = [
+    //   'monday',
+    //   'tuesday',
+    //   'wednesday',
+    //   'thursday',
+    //   'friday',
+    //   'saturday',
+    //   'sunday',
+    // ];
+    // days.forEach((day) => {
+    //   if (!this.restaurantDetails.details.operatingHours[day].isOpen) {
+    //     this.restaurantDetails.details.operatingHours[day].open = '';
+    //     this.restaurantDetails.details.operatingHours[day].close = '';
+    //   }
+    // });
   }
 
   cancel() {
-    if (
-      this.restaurantDetails.details.owner !== '' &&
-      this.restaurantDetails.details.owner !== undefined
-    ) {
-      this.userService
-        .deleteUser(this.restaurantDetails.details.owner)
-        .subscribe({
-          next: (response: UserResponse) => {
-            console.log(response.message);
-          },
-          error: (error) => {
-            console.error('Delete failed', error);
-            this.errorMsg = error.error.message;
-          },
-        });
-    }
+    // if (
+    //   this.restaurantDetails.details.owner !== '' &&
+    //   this.restaurantDetails.details.owner !== undefined
+    // ) {
+    //   this.userService
+    //     .deleteUser(this.restaurantDetails.details.owner)
+    //     .subscribe({
+    //       next: (response: UserResponse) => {
+    //         console.log(response.message);
+    //       },
+    //       error: (error) => {
+    //         console.error('Delete failed', error);
+    //         this.errorMsg = error.error.message;
+    //       },
+    //     });
+    // }
     this.router.navigate(['/admin']);
   }
 
   logout(): void {
-    this.sessionService
-      .logout()
-      .pipe(finalize(() => this.router.navigate(['/login'])))
-      .subscribe({
-        next: () => console.log('Logged out successfully'),
-        error: (error: any) => console.error('Logout failed:', error),
-      });
+    // this.sessionService
+    //   .logout()
+    //   .pipe(finalize(() => this.router.navigate(['/login'])))
+    //   .subscribe({
+    //     next: () => console.log('Logged out successfully'),
+    //     error: (error: any) => console.error('Logout failed:', error),
+    //   });
   }
 }
