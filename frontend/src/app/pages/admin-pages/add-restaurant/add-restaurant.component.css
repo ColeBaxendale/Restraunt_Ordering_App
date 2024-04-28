@@ -94,8 +94,49 @@ a {
   cursor: pointer;
 }
 
+.inputField {
+  width: 15rem;
+  height: 1rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
+}
+
+.inputFieldCity {
+  width: 10rem;
+  height: 1rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+
+  color: var(--darkestBlue);
+}
+
+.inputFieldState {
+  width: 8.5rem;
+  height: 1rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
+}
 
 
+
+.inputFieldTextArea {
+  width: 15rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .8rem;
+  color: var(--darkestBlue);
+}
+
+
+
+.valid-input {
+    label-color: 1px solid green;
+}
 
 
 

@@ -143,38 +143,38 @@ export class RestaurantComponent implements OnInit {
   }
 
   submitForm() {
-    if (!this.restaurant || !this.restaurant.details) {
-    console.error('Restaurant data is not loaded');
-    return;
-  }
-    this.resetTimesIfNeeded();
-    this.errorMsg = '';
-    console.log(this.restaurant);
-    if(this.restaurant.details.location.state)
-      this.restaurant.details.location.state = this.restaurant.details.location.state.toUpperCase()
-    const validationResult = this.restaurantValidator.isValidRestaurantInfo(
-      this.restaurant
-    );
-    if (!validationResult.isValid) {
-      if (validationResult.message) {
-        this.errorMsg = validationResult.message;
-        return;
-      } else {
-        this.errorMsg = 'An unknown validation error occured.';
-      }
-    }
-    this.restaurantService
-      .updateRestaurant(this.restaurantId, this.restaurant)
-      .subscribe({
-        next: (response: RestaurantResponse) => {
-          console.log('Successfully updated restaurant:', response.message);
-          this.router.navigate(['/admin']);
-        },
-        error: (error) => {
-          console.error('Update failed', error);
-          this.errorMsg = error.error.message;
-        },
-      });
+  //   if (!this.restaurant || !this.restaurant.details) {
+  //   console.error('Restaurant data is not loaded');
+  //   return;
+  // }
+  //   this.resetTimesIfNeeded();
+  //   this.errorMsg = '';
+  //   console.log(this.restaurant);
+  //   if(this.restaurant.details.location.state)
+  //     this.restaurant.details.location.state = this.restaurant.details.location.state.toUpperCase()
+  //   const validationResult = this.restaurantValidator.isValidRestaurantInfo(
+  //     this.restaurant
+  //   );
+  //   if (!validationResult.isValid) {
+  //     if (validationResult.message) {
+  //       this.errorMsg = validationResult.message;
+  //       return;
+  //     } else {
+  //       this.errorMsg = 'An unknown validation error occured.';
+  //     }
+  //   }
+  //   this.restaurantService
+  //     .updateRestaurant(this.restaurantId, this.restaurant)
+  //     .subscribe({
+  //       next: (response: RestaurantResponse) => {
+  //         console.log('Successfully updated restaurant:', response.message);
+  //         this.router.navigate(['/admin']);
+  //       },
+  //       error: (error) => {
+  //         console.error('Update failed', error);
+  //         this.errorMsg = error.error.message;
+  //       },
+  //     });
   }
 
   resetTimesIfNeeded() {

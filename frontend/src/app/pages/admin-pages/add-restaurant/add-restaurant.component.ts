@@ -50,9 +50,9 @@ export class AddRestaurantComponent implements OnInit {
         description: [''],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
-          address: [''],
-          city: [''],
-          state: [''],
+          address: ['', this.restaurantValidator.isValidAddressValidation()],
+          city: ['', this.restaurantValidator.isValidCityValidation()],
+          state: ['', this.restaurantValidator.isValidStateValidation()],
           zipCode: ['']
         }),
         operatingHours: this.fb.group({
@@ -93,15 +93,16 @@ export class AddRestaurantComponent implements OnInit {
   
   getErrorMessage(field: string) {
     const control = this.form.get(field);
-    if(control){
+    if (control && control.errors) {
       if (control.hasError('required')) {
         return 'This field is required.';
       } else if (control.hasError('invalidName')) {
         return control.getError('invalidName').value;
       } else if (control.hasError('invalidPhoneNumber')) {
         return control.getError('invalidPhoneNumber').value;
+      } else if (control.hasError('invalidState')) {
+        return control.getError('invalidState').value;
       }
-      return '';
     }
     return '';
   }
