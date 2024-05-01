@@ -54,14 +54,25 @@ a {
   color: var(--darkestBlue) !important;
   caret-color: var(--darkestBlue);
   margin-bottom: 3rem;
+  color: var(--darkestBlue);
+  background-color: #ffffff;
+
+
 }
 
 .loginContainer .formInput::placeholder {
   color: var(--darkestBlue);
+  background-color: #ffffff;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+
+
   font-size: 1.25rem;
 }
 .loginContainer .formInput:focus {
   outline: none;
+  
 }
 .loginContainer .formInput:-webkit-autofill,
 .loginContainer .formInput:-webkit-autofill:hover,
@@ -71,11 +82,13 @@ a {
   -webkit-text-fill-color: var(--darkestBlue) !important;
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
+  
 }
 
 .loginContainer .formInput:-webkit-autofill::first-line {
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
+  
 }
 
 .loginContainer .formInput:-webkit-autofill {
@@ -83,10 +96,16 @@ a {
   font-family: "JetBrainsMono" !important;
   font-size: 1.25rem !important;
   background-color: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 .loginFormContainer .formInput:focus::placeholder {
   color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 .loginContainer .errorMessageContainer {
   width: 100%;
