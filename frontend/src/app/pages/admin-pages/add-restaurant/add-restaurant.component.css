@@ -73,16 +73,28 @@ a {
 
 .mainContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding-top: 1.5rem;
   padding: 5rem;
   align-items: start;
   text-align: center;
+  background-color: bisque;
+  gap: 1.5rem;
+
+
+}
+
+.detailsContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+
 }
 
 .subContainer{
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: 1.5rem;
 }
 
@@ -95,13 +107,17 @@ a {
 }
 
 .inputField {
+  
   width: 15rem;
-  height: 1rem;
+  height: auto; /* Changed from 1rem to auto for better height management */
   font-family: "JetBrainsMono";
   font-weight: 100;
   font-size: .9rem;
   color: var(--darkestBlue);
+  padding-top: 8px; /* Added padding on top */
+  padding-bottom: 8px; /* Added padding on bottom */
 }
+
 
 .inputFieldCity {
   width: 10rem;
@@ -124,12 +140,20 @@ a {
 
 
 
-.inputFieldTextArea {
-  width: 15rem;
+textarea {
+
+ resize: none;
+
+
+}
+
+.inputFieldTextArea{
+  width: 31.5rem;
   font-family: "JetBrainsMono";
   font-weight: 100;
   font-size: .8rem;
   color: var(--darkestBlue);
+  height: 15rem;
 }
 
 
