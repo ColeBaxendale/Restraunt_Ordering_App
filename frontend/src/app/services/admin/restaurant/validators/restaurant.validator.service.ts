@@ -128,9 +128,44 @@ export class RestaurantValidatorService {
     };
   }
 
+  isValidDesciptionValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
 
-  isValidDescription(description: string): boolean {
-    return description.length > 50 && description.length < 1000;
+      if (!value && value === '') {
+        return null;
+      }
+
+      if (value.length < 51) {
+        return {
+          invalidName: { value: 'Desciption must be more than 50 characters' },
+        };
+      }
+
+      if (value.length > 1000) {
+        return {
+          invalidName: { value: 'Desciption must be less than 1000 characters' },
+        };
+      }
+      return null;
+    };
+  }
+
+
+  isValidZipValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value.toUpperCase();
+      if (!value) {
+        return null;
+      }
+      const zipRegex = /^\d{5}(-\d{4})?$/;
+      if (!zipRegex.test(value)) {
+        return {
+          invalidState: { value: 'Invalid ZipCode' }
+        };
+      }
+      return null;
+    };
   }
 
 

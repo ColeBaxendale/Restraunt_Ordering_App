@@ -47,13 +47,13 @@ export class AddRestaurantComponent implements OnInit {
       details: this.fb.group({
         logo: [''],
         name: ['', [Validators.required, this.restaurantValidator.isValidNameValidation()]],
-        description: [''],
+        description: ['',this.restaurantValidator.isValidDesciptionValidation()],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
           address: ['', this.restaurantValidator.isValidAddressValidation()],
           city: ['', this.restaurantValidator.isValidCityValidation()],
           state: ['', this.restaurantValidator.isValidStateValidation()],
-          zipCode: ['']
+          zipCode: ['',this.restaurantValidator.isValidZipValidation()]
         }),
         operatingHours: this.fb.group({
           monday: this.initDay(),
@@ -90,6 +90,26 @@ export class AddRestaurantComponent implements OnInit {
       close: [{value: '', disabled: true}, Validators.required]
     });
   }
+
+  toggleDay(day: string): void {
+    const dayGroup = this.form.get(`details.operatingHours.${day}`);
+    if (dayGroup) {
+      const isOpen = dayGroup.get('isOpen')?.value;
+      const openControl = dayGroup.get('open');
+      const closeControl = dayGroup.get('close');
+
+      if (isOpen) {
+        openControl?.enable();
+        closeControl?.enable();
+      } else {
+        openControl?.disable();
+        closeControl?.disable();
+        openControl?.reset();
+        closeControl?.reset();
+      }
+    }
+  }
+
   
   getErrorMessage(field: string) {
     const control = this.form.get(field);
@@ -124,6 +144,8 @@ export class AddRestaurantComponent implements OnInit {
   }
   
   submitForm() {
+    console.log(this.form);
+
     // console.log(this.restaurantDetails);
 
     // this.resetTimesIfNeeded();

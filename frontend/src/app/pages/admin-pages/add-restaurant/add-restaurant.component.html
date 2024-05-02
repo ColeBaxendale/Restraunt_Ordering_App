@@ -11,317 +11,228 @@
     </div>
   </div>
 
-
   <form [formGroup]="form" class="mainContainer">
     <div class="leftContainer">
-      <div formGroupName="details"class="detailsContainer" >
+      <div formGroupName="details" class="detailsContainer">
         <h3>Details</h3>
         <div class="subContainer">
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Enter Restaurant Name</mat-label>
             <input matInput formControlName="name" required />
             <mat-error *ngIf="form.get(['details', 'name'])?.errors">
-              {{ getErrorMessage('details.name') }}
+              {{ getErrorMessage("details.name") }}
             </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'name'])?.value"
-                    (click)="clearInput('details.name')">
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['details', 'name'])?.value"
+              (click)="clearInput('details.name')"
+            >
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-    
+
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Telephone</mat-label>
-            <input  matInput formControlName="phone" />
+            <input matInput formControlName="phone" />
             <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-              {{ getErrorMessage('details.phone') }}
+              {{ getErrorMessage("details.phone") }}
             </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'phone'])?.value"
-                    (click)="clearInput('details.phone')">
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['details', 'phone'])?.value"
+              (click)="clearInput('details.phone')"
+            >
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </div>
-    
+
         <div class="subContainer">
-    
           <mat-form-field class="inputFieldTextArea" appearance="outline">
             <mat-label>Description</mat-label>
             <textarea
               matInput
               placeholder="Ex. Here at xxx we serve..."
+              formControlName="description"
             ></textarea>
-            <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-              {{ getErrorMessage('details.phone') }}
+            <mat-error *ngIf="form.get(['details', 'description'])?.errors">
+              {{ getErrorMessage("details.description") }}
             </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'phone'])?.value"
-                    (click)="clearInput('details.phone')">
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['details', 'description'])?.value"
+              (click)="clearInput('details.description')"
+            >
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </div>
-        <div formGroupName="location"class="detailsContainer" >
+        <div formGroupName="location" class="detailsContainer">
           <h3>Location</h3>
-            <mat-form-field class="inputFieldAddress" appearance="outline">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="address" />
-                <mat-error *ngIf="form.get(['details', 'location', 'address'])?.errors">
-                  {{ getErrorMessage('details.location.address') }}
-                </mat-error>
-                <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'address'])?.value"
-                        (click)="clearInput('details.location.address')">
-                  <mat-icon>close</mat-icon>
-                </button>
-              </mat-form-field>
+          <mat-form-field class="inputFieldAddress" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" />
+            <mat-error
+              *ngIf="form.get(['details', 'location', 'address'])?.errors"
+            >
+              {{ getErrorMessage("details.location.address") }}
+            </mat-error>
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['details', 'location', 'address'])?.value"
+              (click)="clearInput('details.location.address')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
 
-    
           <div class="subContainer">
             <mat-form-field class="inputFieldCity" appearance="outline">
               <mat-label>City</mat-label>
               <input matInput formControlName="city" />
-              <mat-error *ngIf="form.get(['details', 'location', 'city'])?.errors">
-                {{ getErrorMessage('details.location.city') }}
+              <mat-error
+                *ngIf="form.get(['details', 'location', 'city'])?.errors"
+              >
+                {{ getErrorMessage("details.location.city") }}
               </mat-error>
-              <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'city'])?.value"
-                      (click)="clearInput('details.location.city')">
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'location', 'city'])?.value"
+                (click)="clearInput('details.location.city')"
+              >
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
             <mat-form-field class="inputFieldState" appearance="outline">
               <mat-label>State</mat-label>
-              <input matInput formControlName="state" [class.valid-input]="form.get('state')?.valid && form.get('state')?.value">
-              <mat-error *ngIf="form.get(['details', 'location', 'state'])?.errors">
-                {{ getErrorMessage('details.location.state') }}
+              <input
+                matInput
+                formControlName="state"
+                [class.valid-input]="
+                  form.get('state')?.valid && form.get('state')?.value
+                "
+              />
+              <mat-error
+                *ngIf="form.get(['details', 'location', 'state'])?.errors"
+              >
+                {{ getErrorMessage("details.location.state") }}
               </mat-error>
-              <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'state'])?.value"
-                      (click)="clearInput('details.location.state')">
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'location', 'state'])?.value"
+                (click)="clearInput('details.location.state')"
+              >
                 <mat-icon>close</mat-icon>
               </button>
-          </mat-form-field>
-    
-          <mat-form-field class="inputFieldState" appearance="outline">
-            <mat-label>zipCode</mat-label>
-            <input matInput formControlName="state" [class.valid-input]="form.get('state')?.valid && form.get('state')?.value">
-            <mat-error *ngIf="form.get(['details', 'location', 'state'])?.errors">
-              {{ getErrorMessage('details.location.state') }}
-            </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'state'])?.value"
-                    (click)="clearInput('details.location.state')">
-              <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
+            </mat-form-field>
+
+            <mat-form-field class="inputFieldState" appearance="outline">
+              <mat-label>Zip</mat-label>
+              <input
+                matInput
+                formControlName="zipCode"
+                [class.valid-input]="
+                  form.get('zipCode')?.valid && form.get('zipCode')?.value
+                "
+              />
+              <mat-error
+                *ngIf="form.get(['details', 'location', 'zipCode'])?.errors"
+              >
+                {{ getErrorMessage("details.location.zipCode") }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'location', 'zipCode'])?.value"
+                (click)="clearInput('details.location.zipCode')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
           </div>
+        </div>
       </div>
-
-      </div>
-
     </div>
 
     <div class="rightContainer">
+      <div formGroupName="details">
+        <div formGroupName="operatingHours" class="detailsContainer">
+          <h3>Operating Hours</h3>
 
 
+          <div formGroupName="monday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('monday')"
+                >Monday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
+                {{ getErrorMessage("details.phone") }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div formGroupName="tuesday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('tuesday')"
+                >Tuesday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
+                {{ getErrorMessage("details.phone") }}
+              </mat-error>
+            </div>
+          </div>
+
+
+
+
+
+
+        </div>
+      </div>
     </div>
-
   </form>
 
-
-
-
-
-
-    <!-- <form [formGroup]="form" class="mainContainer">
-
-
-      <div formGroupName="details" class="subContainer">
-        <mat-form-field class="inputField" appearance="outline">
-          <mat-label>Enter Restaurant Name</mat-label>
-          <input matInput formControlName="name" required />
-          <mat-error *ngIf="form.get(['details', 'name'])?.errors">
-            {{ getErrorMessage('details.name') }}
-          </mat-error>
-          <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'name'])?.value"
-                  (click)="clearInput('details.name')">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-    
-        <mat-form-field class="inputField" appearance="outline">
-          <mat-label>Telephone</mat-label>
-          <input  matInput formControlName="phone" />
-          <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-            {{ getErrorMessage('details.phone') }}
-          </mat-error>
-          <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'phone'])?.value"
-                  (click)="clearInput('details.phone')">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-
-        <div formGroupName="location" class="subContainer">
-
-          <mat-form-field class="inputField" appearance="outline">
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address" />
-            <mat-error *ngIf="form.get(['details', 'location', 'address'])?.errors">
-              {{ getErrorMessage('details.location.address') }}
-            </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'address'])?.value"
-                    (click)="clearInput('details.location.address')">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-
-          <mat-form-field class="inputFieldCity" appearance="outline">
-            <mat-label>City</mat-label>
-            <input matInput formControlName="city" />
-            <mat-error *ngIf="form.get(['details', 'location', 'city'])?.errors">
-              {{ getErrorMessage('details.location.city') }}
-            </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'city'])?.value"
-                    (click)="clearInput('details.location.city')">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-
-          <mat-form-field class="inputFieldState" appearance="outline">
-            <mat-label>State</mat-label>
-            <input matInput formControlName="state" [class.valid-input]="form.get('state')?.valid && form.get('state')?.value">
-            <mat-error *ngIf="form.get(['details', 'location', 'state'])?.errors">
-              {{ getErrorMessage('details.location.state') }}
-            </mat-error>
-            <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'location', 'state'])?.value"
-                    (click)="clearInput('details.location.state')">
-              <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
-        
-          
-        </div>
-
-
-        
-
-
-      </div>
-      
-      
-    </form> -->
-
-<!-- 
-    <mat-form-field class="inputFieldTextArea" appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea
-        matInput
-        placeholder="Ex. Here at xxx we serve..."
-      ></textarea>
-      <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-        {{ getErrorMessage('details.phone') }}
-      </mat-error>
-      <button class="icon" matSuffix mat-icon-button aria-label="Clear" *ngIf="form.get(['details', 'phone'])?.value"
-              (click)="clearInput('details.phone')">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field> -->
-
-
-    <!-- <div class="card">
-      <div class="section">
-
-        <mat-form-field appearance="outline">
-          <mat-label [(ngModel)]="restaurantDetails.details.description"
-            >Enter Restaurant Description</mat-label
-          >
-          <textarea
-            matInput
-            placeholder="Ex. Here at xxx we serve..."
-          ></textarea>
-          <!-- @if (restaurantDetails.details.description) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="restaurantDetails.details.description=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          } 
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Enter Address</mat-label>
-          <input
-            matInput
-            placeholder="123 Main Street"
-            [(ngModel)]="restaurantDetails.details.location.address"
-          />
-          @if (restaurantDetails.details.location.address) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.location.address = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>City</mat-label>
-          <input
-            [(ngModel)]="restaurantDetails.details.location.city"
-            matInput
-            placeholder="Ex. San Francisco"
-          />
-          @if (restaurantDetails.details.location.city) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.location.city = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>State</mat-label>
-          <input
-            [(ngModel)]="restaurantDetails.details.location.state"
-            matInput
-            placeholder="Ex. CA"
-          />
-          @if (restaurantDetails.details.location.state) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.location.state = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Postal Code</mat-label>
-          <input
-            [(ngModel)]="restaurantDetails.details.location.zipCode"
-            matInput
-            #postalCode
-            maxlength="10"
-            placeholder="Ex. 94105"
-          />
-          @if (restaurantDetails.details.location.zipCode) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.details.location.zipCode = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-          <mat-hint align="end">{{ postalCode.value.length }} / 8</mat-hint>
-        </mat-form-field>
-
-        <mat-checkbox [(ngModel)]="restaurantDetails.details.ordersEnabled"
-          >Enable Orders?</mat-checkbox
-        >
-      </div>
+  <!-- 
       <div class="section">
         <div class="inputContainerTime">
           <mat-checkbox
@@ -556,6 +467,6 @@
           >Owner Add / Edit</a
         >
       </div>
-    </div> -->
-  
+    </div> 
+</div> -->
 </div>
