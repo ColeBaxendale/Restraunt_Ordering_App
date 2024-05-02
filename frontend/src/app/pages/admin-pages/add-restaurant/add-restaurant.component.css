@@ -13,7 +13,7 @@ a {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: var(--offWhite3);
+  background-color: var(--offWhite);
 }
 
 .header{
@@ -73,15 +73,25 @@ a {
 
 .mainContainer {
   display: flex;
-  flex-direction: column;
   padding-top: 1.5rem;
-  padding: 5rem;
+  padding: 3rem;
   align-items: start;
   text-align: center;
-  background-color: bisque;
   gap: 1.5rem;
+  background-color: var(--offWhite2);
+}
 
+.leftContainer{
+  height: auto;
+  width: 35rem;
+  height: 75vh;
 
+}
+.rightContainer{
+  background-color: aquamarine;
+  height: auto;
+  width: 32rem;
+  height: 75vh;
 }
 
 .detailsContainer{
@@ -96,6 +106,7 @@ a {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
+
 }
 
 .icon{
@@ -114,13 +125,23 @@ a {
   font-weight: 100;
   font-size: .9rem;
   color: var(--darkestBlue);
-  padding-top: 8px; /* Added padding on top */
-  padding-bottom: 8px; /* Added padding on bottom */
+}
+
+.inputFieldAddress {
+  
+  width: 31.5rem;
+
+  height: auto; /* Changed from 1rem to auto for better height management */
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
 }
 
 
+
 .inputFieldCity {
-  width: 10rem;
+  width: 12.5rem;
   height: 1rem;
   font-family: "JetBrainsMono";
   font-weight: 100;
@@ -130,7 +151,7 @@ a {
 }
 
 .inputFieldState {
-  width: 8.5rem;
+  width: 8rem;
   height: 1rem;
   font-family: "JetBrainsMono";
   font-weight: 100;
