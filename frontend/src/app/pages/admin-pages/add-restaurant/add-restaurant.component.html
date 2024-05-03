@@ -227,6 +227,126 @@
               </mat-error>
             </div>
           </div>
+
+          <div formGroupName="wednesday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('wednesday')"
+                >Wednesday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder'] }}
+              </mat-error>
+            </div>
+          </div>
+          
+          <div formGroupName="thursday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('thursday')"
+                >Thursday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder'] }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div formGroupName="friday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('friday')"
+                >Friday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder'] }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div formGroupName="saturday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('saturday')"
+                >Saturday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder'] }}
+              </mat-error>
+            </div>
+          </div>
+
+          <div formGroupName="sunday">
+            <div class="subContainer">
+              <mat-checkbox
+                formControlName="isOpen"
+                (change)="toggleDay('sunday')"
+                >Sunday
+              </mat-checkbox>
+              <input type="time" class="formInputTime" formControlName="open" />
+              <input
+                type="time"
+                class="formInputTime"
+                formControlName="close"
+              />
+            </div>
+            <div class="timeError">
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder'] }}
+              </mat-error>
+            </div>
+          </div>
           
 
 
