@@ -88,7 +88,7 @@ export class AddRestaurantComponent implements OnInit {
       isOpen: [false],
       open: [{value: '', disabled: true}, Validators.required],
       close: [{value: '', disabled: true}, Validators.required]
-    });
+    }, { validators: this.restaurantValidator.operatingHoursValidator() });
   }
 
   toggleDay(day: string): void {

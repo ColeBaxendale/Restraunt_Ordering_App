@@ -168,6 +168,23 @@ export class RestaurantValidatorService {
     };
   }
 
+  operatingHoursValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isOpen = control.get('isOpen')?.value;
+      const open = control.get('open')?.value;
+      const close = control.get('close')?.value;
+  
+      if (isOpen) {
+        if (!open || !close) {
+          return { requiredTimes: 'Opening and closing times are required.' };
+        }
+        if (open >= close) {
+          return { invalidOrder: 'Opening time must be before closing time.' };
+        }
+      }
+      return null;
+    };
+  }
 
 
   isValidZipPlus4Code(zipCode: string): boolean {

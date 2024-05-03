@@ -195,8 +195,11 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-                {{ getErrorMessage("details.phone") }}
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
           </div>
@@ -216,8 +219,11 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
-                {{ getErrorMessage("details.phone") }}
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes']">
+                {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes'] }}
+              </mat-error>
+              <mat-error *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder']">
+                {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
           </div>
