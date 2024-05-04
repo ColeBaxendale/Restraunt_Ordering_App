@@ -82,12 +82,13 @@ a {
   background-color: var(--offWhite2);
 }
 
-.leftContainer .rightContainer{
+.leftContainer .rightContainer .rightMostContainer{
   height: auto;
   width: 30rem;
   height: 75vh;
 
 }
+
 
 
 .detailsContainer{
@@ -96,6 +97,10 @@ a {
   align-items: start;
   gap: 1.75rem;
 
+}
+
+.marginbot{
+  margin-bottom: 1.75rem;
 }
 
 .subContainer{

@@ -24,22 +24,20 @@ export class RestaurantValidatorService {
   isValidNameValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
-      if (!value) {
-        return null;
-      }
-      if (!value || value === '') {
-        return { invalidName: { value: 'Name must be filled in' } };
-      }
 
-      if (value.length < 5) {
-        return {
-          invalidName: { value: 'Name must be more than 4 characters' },
-        };
+      if (!value || value === '') {
+        return { required: { value: 'Name must be filled in' } };
       }
 
       if (value.length > 50) {
         return {
-          invalidName: { value: 'Name must be less than 50 characters' },
+          tooLarge: { value: 'Name must be less than 50 characters' },
+        };
+      }
+
+      if (value.length < 5) {
+        return {
+          tooSmall: { value: 'Name must be more than 4 characters' },
         };
       }
       return null;
@@ -60,7 +58,7 @@ export class RestaurantValidatorService {
         ? null
         : {
             invalidPhoneNumber: {
-              value: 'Phone number must be in the format 111-111-1111',
+              invalid: 'Phone number must be in the format 111-111-1111',
             },
           };
     };
@@ -76,13 +74,13 @@ export class RestaurantValidatorService {
 
       if (value.length < 7) {
         return {
-          invalidName: { value: 'Address must be more than 6 characters' },
+          tooSmall: { value: 'Address must be more than 6 characters' },
         };
       }
 
       if (value.length > 100) {
         return {
-          invalidName: { value: 'Address must be less than 100 characters' },
+          tooLarge: { value: 'Address must be less than 100 characters' },
         };
       }
       return null;
@@ -99,13 +97,13 @@ export class RestaurantValidatorService {
 
       if (value.length < 5) {
         return {
-          invalidName: { value: 'City must be more than 4 characters' },
+          tooSmall: { value: 'City must be more than 4 characters' },
         };
       }
 
       if (value.length > 30) {
         return {
-          invalidName: { value: 'City must be less than 30 characters' },
+          tooLarge: { value: 'City must be less than 30 characters' },
         };
       }
       return null;
@@ -121,7 +119,7 @@ export class RestaurantValidatorService {
       const stateRegex = /^(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)$/i;
       if (!stateRegex.test(value)) {
         return {
-          invalidState: { value: 'Invalid state.' }
+          invalid: { value: 'Invalid state.' }
         };
       }
       return null;
@@ -138,13 +136,13 @@ export class RestaurantValidatorService {
 
       if (value.length < 51) {
         return {
-          invalidName: { value: 'Desciption must be more than 50 characters' },
+          tooSmall: 'Desciption must be more than 50 characters',
         };
       }
 
       if (value.length > 1000) {
         return {
-          invalidName: { value: 'Desciption must be less than 1000 characters' },
+          tooLarge: { value: 'Desciption must be less than 1000 characters' },
         };
       }
       return null;
@@ -161,7 +159,7 @@ export class RestaurantValidatorService {
       const zipRegex = /^\d{5}(-\d{4})?$/;
       if (!zipRegex.test(value)) {
         return {
-          invalidState: { value: 'Invalid ZipCode' }
+          invalid: { value: 'Invalid ZipCode' }
         };
       }
       return null;
@@ -176,10 +174,10 @@ export class RestaurantValidatorService {
   
       if (isOpen) {
         if (!open || !close) {
-          return { requiredTimes: 'Opening and closing times are required.' };
+          return { required: 'Opening and closing times are required.' };
         }
         if (open >= close) {
-          return { invalidOrder: 'Opening time must be before closing time.' };
+          return { invalid: 'Opening time must be before closing time.' };
         }
       }
       return null;
@@ -187,10 +185,6 @@ export class RestaurantValidatorService {
   }
 
 
-  isValidZipPlus4Code(zipCode: string): boolean {
-    const pattern = /^\d{5}(-\d{4})?$/;
-    return pattern.test(zipCode);
-  }
 
   isValidOperatingHours(hours: OperatingHours): boolean {
     if (!hours.isOpen) {
@@ -207,11 +201,54 @@ export class RestaurantValidatorService {
     return openTime < closeTime;
   }
 
-  isValidFixedRate(rate: number): boolean {
-    return rate > 0.01 && rate < 0.1;
+  isValidStripeIdValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value && value === '') {
+        return null;
+      }
+
+      if (value.length < 2) {
+        return {
+          tooSmall: { value: 'Stripe ID must be more than 1 characters' },
+        };
+      }
+
+      if (value.length > 100) {
+        return {
+          tooLarge: { value: 'Stripe ID must be less than 100 characters' },
+        };
+      }
+      return null;
+    };
   }
 
-  isValidStripeID(id: string): boolean {
-    return id.length > 1 && id.length < 100;
+  isValidFixedRateValidation(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value || value === '') {
+        return { required: { value: 'Fixed Rate must be filled in' } };
+      }
+
+      if (!/^\d+(\.\d+)?$/.test(value)) {
+        return { invalid: { value: 'Fixed Rate must be only digits' } };
+
+      }
+      if (value > 0.1) {
+        return {
+          tooLarge: { value: 'Fixed rate must be less than 0.10' },
+        };
+      }
+
+      if (value < 0.01) {
+        return {
+          tooSmall: { value: 'Fixed rate must be more than 0.01' },
+        };
+      }
+      return null;
+    };
   }
+
 }

@@ -18,7 +18,7 @@
         <div class="subContainer">
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Enter Restaurant Name</mat-label>
-            <input matInput formControlName="name" required />
+            <input matInput formControlName="name" />
             <mat-error *ngIf="form.get(['details', 'name'])?.errors">
               {{ getErrorMessage("details.name") }}
             </mat-error>
@@ -179,7 +179,6 @@
         <div formGroupName="operatingHours" class="detailsContainer">
           <h3>Operating Hours</h3>
 
-
           <div formGroupName="monday">
             <div class="subContainer">
               <mat-checkbox
@@ -195,10 +194,14 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
@@ -219,10 +222,14 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
@@ -243,15 +250,19 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
           </div>
-          
+
           <div formGroupName="thursday">
             <div class="subContainer">
               <mat-checkbox
@@ -267,10 +278,14 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
@@ -291,10 +306,14 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
@@ -315,10 +334,14 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
@@ -339,261 +362,68 @@
               />
             </div>
             <div class="timeError">
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes']"
+              >
                 {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes'] }}
               </mat-error>
-              <mat-error *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder']">
+              <mat-error
+                *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder']"
+              >
                 {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder'] }}
               </mat-error>
             </div>
           </div>
-          
-
-
-
-
-
-
         </div>
+      </div>
+    </div>
+
+    <div class="rightMostContainer">
+      <div formGroupName="stripe" class="detailsContainer">
+        <h3>Stripe</h3>
+        <mat-form-field class="inputField" appearance="outline">
+          <mat-label>Stripe ID</mat-label>
+          <input matInput formControlName="stripeAccountId" />
+          <mat-error *ngIf="form.get(['stripe', 'stripeAccountId'])?.errors">
+            {{ getErrorMessage("stripe.stripeAccountId") }}
+          </mat-error>
+          <button
+            class="icon"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="form.get(['stripe', 'stripeAccountId'])?.value"
+            (click)="clearInput('stripe.stripeAccountId')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-checkbox formControlName="addFees" class="marginbot"
+          >Add Fees To Customer?
+        </mat-checkbox>
+      </div>
+      <div formGroupName="admin" class="detailsContainer">
+        <h3>Admin</h3>
+        <mat-form-field class="inputField" appearance="outline">
+          <mat-label>Fixed Rate</mat-label>
+          <input matInput formControlName="fixedRate" />
+          <mat-error *ngIf="form.get(['admin', 'fixedRate'])?.errors">
+            {{ getErrorMessage("admin.fixedRate") }}
+          </mat-error>
+          <button
+            class="icon"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="form.get(['admin', 'fixedRate'])?.value"
+            (click)="clearInput('admin.fixedRate')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
       </div>
     </div>
   </form>
 
-  <!-- 
-      <div class="section">
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="restaurantDetails.details.operatingHours.monday.isOpen"
-            >Monday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.monday.open"
-            name="mondayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.monday.close"
-            name="mondayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.monday.isOpen"
-          />
-        </div>
-
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.tuesday.isOpen
-            "
-            >Tuesday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.open"
-            name="tuesdayOpen"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.tuesday.isOpen
-            "
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.close"
-            name="tuesdayClose"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.tuesday.isOpen
-            "
-          />
-        </div>
-
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.wednesday.isOpen
-            "
-            >Wednesday</mat-checkbox
-          >
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.wednesday.open
-            "
-            name="wednesdayOpen"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.wednesday.isOpen
-            "
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.wednesday.close
-            "
-            name="wednesdayClose"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.wednesday.isOpen
-            "
-          />
-        </div>
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.thursday.isOpen
-            "
-            >Thursday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.thursday.open"
-            name="thursdayOpen"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.thursday.isOpen
-            "
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.thursday.close
-            "
-            name="thursdayClose"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.thursday.isOpen
-            "
-          />
-        </div>
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="restaurantDetails.details.operatingHours.friday.isOpen"
-            >Friday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.tuesday.open"
-            name="fridayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.friday.isOpen"
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.friday.close"
-            name="fridayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.friday.isOpen"
-          />
-        </div>
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.saturday.isOpen
-            "
-            >Saturday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.saturday.open"
-            name="saturdayOpen"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.saturday.isOpen
-            "
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="
-              restaurantDetails.details.operatingHours.saturday.close
-            "
-            name="saturdayClose"
-            [disabled]="
-              !restaurantDetails.details.operatingHours.saturday.isOpen
-            "
-          />
-        </div>
-        <div class="inputContainerTime">
-          <mat-checkbox
-            [(ngModel)]="restaurantDetails.details.operatingHours.sunday.isOpen"
-            >Sunday</mat-checkbox
-          >
-
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.sunday.open"
-            name="sundayOpen"
-            [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
-          />
-          <input
-            type="time"
-            class="formInputTime"
-            [(ngModel)]="restaurantDetails.details.operatingHours.sunday.close"
-            name="sundayClose"
-            [disabled]="!restaurantDetails.details.operatingHours.sunday.isOpen"
-          />
-        </div>
-      </div>
-
-      <div class="section2">
-        <mat-form-field appearance="outline">
-          <mat-label>Stripe ID</mat-label>
-          <input
-            [(ngModel)]="restaurantDetails.stripe.stripeAccountId"
-            matInput
-            placeholder="Ex. 123few34q32"
-          />
-          @if (restaurantDetails.stripe.stripeAccountId) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.stripe.stripeAccountId = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Fixed Rate</mat-label>
-          <input
-            [(ngModel)]="restaurantDetails.admin.fixedRate"
-            matInput
-            placeholder="Ex. 0.02"
-          />
-          @if (restaurantDetails.admin.fixedRate) {
-          <button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="restaurantDetails.admin.fixedRate = 0.0"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-          }
-        </mat-form-field>
-
-        <mat-checkbox [(ngModel)]="restaurantDetails.admin.isActive"
-          >Is Restaurant Active?</mat-checkbox
-        >
-
-        <mat-checkbox [(ngModel)]="restaurantDetails.stripe.addFees"
-          >Add Fees To Customer?</mat-checkbox
-        >
-
-        <a for="fileInput" class="linkLike" (click)="openOwnerDialog()"
-          >Owner Add / Edit</a
-        >
-      </div>
-    </div> 
-</div> -->
 </div>

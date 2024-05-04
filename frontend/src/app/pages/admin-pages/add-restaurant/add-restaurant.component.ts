@@ -70,11 +70,11 @@ export class AddRestaurantComponent implements OnInit {
       }),
       admin: this.fb.group({
         isActive: [false],
-        fixedRate: [0.02],
+        fixedRate: [0.02, [Validators.required, this.restaurantValidator.isValidFixedRateValidation()]],
         overallIncome: [0.01],
       }),
       stripe: this.fb.group({
-        stripeAccountId: [''],
+        stripeAccountId: ['',this.restaurantValidator.isValidStripeIdValidation()],
         addFees: [false],
       }),
     });
@@ -111,21 +111,17 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   
-  getErrorMessage(field: string) {
+  getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
-      if (control.hasError('required')) {
-        return 'This field is required.';
-      } else if (control.hasError('invalidName')) {
-        return control.getError('invalidName').value;
-      } else if (control.hasError('invalidPhoneNumber')) {
-        return control.getError('invalidPhoneNumber').value;
-      } else if (control.hasError('invalidState')) {
-        return control.getError('invalidState').value;
-      }
+      // Return the first error message found
+      const firstKey = Object.keys(control.errors)[0]; // Get the first error key
+      const error = control.getError(firstKey);
+      return error.value; 
     }
     return '';
   }
+  
   
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
