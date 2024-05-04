@@ -1,6 +1,13 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, Validators, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+} from '@angular/forms';
 import {
   RestaurantResponse,
   Restaurant,
@@ -15,16 +22,25 @@ import { RestaurantValidatorService } from '../../../services/admin/restaurant/v
 import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {merge} from 'rxjs';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge } from 'rxjs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
-  imports: [NgIf, FormsModule, CommonModule,MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule,MatCheckboxModule],
+  imports: [
+    NgIf,
+    FormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+  ],
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css',
 })
@@ -39,21 +55,30 @@ export class AddRestaurantComponent implements OnInit {
     private sessionService: SessionService,
     private dialog: MatDialog,
     private restaurantValidator: RestaurantValidatorService,
-    private userService: UserService,
+    private userService: UserService
   ) {}
-  
+
   ngOnInit(): void {
     this.form = this.fb.group({
       details: this.fb.group({
         logo: [''],
-        name: ['', [Validators.required, this.restaurantValidator.isValidNameValidation()]],
-        description: ['',this.restaurantValidator.isValidDesciptionValidation()],
+        name: [
+          '',
+          [
+            Validators.required,
+            this.restaurantValidator.isValidNameValidation(),
+          ],
+        ],
+        description: [
+          '',
+          this.restaurantValidator.isValidDesciptionValidation(),
+        ],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
           address: ['', this.restaurantValidator.isValidAddressValidation()],
           city: ['', this.restaurantValidator.isValidCityValidation()],
           state: ['', this.restaurantValidator.isValidStateValidation()],
-          zipCode: ['',this.restaurantValidator.isValidZipValidation()]
+          zipCode: ['', this.restaurantValidator.isValidZipValidation()],
         }),
         operatingHours: this.fb.group({
           monday: this.initDay(),
@@ -66,29 +91,40 @@ export class AddRestaurantComponent implements OnInit {
         }),
         ordersEnabled: [false],
         owner: [''],
-        menuSections: this.fb.array([])
+        menuSections: this.fb.array([]),
       }),
       admin: this.fb.group({
         isActive: [false],
-        fixedRate: [0.02, [Validators.required, this.restaurantValidator.isValidFixedRateValidation()]],
+        fixedRate: [
+          0.02,
+          [
+            Validators.required,
+            this.restaurantValidator.isValidFixedRateValidation(),
+          ],
+        ],
         overallIncome: [0.01],
       }),
       stripe: this.fb.group({
-        stripeAccountId: ['',this.restaurantValidator.isValidStripeIdValidation()],
+        stripeAccountId: [
+          '',
+          this.restaurantValidator.isValidStripeIdValidation(),
+        ],
         addFees: [false],
       }),
     });
 
     console.log(this.form);
-    
   }
 
   private initDay() {
-    return this.fb.group({
-      isOpen: [false],
-      open: [{value: '', disabled: true}, Validators.required],
-      close: [{value: '', disabled: true}, Validators.required]
-    }, { validators: this.restaurantValidator.operatingHoursValidator() });
+    return this.fb.group(
+      {
+        isOpen: [false],
+        open: [{ value: '', disabled: true }, Validators.required],
+        close: [{ value: '', disabled: true }, Validators.required],
+      },
+      { validators: this.restaurantValidator.operatingHoursValidator() }
+    );
   }
 
   toggleDay(day: string): void {
@@ -110,35 +146,32 @@ export class AddRestaurantComponent implements OnInit {
     }
   }
 
-  
   getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
+      if (control.hasError('required')) {
+        return 'This field is required.';
+      }
       // Return the first error message found
       const firstKey = Object.keys(control.errors)[0]; // Get the first error key
       const error = control.getError(firstKey);
-      return error.value; 
+      return error.value;
     }
     return '';
   }
-  
-  
+
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
-    
+
     if (control) {
-    console.log(control);
+      console.log(control);
       control.reset(''); // Reset without value to clear to `null` or use `''` to reset to empty string
       control.markAsPristine();
       control.markAsUntouched();
-    console.log(control);
-
-    }
-    else
-    console.log(control);
-    
+      console.log(control);
+    } else console.log(control);
   }
-  
+
   submitForm() {
     console.log(this.form);
 
@@ -159,7 +192,6 @@ export class AddRestaurantComponent implements OnInit {
     //     this.errorMsg = 'An unknown validation error occured.';
     //   }
     // }
-
 
     // this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
     //   next: (response: RestaurantResponse) => {
@@ -182,7 +214,6 @@ export class AddRestaurantComponent implements OnInit {
     //       owner: this.restaurantDetails.details.owner,
     //     },
     //   });
-
     //   dialogRef.afterClosed().subscribe((newOwner) => {
     //     if (newOwner) {
     //       if (!/\d/.test(newOwner) || newOwner.length !== 24) {
@@ -191,7 +222,7 @@ export class AddRestaurantComponent implements OnInit {
     //           this.restaurantDetails.details.owner = '';
     //           console.log(this.restaurantDetails.details.owner);
     //         }
-    //       }          
+    //       }
     //     }
     //   });
     // } else {
@@ -202,7 +233,6 @@ export class AddRestaurantComponent implements OnInit {
     //       /* data passed to the dialog */
     //     },
     //   });
-
     //   dialogRef.afterClosed().subscribe((newOwner) => {
     //     if (newOwner) {
     //       this.restaurantDetails.details.owner = newOwner;

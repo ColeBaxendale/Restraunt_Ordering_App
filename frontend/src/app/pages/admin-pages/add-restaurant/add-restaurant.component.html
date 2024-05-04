@@ -18,7 +18,7 @@
         <div class="subContainer">
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Enter Restaurant Name</mat-label>
-            <input matInput formControlName="name" />
+            <input matInput formControlName="name" required />
             <mat-error *ngIf="form.get(['details', 'name'])?.errors">
               {{ getErrorMessage("details.name") }}
             </mat-error>
@@ -404,7 +404,7 @@
       </div>
       <div formGroupName="admin" class="detailsContainer">
         <h3>Admin</h3>
-        <mat-form-field class="inputField" appearance="outline">
+        <mat-form-field class="inputField" required appearance="outline">
           <mat-label>Fixed Rate</mat-label>
           <input matInput formControlName="fixedRate" />
           <mat-error *ngIf="form.get(['admin', 'fixedRate'])?.errors">
