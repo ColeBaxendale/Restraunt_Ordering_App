@@ -421,6 +421,30 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+        <mat-checkbox formControlName="isActive" class="marginbot"
+        >Is Restaurant Active?
+      </mat-checkbox>
+
+      </div>
+      <div formGroupName="details" class="detailsContainer">
+        <h3>Owner</h3>
+        <mat-form-field class="inputField" appearance="outline">
+          <mat-label>Owner Email</mat-label>
+          <input matInput [(ngModel)]="currentOwnerEmail" />
+          <mat-error *ngIf="currentOwnerEmail?.errors">
+            {{ getErrorMessage("stripe.stripeAccountId") }}
+          </mat-error>
+          <button
+            class="icon"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="form.get(['stripe', 'stripeAccountId'])?.value"
+            (click)="clearInput('stripe.stripeAccountId')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
       </div>
     </div>

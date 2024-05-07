@@ -47,6 +47,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 export class AddRestaurantComponent implements OnInit {
   form!: FormGroup;
   errorMsg = '';
+  currentOwnerEmail =['', this.restaurantValidator.isValidPhoneValidation()];
 
   constructor(
     private fb: FormBuilder,
@@ -205,7 +206,32 @@ export class AddRestaurantComponent implements OnInit {
     // });
   }
 
-  openOwnerDialog(): void {
+
+
+
+
+
+  openAddOwnerDialog(): void {
+    const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
+          width: '600px', // Set the width
+          height: '470px', // Set the height
+          data: {
+            /* data passed to the dialog */
+          },
+        });
+        dialogRef.afterClosed().subscribe((newOwner) => {
+          if (newOwner && this.form.get('details.owner')) { // Check if newOwner is not null and the control exists
+            this.form.get('details.owner')!.setValue(newOwner._id);  // Use the non-null assertion operator `!`
+            this.currentOwner = newOwner.email;
+            console.log(this.currentOwner);
+            return;
+            
+          } else {
+            console.error('No new owner provided or control does not exist');
+          }
+        });
+      
+
     // if (this.restaurantDetails.details.owner != '') {
     //   const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
     //     width: '600px', // Set the width
@@ -241,6 +267,20 @@ export class AddRestaurantComponent implements OnInit {
     //     }
     //   });
     // }
+  }
+
+  getOwnerName(userId: string){
+    this.userService.getUserById(userId).subscribe({
+      next: (response: UserResponse) => {
+        console.log(response.user?.email);
+        
+        return response.user?.email;
+      },
+      error: (error) => {
+        console.error('Error geting owner email', error);
+        this.errorMsg = error.error.message;
+      },
+    });
   }
 
   resetTimesIfNeeded() {

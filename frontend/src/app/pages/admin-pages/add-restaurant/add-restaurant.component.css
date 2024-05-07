@@ -100,6 +100,7 @@ a {
 }
 
 .marginbot{
+  margin-top: -1.75rem;
   margin-bottom: 1.75rem;
 }
 
@@ -170,7 +171,20 @@ mat-error{
   color: var(--darkestBlue);
 }
 
+.button{
+  background-color: var(--offWhite2);
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  text-underline-offset: .5rem;
+}
 
+.button:hover{
+  color: var(--lightBlue2);
+}
 
 textarea {
 
