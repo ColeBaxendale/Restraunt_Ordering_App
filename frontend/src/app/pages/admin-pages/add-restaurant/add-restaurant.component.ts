@@ -136,6 +136,8 @@ export class AddRestaurantComponent implements OnInit {
       }
     }
   }
+
+  
   getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
@@ -161,7 +163,6 @@ export class AddRestaurantComponent implements OnInit {
 
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
-
     if (control) {
       console.log(control);
       control.reset(''); // Reset without value to clear to `null` or use `''` to reset to empty string
@@ -172,132 +173,30 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.form);
+    if (this.form.valid) {
+      console.log('Form Data:', this.form.value);
+      this.restaurantService.createRestaurant(this.form.value).subscribe({
+        next: (response: RestaurantResponse) => {
+          console.log('Successfully created restaurant:', response.message);
+          this.router.navigate(['/admin']); // Navigate to the admin page or dashboard
+          return;
 
-    // console.log(this.restaurantDetails);
+        },
+        error: (error) => {
+          console.error('Failed to create restaurant:', error);
+          this.errorMsg = error.error.message || 'An error occurred during form submission.';
+          return;
 
-    // this.resetTimesIfNeeded();
-    // this.errorMsg = '';
-    // if(this.restaurantDetails.details.location.state)
-    //     this.restaurantDetails.details.location.state = this.restaurantDetails.details.location.state.toUpperCase()
-    // const validationResult = this.restaurantValidator.isValidRestaurantInfo(
-    //   this.restaurantDetails
-    // );
-    // if (!validationResult.isValid) {
-    //   if (validationResult.message) {
-    //     this.errorMsg = validationResult.message;
-    //     return;
-    //   } else {
-    //     this.errorMsg = 'An unknown validation error occured.';
-    //   }
-    // }
-
-    // this.restaurantService.createRestaurant(this.restaurantDetails).subscribe({
-    //   next: (response: RestaurantResponse) => {
-    //     console.log('Successfully created restaurant' + response.message);
-    //     this.router.navigate(['/admin']);
-    //   },
-    //   error: (error) => {
-    //     console.error('Login failed', error);
-    //     this.errorMsg = error.error.message;
-    //   },
-    // });
+        }
+      });
+    } 
+    else{
+      return;
+    }
   }
 
 
 
-
-
-
-  // openAddOwnerDialog(): void {
-  //   const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
-  //         width: '600px', // Set the width
-  //         height: '470px', // Set the height
-  //         data: {
-  //           /* data passed to the dialog */
-  //         },
-  //       });
-  //       dialogRef.afterClosed().subscribe((newOwner) => {
-  //         if (newOwner && this.form.get('details.owner')) { // Check if newOwner is not null and the control exists
-  //           this.form.get('details.owner')!.setValue(newOwner._id);  // Use the non-null assertion operator `!`
-  //           this.currentOwner = newOwner.email;
-  //           console.log(this.currentOwner);
-  //           return;
-            
-  //         } else {
-  //           console.error('No new owner provided or control does not exist');
-  //         }
-  //       });
-      
-
-    // if (this.restaurantDetails.details.owner != '') {
-    //   const dialogRef = this.dialog.open(OwnerEditDialogComponent, {
-    //     width: '600px', // Set the width
-    //     height: '470px', // Set the height
-    //     data: {
-    //       owner: this.restaurantDetails.details.owner,
-    //     },
-    //   });
-    //   dialogRef.afterClosed().subscribe((newOwner) => {
-    //     if (newOwner) {
-    //       if (!/\d/.test(newOwner) || newOwner.length !== 24) {
-    //         this.errorMsg = newOwner
-    //         if(newOwner == 'User account deleted successfully'){
-    //           this.restaurantDetails.details.owner = '';
-    //           console.log(this.restaurantDetails.details.owner);
-    //         }
-    //       }
-    //     }
-    //   });
-    // } else {
-    //   const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
-    //     width: '600px', // Set the width
-    //     height: '470px', // Set the height
-    //     data: {
-    //       /* data passed to the dialog */
-    //     },
-    //   });
-    //   dialogRef.afterClosed().subscribe((newOwner) => {
-    //     if (newOwner) {
-    //       this.restaurantDetails.details.owner = newOwner;
-    //       console.log('New owner set:', this.restaurantDetails.details.owner);
-    //       console.log(newOwner);
-    //     }
-    //   });
-    // }
-  // }
-
-  getOwnerName(userId: string){
-    this.userService.getUserById(userId).subscribe({
-      next: (response: UserResponse) => {
-        console.log(response.user?.email);
-        
-        return response.user?.email;
-      },
-      error: (error) => {
-        console.error('Error geting owner email', error);
-        this.errorMsg = error.error.message;
-      },
-    });
-  }
-
-  resetTimesIfNeeded() {
-    // const days = [
-    //   'monday',
-    //   'tuesday',
-    //   'wednesday',
-    //   'thursday',
-    //   'friday',
-    //   'saturday',
-    //   'sunday',
-    // ];
-    // days.forEach((day) => {
-    //   if (!this.restaurantDetails.details.operatingHours[day].isOpen) {
-    //     this.restaurantDetails.details.operatingHours[day].open = '';
-    //     this.restaurantDetails.details.operatingHours[day].close = '';
-    //   }
-    // });
-  }
 
   cancel() {
     // if (
