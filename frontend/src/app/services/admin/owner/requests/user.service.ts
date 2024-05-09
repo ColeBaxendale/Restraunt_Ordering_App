@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { User, UserResponse } from '../../../../../../types';
+import { LoadingService } from '../../../loading/loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { User, UserResponse } from '../../../../../../types';
 export class UserService {
   private baseUrl = 'http://localhost:3000/admin/users'; // Assuming your API endpoint for users
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,public loadingService: LoadingService,) {}
 
   createUser(user: User): Observable<UserResponse> {
     return this.http.post<UserResponse>(`${this.baseUrl}`, user, {
@@ -46,10 +47,17 @@ export class UserService {
       withCredentials: true,
     });
   }
-
   doesUserExist(email: string): Observable<boolean> {
-    return this.http.post<boolean>(`${this.baseUrl}/check-email`, { email }, {
-      withCredentials: true
-    });
+    this.loadingService.setLoading(true, 'owner'); // Set loading to true
+    return this.http.post<{ exists: boolean }>(
+      `${this.baseUrl}/check-email`, 
+      { email }, 
+      { withCredentials: true }
+    ).pipe(
+      map(response => response.exists), // Map the response to the existence boolean
+      finalize(() => this.loadingService.setLoading(false, 'owner')) // Reset loading state on completion or error
+    );
   }
+  
+
 }

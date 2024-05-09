@@ -159,21 +159,32 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.checkUserEmail = async (req,res) => {
+exports.checkUserEmail = async (req, res) => {
   const { email } = req.body;
+
   if (!email) {
+    console.log("Error: Email parameter missing in request body.");
     return res.status(400).json({ exists: false, error: 'Email is required' });
   }
+
+  console.log("Checking if user exists with email:", email);
+
   try {
     const user = await User.findOne({ email: email }).exec();
-    const exists = !!user;
-    res.json({ exists });
+    if (user) {
+      console.log("User found with email:", email);
+      return res.json({ exists: true });
+    } else {
+      console.log("No user found with email:", email);
+      return res.json({ exists: false });
+    }
   } catch (error) {
     console.error('Failed to check user existence:', error);
-    res.status(500).json({ exists: false, error: 'Error checking user existence' });
+    return res.status(500).json({ exists: false, error: 'Error checking user existence' });
   }
+};
 
-}
+
 
 
 

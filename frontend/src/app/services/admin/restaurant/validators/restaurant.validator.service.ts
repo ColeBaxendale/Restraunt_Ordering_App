@@ -266,7 +266,7 @@ export class RestaurantValidatorService {
       }
       // Only checks if the email exists if the format is valid
       return this.userService.doesUserExist(value).pipe(
-        map(userExists => userExists ? { emailInUse: { value: 'This email is already in use.' } } : null)
+        map(userExists => userExists ? { exists: { value: 'This email is already in use.' } } : null)
       );
     };
   }

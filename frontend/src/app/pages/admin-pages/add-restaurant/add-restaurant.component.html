@@ -2,11 +2,21 @@
   <div class="header">
     <h1>Adding New Restaurant</h1>
 
-    <div class="buttonContainer">
+    <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
       <div *ngIf="errorMsg != ''">
         <p>{{ errorMsg }}</p>
       </div>
-      <button class="buttonClass" (click)="submitForm()">Submit</button>
+
+      <button class="buttonClass" [disabled]="false" (click)="submitForm()">Submit</button>
+      <button class="buttonClass" (click)="cancel()">Cancel</button>
+    </div>
+
+    <div class="buttonContainer" *ngIf="loadingService.getLoading()">
+      <div *ngIf="errorMsg != ''">
+        <p>{{ errorMsg }}</p>
+      </div>
+
+      <button class="buttonClassDisabled" [disabled]="true" (click)="submitForm()">Submit</button>
       <button class="buttonClass" (click)="cancel()">Cancel</button>
     </div>
   </div>
@@ -405,14 +415,17 @@
     
       <div formGroupName="details" class="detailsContainer">
         <h3>Owner</h3>
+        <div class="loadingBox">
+
+        
         <mat-form-field class="inputField" appearance="outline">
           <mat-label>Owner Email</mat-label>
           <input matInput formControlName="owner" />
           <mat-error *ngIf="form.get('details.owner')?.errors?.['invalidEmailFormat']">
             {{ form.get('details.owner')?.errors?.['invalidEmailFormat'].value }}
           </mat-error>
-          <mat-error *ngIf="form.get('details.owner')?.errors?.['emailInUse']">
-            {{ form.get('details.owner')?.errors?.['emailInUse'].value }}
+          <mat-error *ngIf="form.get('details.owner')?.errors?.['exists']">
+            {{ form.get('details.owner')?.errors?.['exists'].value }}
           </mat-error>
           <button
             class="icon"
@@ -425,6 +438,9 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+        <mat-progress-bar *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'owner'" mode="query"></mat-progress-bar>
+
+        </div>
 
       </div>
     </div>

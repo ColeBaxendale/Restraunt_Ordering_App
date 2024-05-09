@@ -1,7 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
   FormsModule,
   Validators,
   ReactiveFormsModule,
@@ -10,24 +9,20 @@ import {
 } from '@angular/forms';
 import {
   RestaurantResponse,
-  Restaurant,
-  UserResponse,
 } from '../../../../../types';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { SessionService } from '../../../services/session/session.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
 import { UserService } from '../../../services/admin/owner/requests/user.service';
-import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
-import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { LoadingService } from '../../../services/loading/loading.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
@@ -40,6 +35,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css',
@@ -53,10 +50,8 @@ export class AddRestaurantComponent implements OnInit {
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private router: Router,
-    private sessionService: SessionService,
-    private dialog: MatDialog,
     private restaurantValidator: RestaurantValidatorService,
-    private userService: UserService
+    public loadingService: LoadingService,
   ) {}
 
   ngOnInit(): void {
@@ -142,7 +137,7 @@ export class AddRestaurantComponent implements OnInit {
     const control = this.form.get(field);
     if (control && control.errors) {
       if (control.hasError('required')) {
-        return 'This field is required.';
+        return 'Name field is required.';
       }
       if (control.hasError('invalidEmailFormat')) {
         return 'Invalid email format.';
@@ -172,7 +167,10 @@ export class AddRestaurantComponent implements OnInit {
     } else console.log(control);
   }
 
-  submitForm() {
+  async submitForm() {
+    if(this.loadingService.getLoading()){
+      return;
+    }
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
       this.restaurantService.createRestaurant(this.form.value).subscribe({
@@ -191,7 +189,18 @@ export class AddRestaurantComponent implements OnInit {
       });
     } 
     else{
-      return;
+      const control = this.form.get('details.name');
+      if(control){
+        if (control.hasError('required')) {
+           this.errorMsg = 'Name field is required.';
+        }
+        else{
+          this.errorMsg = 'Errors occur in the form'
+        }
+      } else{
+        this.errorMsg = 'Errors occur in the form'
+
+      }
     }
   }
 
@@ -199,32 +208,8 @@ export class AddRestaurantComponent implements OnInit {
 
 
   cancel() {
-    // if (
-    //   this.restaurantDetails.details.owner !== '' &&
-    //   this.restaurantDetails.details.owner !== undefined
-    // ) {
-    //   this.userService
-    //     .deleteUser(this.restaurantDetails.details.owner)
-    //     .subscribe({
-    //       next: (response: UserResponse) => {
-    //         console.log(response.message);
-    //       },
-    //       error: (error) => {
-    //         console.error('Delete failed', error);
-    //         this.errorMsg = error.error.message;
-    //       },
-    //     });
-    // }
     this.router.navigate(['/admin']);
   }
 
-  logout(): void {
-    // this.sessionService
-    //   .logout()
-    //   .pipe(finalize(() => this.router.navigate(['/login'])))
-    //   .subscribe({
-    //     next: () => console.log('Logged out successfully'),
-    //     error: (error: any) => console.error('Logout failed:', error),
-    //   });
-  }
+
 }

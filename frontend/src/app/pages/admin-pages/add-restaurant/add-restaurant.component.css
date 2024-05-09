@@ -59,6 +59,20 @@ a {
   border: none;
 
 }
+
+.buttonClassDisabled{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
+  font-family: "JetBrainsMono";
+  font-size: 1.5rem;
+  font-weight: 100;
+  color: gray !important;
+  border: none;
+}
+
 .header .buttonContainer{
   display: flex;
   flex-direction: row;
@@ -211,5 +225,13 @@ textarea {
 
 
 
+.loadingBox{
+  display: flex;
+  flex-direction: column;
+  height: 5rem
+}
 
+mat-progress-bar{
+  margin-top: -1.2rem;
+}
 
