@@ -70,10 +70,7 @@ export class AddRestaurantComponent implements OnInit {
             this.restaurantValidator.isValidNameValidation(),
           ],
         ],
-        description: [
-          '',
-          this.restaurantValidator.isValidDesciptionValidation(),
-        ],
+        description: ['', this.restaurantValidator.isValidDescriptionValidation()],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
           address: ['', this.restaurantValidator.isValidAddressValidation()],
@@ -91,18 +88,10 @@ export class AddRestaurantComponent implements OnInit {
           sunday: this.initDay(),
         }),
         ordersEnabled: [false],
-        owner: [''],
+        owner: ['', null, this.restaurantValidator.isValidOwnerEmailAsync()],
         menuSections: this.fb.array([]),
       }),
       admin: this.fb.group({
-        isActive: [false],
-        fixedRate: [
-          0.02,
-          [
-            Validators.required,
-            this.restaurantValidator.isValidFixedRateValidation(),
-          ],
-        ],
         overallIncome: [0.01],
       }),
       stripe: this.fb.group({
@@ -113,6 +102,7 @@ export class AddRestaurantComponent implements OnInit {
         addFees: [false],
       }),
     });
+    console.log(this.form.get('details.owner'));
 
     console.log(this.form);
   }
@@ -146,20 +136,28 @@ export class AddRestaurantComponent implements OnInit {
       }
     }
   }
-
   getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
       if (control.hasError('required')) {
         return 'This field is required.';
       }
-      // Return the first error message found
-      const firstKey = Object.keys(control.errors)[0]; // Get the first error key
-      const error = control.getError(firstKey);
-      return error.value;
+      if (control.hasError('invalidEmailFormat')) {
+        return 'Invalid email format.';
+      }
+      if (control.hasError('emailInUse')) {
+        return 'This email is already in use.';
+      }
+      // Generic catch-all for any other error types
+      const errorKeys = Object.keys(control.errors);
+      const firstErrorKey = errorKeys[0];
+      const error = control.errors[firstErrorKey];
+      return error.value || 'Invalid field';
     }
-    return '';
+    return ''; // Ensure a string is always returned
   }
+  
+  
 
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
@@ -211,25 +209,25 @@ export class AddRestaurantComponent implements OnInit {
 
 
 
-  openAddOwnerDialog(): void {
-    const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
-          width: '600px', // Set the width
-          height: '470px', // Set the height
-          data: {
-            /* data passed to the dialog */
-          },
-        });
-        dialogRef.afterClosed().subscribe((newOwner) => {
-          if (newOwner && this.form.get('details.owner')) { // Check if newOwner is not null and the control exists
-            this.form.get('details.owner')!.setValue(newOwner._id);  // Use the non-null assertion operator `!`
-            this.currentOwner = newOwner.email;
-            console.log(this.currentOwner);
-            return;
+  // openAddOwnerDialog(): void {
+  //   const dialogRef = this.dialog.open(OwnerAddDialogComponent, {
+  //         width: '600px', // Set the width
+  //         height: '470px', // Set the height
+  //         data: {
+  //           /* data passed to the dialog */
+  //         },
+  //       });
+  //       dialogRef.afterClosed().subscribe((newOwner) => {
+  //         if (newOwner && this.form.get('details.owner')) { // Check if newOwner is not null and the control exists
+  //           this.form.get('details.owner')!.setValue(newOwner._id);  // Use the non-null assertion operator `!`
+  //           this.currentOwner = newOwner.email;
+  //           console.log(this.currentOwner);
+  //           return;
             
-          } else {
-            console.error('No new owner provided or control does not exist');
-          }
-        });
+  //         } else {
+  //           console.error('No new owner provided or control does not exist');
+  //         }
+  //       });
       
 
     // if (this.restaurantDetails.details.owner != '') {
@@ -267,7 +265,7 @@ export class AddRestaurantComponent implements OnInit {
     //     }
     //   });
     // }
-  }
+  // }
 
   getOwnerName(userId: string){
     this.userService.getUserById(userId).subscribe({

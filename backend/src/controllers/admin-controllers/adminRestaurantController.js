@@ -48,15 +48,19 @@ exports.createRestaurant = async (req, res, next) => {
         },
         operatingHours: details.operatingHours || {
           monday: { isOpen: false, open: "", close: "" },
-          // Preset defaults for other days if needed
+          tuesday: { isOpen: false, open: "", close: "" },
+          wednesday: { isOpen: false, open: "", close: "" },
+          thursday: { isOpen: false, open: "", close: "" },
+          friday: { isOpen: false, open: "", close: "" },
+          saturday: { isOpen: false, open: "", close: "" },
+          sunday: { isOpen: false, open: "", close: "" },
+          
         },
         ordersEnabled: details.ordersEnabled || false,
         owner: ownerId,
         menuSections: details.menuSections || [],
       },
       admin: {
-        isActive: admin?.isActive || false,
-        fixedRate: admin?.fixedRate || 0.02,
         overallIncome: admin?.overallIncome || 0,
       },
       stripe: {

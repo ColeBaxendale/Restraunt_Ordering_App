@@ -76,10 +76,11 @@ a {
   padding-top: .5rem;
   padding: 3rem;
   padding-top: 2.5rem;
-  align-items: start;
   text-align: center;
-  gap: 7.5rem;
-  background-color: var(--offWhite2);
+  gap: 8.5rem;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .leftContainer .rightContainer .rightMostContainer{

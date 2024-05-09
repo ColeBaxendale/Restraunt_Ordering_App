@@ -402,45 +402,25 @@
           >Add Fees To Customer?
         </mat-checkbox>
       </div>
-      <div formGroupName="admin" class="detailsContainer">
-        <h3>Admin</h3>
-        <mat-form-field class="inputField" required appearance="outline">
-          <mat-label>Fixed Rate</mat-label>
-          <input matInput formControlName="fixedRate" />
-          <mat-error *ngIf="form.get(['admin', 'fixedRate'])?.errors">
-            {{ getErrorMessage("admin.fixedRate") }}
-          </mat-error>
-          <button
-            class="icon"
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            *ngIf="form.get(['admin', 'fixedRate'])?.value"
-            (click)="clearInput('admin.fixedRate')"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <mat-checkbox formControlName="isActive" class="marginbot"
-        >Is Restaurant Active?
-      </mat-checkbox>
-
-      </div>
+    
       <div formGroupName="details" class="detailsContainer">
         <h3>Owner</h3>
         <mat-form-field class="inputField" appearance="outline">
           <mat-label>Owner Email</mat-label>
-          <input matInput [(ngModel)]="currentOwnerEmail" />
-          <mat-error *ngIf="currentOwnerEmail?.errors">
-            {{ getErrorMessage("stripe.stripeAccountId") }}
+          <input matInput formControlName="owner" />
+          <mat-error *ngIf="form.get('details.owner')?.errors?.['invalidEmailFormat']">
+            {{ form.get('details.owner')?.errors?.['invalidEmailFormat'].value }}
+          </mat-error>
+          <mat-error *ngIf="form.get('details.owner')?.errors?.['emailInUse']">
+            {{ form.get('details.owner')?.errors?.['emailInUse'].value }}
           </mat-error>
           <button
             class="icon"
             matSuffix
             mat-icon-button
             aria-label="Clear"
-            *ngIf="form.get(['stripe', 'stripeAccountId'])?.value"
-            (click)="clearInput('stripe.stripeAccountId')"
+            *ngIf="form.get(['details', 'owner'])?.value"
+            (click)="clearInput('details.owner')"
           >
             <mat-icon>close</mat-icon>
           </button>

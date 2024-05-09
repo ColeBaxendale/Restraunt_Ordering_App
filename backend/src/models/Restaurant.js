@@ -42,10 +42,7 @@ const RestaurantDetails = new mongoose.Schema({
 });
 
 const AdminDetails = new mongoose.Schema({
-  isActive: { type: Boolean, default: false},
   overallIncome: { type: Number, default: 0.02 },
-  fixedRate: { type: Number, default: 0.02 },
-
 });
 const StripeDetails = new mongoose.Schema({
   stripeAccountId: { type: String, default: ''},

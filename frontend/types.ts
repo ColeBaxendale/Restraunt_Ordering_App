@@ -57,9 +57,7 @@ export interface RestaurantDetails {
 }
 
 export interface AdminDetails {
-  isActive: boolean;
   overallIncome: number;
-  fixedRate: number;
 }
 
 export interface StripeDetails {

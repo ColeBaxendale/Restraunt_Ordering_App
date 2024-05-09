@@ -4,13 +4,15 @@ import {
   Restaurant,
   ValidationResponse,
 } from '../../../../../../types';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Observable, catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
+import { UserService } from '../../owner/requests/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantValidatorService {
-  constructor() {}
+  constructor(private userService: UserService) {}
   days = [
     'monday',
     'tuesday',
@@ -54,13 +56,12 @@ export class RestaurantValidatorService {
       // Inline regex to check the format.
       const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
       const isValid = phoneRegex.test(value);
-      return isValid
-        ? null
-        : {
-            invalidPhoneNumber: {
-              invalid: 'Phone number must be in the format 111-111-1111',
-            },
-          };
+      if(!isValid){
+        return {
+          tooSmall: { value: 'Phone Number must be in 631-123-4568 format' },
+        };
+      }
+      return null;
     };
   }
 
@@ -126,7 +127,7 @@ export class RestaurantValidatorService {
     };
   }
 
-  isValidDesciptionValidation(): ValidatorFn {
+  isValidDescriptionValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
 
@@ -136,13 +137,13 @@ export class RestaurantValidatorService {
 
       if (value.length < 51) {
         return {
-          tooSmall: 'Desciption must be more than 50 characters',
+          tooSmall: {value: 'Description must be more than 50 characters'},
         };
       }
 
       if (value.length > 1000) {
         return {
-          tooLarge: { value: 'Desciption must be less than 1000 characters' },
+          tooLarge: { value: 'Description must be less than 1000 characters' },
         };
       }
       return null;
@@ -167,17 +168,17 @@ export class RestaurantValidatorService {
   }
 
   operatingHoursValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const isOpen = control.get('isOpen')?.value;
-      const open = control.get('open')?.value;
-      const close = control.get('close')?.value;
+    return (group: AbstractControl): ValidationErrors | null => {
+      const isOpen = group.get('isOpen')?.value;
+      const open = group.get('open')?.value;
+      const close = group.get('close')?.value;
   
       if (isOpen) {
         if (!open || !close) {
-          return { required: 'Opening and closing times are required.' };
+          return { requiredTimes: 'Opening and closing times are required.' };
         }
         if (open >= close) {
-          return { invalid: 'Opening time must be before closing time.' };
+          return { invalidOrder: 'Opening time must be before closing time.' };
         }
       }
       return null;
@@ -251,4 +252,25 @@ export class RestaurantValidatorService {
     };
   }
 
+
+
+  isValidOwnerEmailAsync(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+      if (!value) { // Checks for both empty string and null
+        return of(null); // No error if field is empty
+      }
+      const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailPattern.test(value)) {
+        return of({ invalidEmailFormat: { value: 'Invalid Owner Email' } });
+      }
+      // Only checks if the email exists if the format is valid
+      return this.userService.doesUserExist(value).pipe(
+        map(userExists => userExists ? { emailInUse: { value: 'This email is already in use.' } } : null)
+      );
+    };
+  }
+  
+  
+  
 }

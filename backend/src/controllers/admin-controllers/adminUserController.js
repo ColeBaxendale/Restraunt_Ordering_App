@@ -159,6 +159,23 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+exports.checkUserEmail = async (req,res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ exists: false, error: 'Email is required' });
+  }
+  try {
+    const user = await User.findOne({ email: email }).exec();
+    const exists = !!user;
+    res.json({ exists });
+  } catch (error) {
+    console.error('Failed to check user existence:', error);
+    res.status(500).json({ exists: false, error: 'Error checking user existence' });
+  }
+
+}
+
+
 
 
 // exports.updateUser = async (req, res) => {

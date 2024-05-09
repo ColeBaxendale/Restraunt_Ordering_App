@@ -46,4 +46,10 @@ export class UserService {
       withCredentials: true,
     });
   }
+
+  doesUserExist(email: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/check-email`, { email }, {
+      withCredentials: true
+    });
+  }
 }

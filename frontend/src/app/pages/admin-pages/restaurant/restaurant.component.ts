@@ -100,9 +100,7 @@ export class RestaurantComponent implements OnInit {
         ordersEnabled: false
       },
       admin: {
-        isActive: false,
         overallIncome: 0,
-        fixedRate: 0
       },
       stripe: {
         stripeAccountId: '',

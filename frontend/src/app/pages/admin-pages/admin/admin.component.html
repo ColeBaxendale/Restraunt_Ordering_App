@@ -31,10 +31,6 @@
         ><p>{{ restaurant.details.name }}</p></mat-card-title
       >
       <mat-divider></mat-divider>
-      <mat-card-content>
-        <span *ngIf="restaurant.admin.isActive; else notLive">Live</span>
-        <ng-template #notLive>Not Live</ng-template>
-      </mat-card-content>
       <mat-card-content
         >Overall Income: ${{
           restaurant.admin.overallIncome - 0.01 | number : "1.2-2"
