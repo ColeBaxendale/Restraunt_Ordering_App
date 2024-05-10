@@ -95,6 +95,26 @@ exports.createRestaurant = async (req, res, next) => {
   }
 };
 
+exports.createRestaurantWithOwner = async (req,res) => {
+  try{
+    const { email } = req.body;
+    if (!email || typeof email !== "string" || email.trim().length === 0) {
+  
+      
+    }
+
+
+  
+  }catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to add new restaurant.", error: error.message });
+  }
+
+}
+
+
+
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;
   try {
