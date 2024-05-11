@@ -7,12 +7,13 @@ import {
 import { AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Observable, catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
 import { UserService } from '../../owner/requests/user.service';
+import { RestaurantService } from '../requests/restaurant.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantValidatorService {
-  constructor(private userService: UserService) {}
+  constructor(private restaurantService: RestaurantService, private userService: UserService) {}
   days = [
     'monday',
     'tuesday',
@@ -23,26 +24,28 @@ export class RestaurantValidatorService {
     'sunday',
   ];
   @Injectable({ providedIn: 'root' })
-  isValidNameValidation(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
 
+  isValidNameValidation(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
       if (!value || value === '') {
-        return { required: { value: 'Name must be filled in' } };
+        return of({ required: { value: 'Name must be filled in' } });
       }
 
       if (value.length > 50) {
-        return {
-          tooLarge: { value: 'Name must be less than 50 characters' },
-        };
+        // Wrap the error object in 'of()' to return an Observable
+        return of({ tooLarge: { value: 'Name must be less than 50 characters' } });
+      }
+  
+      if (value.length < 5) {
+        // Wrap the error object in 'of()' to return an Observable
+        return of({ tooSmall: { value: 'Name must be more than 4 characters' } });
       }
 
-      if (value.length < 5) {
-        return {
-          tooSmall: { value: 'Name must be more than 4 characters' },
-        };
-      }
-      return null;
+      // Only checks if the email exists if the format is valid
+      return this.restaurantService.doesRestaurantExist(value).pipe(
+        map(restaurantExists => restaurantExists ? { exists: { value: 'This name is already in use.' } } : null)
+      );
     };
   }
 
@@ -266,7 +269,7 @@ export class RestaurantValidatorService {
       }
       // Only checks if the email exists if the format is valid
       return this.userService.doesUserExist(value).pipe(
-        map(userExists => userExists ? { exists: { value: 'This email is already in use.' } } : null)
+        map(userExists => userExists ? { exists: { value: 'This email is a2lready in use.' } } : null)
       );
     };
   }

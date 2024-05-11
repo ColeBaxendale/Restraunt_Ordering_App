@@ -58,13 +58,7 @@ export class AddRestaurantComponent implements OnInit {
     this.form = this.fb.group({
       details: this.fb.group({
         logo: [''],
-        name: [
-          '',
-          [
-            Validators.required,
-            this.restaurantValidator.isValidNameValidation(),
-          ],
-        ],
+        name: ['', [Validators.required], [this.restaurantValidator.isValidNameValidation()]],
         description: ['', this.restaurantValidator.isValidDescriptionValidation()],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
@@ -137,13 +131,7 @@ export class AddRestaurantComponent implements OnInit {
     const control = this.form.get(field);
     if (control && control.errors) {
       if (control.hasError('required')) {
-        return 'Name field is required.';
-      }
-      if (control.hasError('invalidEmailFormat')) {
-        return 'Invalid email format.';
-      }
-      if (control.hasError('emailInUse')) {
-        return 'This email is already in use.';
+        return 'Name must be filled in.';
       }
       // Generic catch-all for any other error types
       const errorKeys = Object.keys(control.errors);

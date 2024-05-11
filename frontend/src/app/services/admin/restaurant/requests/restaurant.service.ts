@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, finalize, map } from 'rxjs';
 import { Restaurant } from '../../../../../../types';
 import { RestaurantResponse } from '../../../../../../types';
+import { LoadingService } from '../../../loading/loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class RestaurantService {
   private baseUrl = 'http://localhost:3000/admin/restaurants';
   private currentId!: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,public loadingService: LoadingService) {}
 
   setCurrentId(id: string) {
     this.currentId = id;
@@ -56,5 +57,17 @@ export class RestaurantService {
     return this.http.get<Restaurant[]>(`${this.baseUrl}`, {
       withCredentials: true,
     });
+  }
+
+  doesRestaurantExist(name: string): Observable<boolean> {
+    this.loadingService.setLoading(true, 'name'); // Set loading to true
+    return this.http.post<{ exists: boolean }>(
+      `${this.baseUrl}/check-name`, 
+      { name }, 
+      { withCredentials: true }
+    ).pipe(
+      map((response: { exists: any; }) => response.exists), // Map the response to the existence boolean
+      finalize(() => this.loadingService.setLoading(false, 'name')) // Reset loading state on completion or error
+    );
   }
 }

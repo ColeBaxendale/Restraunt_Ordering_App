@@ -7,7 +7,9 @@
         <p>{{ errorMsg }}</p>
       </div>
 
-      <button class="buttonClass" [disabled]="false" (click)="submitForm()">Submit</button>
+      <button class="buttonClass" [disabled]="false" (click)="submitForm()">
+        Submit
+      </button>
       <button class="buttonClass" (click)="cancel()">Cancel</button>
     </div>
 
@@ -16,7 +18,9 @@
         <p>{{ errorMsg }}</p>
       </div>
 
-      <button class="buttonClass" [disabled]="true" (click)="submitForm()">Submit</button>
+      <button class="buttonClassDisabled" [disabled]="true" (click)="submitForm()">
+        Submit
+      </button>
       <button class="buttonClass" (click)="cancel()">Cancel</button>
     </div>
   </div>
@@ -26,11 +30,22 @@
       <div formGroupName="details" class="detailsContainer">
         <h3>Details</h3>
         <div class="subContainer">
+          <div>
+
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Enter Restaurant Name</mat-label>
-            <input matInput formControlName="name" required />
-            <mat-error *ngIf="form.get(['details', 'name'])?.errors">
+            <input matInput formControlName="name" required="true" />
+            <mat-error *ngIf="form.get(['details', 'name'])?.hasError('required')">
               {{ getErrorMessage("details.name") }}
+            </mat-error>
+            <mat-error *ngIf="form.get('details.name')?.errors?.['tooLarge']">
+              {{ form.get('details.name')?.errors?.['tooLarge'].value }}
+            </mat-error>
+            <mat-error *ngIf="form.get('details.name')?.errors?.['tooSmall']">
+              {{ form.get('details.name')?.errors?.['tooSmall'].value }}
+            </mat-error>
+            <mat-error *ngIf="form.get('details.name')?.errors?.['exists']">
+              {{ form.get('details.name')?.errors?.['exists'].value }}
             </mat-error>
             <button
               class="icon"
@@ -43,6 +58,15 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
+          <mat-progress-bar
+          *ngIf="
+            loadingService.getLoading() &&
+            loadingService.getLoadingItem() === 'name'
+          "
+          mode="indeterminate"
+        ></mat-progress-bar>
+      </div>
+
 
           <mat-form-field class="inputField" appearance="outline">
             <mat-label>Telephone</mat-label>
@@ -412,38 +436,41 @@
           >Add Fees To Customer?
         </mat-checkbox>
       </div>
-    
+
       <div formGroupName="details" class="detailsContainer">
         <h3>Owner</h3>
         <div class="loadingBox">
-
-        
-        <mat-form-field class="inputField" appearance="outline">
-          <mat-label>Owner Email</mat-label>
-          <input matInput formControlName="owner" />
-          <mat-error *ngIf="form.get('details.owner')?.errors?.['invalidEmailFormat']">
-            {{ form.get('details.owner')?.errors?.['invalidEmailFormat'].value }}
-          </mat-error>
-          <mat-error *ngIf="form.get('details.owner')?.errors?.['exists']">
-            {{ form.get('details.owner')?.errors?.['exists'].value }}
-          </mat-error>
-          <button
-            class="icon"
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            *ngIf="form.get(['details', 'owner'])?.value"
-            (click)="clearInput('details.owner')"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <mat-progress-bar *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'owner'" mode="query"></mat-progress-bar>
-
+          <mat-form-field class="inputField" appearance="outline">
+            <mat-label>Owner Email</mat-label>
+            <input matInput formControlName="owner" />
+            <mat-error
+              *ngIf="form.get('details.owner')?.errors?.['invalidEmailFormat']"
+            >
+              {{ form.get('details.owner')?.errors?.['invalidEmailFormat'].value }}
+            </mat-error>
+            <mat-error *ngIf="form.get('details.owner')?.errors?.['exists']">
+              {{ form.get('details.owner')?.errors?.['exists'].value }}
+            </mat-error>
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['details', 'owner'])?.value"
+              (click)="clearInput('details.owner')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-progress-bar
+            *ngIf="
+              loadingService.getLoading() &&
+              loadingService.getLoadingItem() === 'owner'
+            "
+            mode="query"
+          ></mat-progress-bar>
         </div>
-
       </div>
     </div>
   </form>
-
 </div>

@@ -67,9 +67,10 @@ a {
   padding: 0; 
   text-align: center;
   font-family: "JetBrainsMono";
+  color: var(--darkestBlue) !important;
+  opacity: 45%;
   font-size: 1.5rem;
   font-weight: 100;
-  color: gray !important;
   border: none;
 }
 

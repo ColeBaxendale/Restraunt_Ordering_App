@@ -54,7 +54,6 @@ exports.createRestaurant = async (req, res, next) => {
           friday: { isOpen: false, open: "", close: "" },
           saturday: { isOpen: false, open: "", close: "" },
           sunday: { isOpen: false, open: "", close: "" },
-          
         },
         ordersEnabled: details.ordersEnabled || false,
         owner: ownerId,
@@ -85,35 +84,27 @@ exports.createRestaurant = async (req, res, next) => {
         .status(400)
         .json({ message: "A restaurant with the same name already exists." });
     } else {
-      res
-        .status(500)
-        .json({
-          message: "Failed to add new restaurant.",
-          error: error.message,
-        });
+      res.status(500).json({
+        message: "Failed to add new restaurant.",
+        error: error.message,
+      });
     }
   }
 };
 
-exports.createRestaurantWithOwner = async (req,res) => {
-  try{
-    const { email } = req.body;
-    if (!email || typeof email !== "string" || email.trim().length === 0) {
-  
-      
-    }
+exports.createRestaurantWithOwner = async (req, res) => {
+  try {
+    const { email, details, admin, stripe } = req.body;
 
+    // Create user a
 
-  
-  }catch (error) {
+    
+  } catch (error) {
     res
       .status(500)
       .json({ message: "Failed to add new restaurant.", error: error.message });
   }
-
-}
-
-
+};
 
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;
@@ -201,12 +192,10 @@ exports.deleteRestaurant = async (req, res, next) => {
     res.status(200).json({ message: "Restaurant deleted successfully." });
   } catch (error) {
     console.error("Failed to delete restaurant:", error);
-    res
-      .status(500)
-      .json({
-        message: "Failed to delete restaurant",
-        error: error.toString(),
-      });
+    res.status(500).json({
+      message: "Failed to delete restaurant",
+      error: error.toString(),
+    });
   }
 };
 
@@ -223,25 +212,33 @@ exports.getAllRestaurants = async (req, res, next) => {
 
 exports.checkRestaurantName = async (req, res) => {
   const { name } = req.body;
-
   if (!name) {
     console.log("Error: Restaurant Name parameter missing in request body.");
-    return res.status(400).json({ exists: false, error: 'Restaurant Name is required' });
+    return res
+      .status(400)
+      .json({ exists: false, error: "Restaurant Name is required" });
   }
 
-  console.log("Checking if restaurant exists with name:", name);
+  const nameToCheck = name.toLowerCase(); // Normalize input to lowercase
+  console.log("Checking if restaurant exists with name:", nameToCheck);
 
   try {
-    const restaurant = await Restaurant.findOne({ name: name }).exec();
+    // Adjust query to target the 'details.nameLowerCase' field
+    const restaurant = await Restaurant.findOne({
+      "details.nameLowerCase": nameToCheck, // Corrected to access the nested field
+    }).exec();
+
     if (restaurant) {
-      console.log("Restaurant found with name:", name);
+      console.log("Restaurant found with name:", nameToCheck);
       return res.json({ exists: true });
     } else {
-      console.log("No restaurant found with name:", name);
+      console.log("No restaurant found with name:", nameToCheck);
       return res.json({ exists: false });
     }
   } catch (error) {
-    console.error('Failed to check restaurant existence:', error);
-    return res.status(500).json({ exists: false, error: 'Error checking restaurant existence' });
+    console.error("Failed to check restaurant existence:", error);
+    return res
+      .status(500)
+      .json({ exists: false, error: "Error checking restaurant existence" });
   }
 };
