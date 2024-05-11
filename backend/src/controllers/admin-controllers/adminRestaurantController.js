@@ -33,11 +33,10 @@ exports.createRestaurant = async (req, res, next) => {
       ownerId = details.owner; // Only set if it's not an empty string
     }
 
-    // Constructing the restaurant object with structured validation and defaulting
     const restaurantDetails = {
       details: {
         name: details.name,
-        nameLowerCase, // Lowercase version for case-insensitive operations
+        nameLowerCase, 
         logo: details.logo || "",
         description: details.description || "",
         phone: details.phone || "",
@@ -99,7 +98,6 @@ exports.createRestaurantWithOwner = async (req, res) => {
 
   try {
     const { email, details, admin, stripe } = req.body;
-    console.log(req.body);
     
     if (!email || !details.name) {
       throw new Error("Required fields are missing");
@@ -283,7 +281,6 @@ exports.checkRestaurantName = async (req, res) => {
   }
 
   const nameToCheck = name.toLowerCase(); // Normalize input to lowercase
-  console.log("Checking if restaurant exists with name:", nameToCheck);
 
   try {
     // Adjust query to target the 'details.nameLowerCase' field
@@ -292,10 +289,8 @@ exports.checkRestaurantName = async (req, res) => {
     }).exec();
 
     if (restaurant) {
-      console.log("Restaurant found with name:", nameToCheck);
       return res.json({ exists: true });
     } else {
-      console.log("No restaurant found with name:", nameToCheck);
       return res.json({ exists: false });
     }
   } catch (error) {
