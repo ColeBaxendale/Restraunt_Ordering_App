@@ -11,7 +11,14 @@ import {
 import { SessionService } from '../../../services/session/session.service';
 import { Subject, finalize, takeUntil } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
 import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
@@ -19,12 +26,12 @@ import { OwnerAddDialogComponent } from '../../../components/admin-components/ow
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { OwnerEditRestaurantDialogComponent } from '../../../components/admin-components/owner-edit-restaurant-dialog/owner-edit-restaurant-dialog.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {merge} from 'rxjs';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge } from 'rxjs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
@@ -58,16 +65,15 @@ export class RestaurantComponent implements OnInit {
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private userService: UserService
-  ){}
+  ) {}
 
   ngOnInit() {
     this.initializeForm();
     const restaurantId = this.restaurantService.getCurrentId();
     if (restaurantId) {
       this.loadRestaurantData(restaurantId);
-    }
-    else{
-      this.router.navigate(['/admin']); 
+    } else {
+      this.router.navigate(['/admin']);
     }
   }
 
@@ -101,7 +107,11 @@ export class RestaurantComponent implements OnInit {
           sunday: this.initDay(),
         }),
         ordersEnabled: [false],
-        owner: ['', null, this.restaurantValidator.isValidOwnerEmailEditAsync()],
+        owner: [
+          '',
+          null,
+          this.restaurantValidator.isValidOwnerEmailEditAsync(),
+        ],
         menuSections: this.fb.array([]),
       }),
       admin: this.fb.group({
@@ -147,45 +157,48 @@ export class RestaurantComponent implements OnInit {
     }
   }
 
- 
-
   private loadRestaurantData(restaurantId: string) {
-    this.restaurantService.getRestaurantById(restaurantId).pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe({
-      next: (response) => {
-        this.form.patchValue(response);
-        if (response.details.owner) {
-          this.userService.getUserById(response.details.owner).pipe(
-            takeUntil(this.unsubscribe$)
-          ).subscribe({
-            next: (userResponse) => {
-              console.log(userResponse);
-              if(userResponse.user?.email){
-                this.restaurantService.setCurrentOwnerEmail(userResponse.user.email ?? "");
-               }
-               else{
-               error: (error: any) => console.error('Error setting email:', error)
-               }
-              this.form.patchValue({
-                details: {
-                  owner: userResponse.user?.email
+    this.restaurantService
+      .getRestaurantById(restaurantId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (response) => {
+          this.form.patchValue(response);
+          if (response.details.owner) {
+            this.userService
+              .getUserById(response.details.owner)
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe({
+                next: (userResponse) => {
+                  console.log(userResponse);
+                  if (userResponse.user?.email) {
+                    this.restaurantService.setCurrentOwnerEmail(
+                      userResponse.user.email ?? ''
+                    );
+                  } else {
+                    error: (error: any) =>
+                      console.error('Error setting email:', error);
+                  }
+                  this.form.patchValue({
+                    details: {
+                      owner: userResponse.user?.email,
+                    },
+                  });
                 },
+                error: (error) =>
+                  console.error('Error fetching user data:', error),
               });
-
-            },
-            error: (error) => console.error('Error fetching user data:', error)
-          });
-        }
-      },
-      error: (error) => console.error('Error fetching restaurant data:', error)
-    });
+          }
+        },
+        error: (error) =>
+          console.error('Error fetching restaurant data:', error),
+      });
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-    this.restaurantService.setCurrentOwnerEmail("");
+    this.restaurantService.setCurrentOwnerEmail('');
   }
 
   getErrorMessage(field: string): string {
@@ -206,50 +219,39 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get(path);
     if (control) {
       console.log(control);
-      control.reset(''); 
+      control.reset('');
       control.markAsPristine();
       control.markAsUntouched();
       console.log(control);
-    } 
+    }
   }
 
   cancel() {
-      this.router.navigate(['/admin']); 
-      this.restaurantService.setCurrentOwnerEmail("");
+    this.router.navigate(['/admin']);
+    this.restaurantService.setCurrentOwnerEmail('');
   }
-    
-    submitForm() {
-      if (this.loadingService.getLoading()) {
-        return;
-      }
-      if (this.form.valid) {
-        if(this.form.get('details.owner')?.value === ''){
-          if(this.restaurantService.getCurrentOwnerEmail() === ""){
-            // UPDATE RESTAURANT WITHOUT TOUCHING OWNER
-          }
-          else{
-            // DELETE OLD USER AND UPDATE RESTAURANT WITH NO OWNER
-          }
-        }
-        else{
-          if(this.restaurantService.getCurrentOwnerEmail() === ""){
-            // CREATE NEW USER AND UPDATE RESTAURANT
-          }
-          else{
-            if(this.restaurantService.getCurrentOwnerEmail().toLowerCase() === this.form.get('details.owner')?.value.toLowerCase()){
-              // UPDATE RESTAURANT WITHOUT CHANGING USER
-            }
-            else{
-              // DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
-            }
-          }
-        }
 
-
-      }
-
-      
-
+  submitForm() {
+    if (this.loadingService.getLoading()) {
+      return;
     }
-      
+    if (this.form.valid) {
+      if (this.restaurantService.getCurrentOwnerEmail() === '') {
+        if (this.form.get('details.owner')?.value != '') {
+          // CREATE NEW USER AND UPDATE RESTAURANT
+        } else {
+          // UPDATE RESTAURANT WITHOUT TOUCHING OWNER
+        }
+      } else {
+        if (
+          this.restaurantService.getCurrentOwnerEmail().toLowerCase() ===
+          this.form.get('details.owner')?.value.toLowerCase()
+        ) {
+          // UPDATE RESTAURANT WITHOUT CHANGING USER
+        } else {
+          // DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
+        }
+      }
+    }
+  }
 }
