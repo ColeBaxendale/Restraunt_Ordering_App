@@ -220,3 +220,28 @@ exports.getAllRestaurants = async (req, res, next) => {
       .json({ message: "Failed to fetch restaurants", error: error.message });
   }
 };
+
+exports.checkRestaurantName = async (req, res) => {
+  const { name } = req.body;
+
+  if (!name) {
+    console.log("Error: Restaurant Name parameter missing in request body.");
+    return res.status(400).json({ exists: false, error: 'Restaurant Name is required' });
+  }
+
+  console.log("Checking if restaurant exists with name:", name);
+
+  try {
+    const restaurant = await Restaurant.findOne({ name: name }).exec();
+    if (restaurant) {
+      console.log("Restaurant found with name:", name);
+      return res.json({ exists: true });
+    } else {
+      console.log("No restaurant found with name:", name);
+      return res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error('Failed to check restaurant existence:', error);
+    return res.status(500).json({ exists: false, error: 'Error checking restaurant existence' });
+  }
+};

@@ -22,13 +22,14 @@ router.get('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestauran
 router.put('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.updateRestaurant);
 router.delete('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.deleteRestaurant);
 router.get('/restaurants', verifyToken, checkRole(['admin']), adminRestaurantController.getAllRestaurants);
+router.post('/restaurants/check-name', verifyToken, checkRole(['admin']), adminRestaurantController.checkRestaurantName);
+
 
 router.post('/users', verifyToken, checkRole(['admin']), adminUserController.createUser);
 router.post('/users/check-email', verifyToken, checkRole(['admin']), adminUserController.checkUserEmail);
 
 router.get('/users', verifyToken, checkRole(['admin']), adminUserController.getAllUsers);
 router.get('/users/:id', verifyToken, checkRole(['admin']), adminUserController.getUserById);
-// router.put('/users/:id', verifyToken, checkRole(['admin']), adminUserController.updateUser);
 // router.post('/users/:id/reset', checkRole(['admin']).resetUserPassword);
 router.delete('/users/:id', verifyToken, checkRole(['admin']), adminUserController.deleteUser);
 
