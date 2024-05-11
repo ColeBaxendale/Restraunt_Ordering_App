@@ -273,6 +273,32 @@ export class RestaurantValidatorService {
       );
     };
   }
+
+  isValidOwnerEmailEditAsync(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+      const oldEmail = this.restaurantService.getCurrentOwnerEmail();
+      console.log(oldEmail);
+      
+      if (!value) { // Checks for both empty string and null
+        return of(null); // No error if field is empty
+      }
+      const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailPattern.test(value)) {
+        return of({ invalidEmailFormat: { value: 'Invalid Owner Email' } });
+      }
+      
+      if(oldEmail.toLowerCase() === value.toLowerCase()){
+        return of(null);
+      }
+      else{
+      return this.userService.doesUserExist(value).pipe(
+        map(userExists => userExists ? { exists: { value: 'This email is already in use.' } } : null)
+        );
+      };
+    }
+  }
+
   
   
   

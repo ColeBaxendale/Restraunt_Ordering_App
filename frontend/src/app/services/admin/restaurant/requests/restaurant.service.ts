@@ -11,6 +11,7 @@ import { LoadingService } from '../../../loading/loading.service';
 export class RestaurantService {
   private baseUrl = 'http://localhost:3000/admin/restaurants';
   private currentId!: string;
+  private currentOwnerEmail!: string;
 
   constructor(private http: HttpClient,public loadingService: LoadingService) {}
 
@@ -20,6 +21,14 @@ export class RestaurantService {
 
   getCurrentId(): string {
     return this.currentId;
+  }
+
+  setCurrentOwnerEmail(currentOwnerEmail: string) {
+    this.currentOwnerEmail = currentOwnerEmail;
+  }
+
+  getCurrentOwnerEmail(): string {
+    return this.currentOwnerEmail;
   }
 
   createRestaurant(restaurantData: any): Observable<RestaurantResponse> {

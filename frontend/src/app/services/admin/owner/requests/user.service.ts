@@ -58,6 +58,21 @@ export class UserService {
       finalize(() => this.loadingService.setLoading(false, 'owner')) // Reset loading state on completion or error
     );
   }
+
+  // doesUserExistEdit(oldEmail: string, newEmail: string): Observable<boolean> {
+  //   this.loadingService.setLoading(true, 'owner'); // Set loading to true
+  //   if(oldEmail.toLowerCase() === newEmail.toLowerCase()){
+  //     return true;
+  //   }
+  //   return this.http.post<{ exists: boolean }>(
+  //     `${this.baseUrl}/check-email`, 
+  //     { email }, 
+  //     { withCredentials: true }
+  //   ).pipe(
+  //     map(response => response.exists), // Map the response to the existence boolean
+  //     finalize(() => this.loadingService.setLoading(false, 'owner')) // Reset loading state on completion or error
+  //   );
+  // }
   
 
 }

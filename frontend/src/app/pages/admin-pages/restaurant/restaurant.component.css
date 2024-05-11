@@ -13,11 +13,7 @@ a {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-image: linear-gradient(
-    to top,
-    var(--lightBlue2),
-    var(--darkestBlue)
-  );
+  background-color: var(--offWhite);
 }
 
 .header{
@@ -29,13 +25,13 @@ a {
   padding-top: 1.5rem;
   padding-left: 3rem;
   padding-right: 3rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .header h1{
   font-size: 1.8rem;
   font-weight: 100;
-  color: var(--offWhite) !important;
+  color: var(--darkestBlue) !important;
 
 }
 
@@ -58,11 +54,26 @@ a {
   font-family: "JetBrainsMono";
   font-size: 1.5rem;
   font-weight: 100;
-  color: var(--offWhite) !important;
+  color: var(--darkestBlue) !important;
   cursor: pointer;
   border: none;
 
 }
+
+.buttonClassDisabled{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
+  font-family: "JetBrainsMono";
+  color: var(--darkestBlue) !important;
+  opacity: 45%;
+  font-size: 1.5rem;
+  font-weight: 100;
+  border: none;
+}
+
 .header .buttonContainer{
   display: flex;
   flex-direction: row;
@@ -77,246 +88,151 @@ a {
 
 .mainContainer {
   display: flex;
-  justify-content: center; /* Space between to handle multiple cards */
-  padding-top: 1.5rem;
+  padding-top: .5rem;
+  padding: 3rem;
+  padding-top: 2.5rem;
   text-align: center;
-}
-
-.mainContainer .card {
-  background-color: var(--offWhite);
-  border: 1px solid var(--lightTan);
-  display: flex;
-  flex-direction: row;
-  border-radius: 5px;
-  width: 95vw; 
-  height: 82vh;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1); /* Subtle shadow for depth */
-  font-family: "JetBrainsMono";
-  font-weight: 100;
+  gap: 8.5rem;
+  align-items: center;
   justify-content: center;
 
 }
 
-.section{
-  width: 30vw;
-  height:80vh;
+.leftContainer .rightContainer .rightMostContainer{
+  height: auto;
+  width: 30rem;
+  height: 75vh;
+
+}
+
+
+
+.detailsContainer{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 1rem;
+  align-items: start;
+  gap: 1.75rem;
+
 }
 
-.section2{
-  width: 30vw;
-  height:80vh;
+.marginbot{
+  margin-top: -1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.subContainer{
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding-top: 1rem;
-}
-
-
-.inputContainer {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 1.5rem;
-  color: var(--darkestBlue);
-  gap: .5rem;
-  font-weight: 100;
-}
-
-.inputContainer2 {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 1.5rem;
-  color: var(--darkestBlue);
-  gap: .5rem;
-  font-weight: 100;
-}
-
-.inputContainerTime {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 3.5rem;
-  color: var(--darkestBlue);
-  gap: .5rem;
-  font-weight: 100;
-}
-
-
- h5{
-  margin-top: .1rem;
-  font-size: .8rem;
+  flex-direction: row;
+  gap: 1.5rem;
 
 }
 
-.inputContainer2 h5{
-  margin-top: 2rem;
-  font-size: .8rem;
+
+
+
+.timeError{
+  font-size: 1rem;
+  margin-top: .5rem;
 }
-.formInputSmall {
-  background-color: var(--offWhite);
-  width: 10rem;
-  height: 2.5rem;
-  border-bottom: 0.15rem solid var(--lightBlue2);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  text-align: left;
-  font-family: "JetBrainsMono";
-  font-size: .8rem;
-  letter-spacing: -.043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
+
+.icon{
   background-color: inherit;
-  margin-top: 1.5rem;
-}
-
- .formInput {
-  background-color: var(--offWhite);
-  width: 15rem;
-  height: 2.5rem;
-  border-bottom: 0.15rem solid var(--lightBlue2);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  text-align: left;
-  font-family: "JetBrainsMono";
-  font-size: .8rem;
-  letter-spacing: -.043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
-  background-color: inherit;
-  margin-top: 1.5rem;
-}
- .formInput::placeholder {
-  color: var(--darkestBlue) !important;
-  font-size: .8rem;
-
-}
- .formInput:focus {
+  border: none;
   outline: none;
-}
- .formInput:-webkit-autofill,
- .formInput:-webkit-autofill:hover,
- .formInput:-webkit-autofill:focus,
- .formInput:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
-
+  margin-right: .5rem;
+  cursor: pointer;
 }
 
- .formInput:-webkit-autofill::first-line {
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
-
-}
-
- .formInput:-webkit-autofill {
-  -webkit-box-shadow: none;
-  background-color: none;
-  font-family: "JetBrainsMono" !important;
-  font-size: .8rem !important;
-}
-
- .formInput:focus::placeholder {
-  color: transparent;
-}
-
-.formInputTextBox {
-  background-color: var(--offWhite);
+.inputField {
+  
   width: 15rem;
-  height: 8.5rem;
-  border: 0.10rem solid var(--lightBlue2);
-  text-align: left;
+  height: auto; /* Changed from 1rem to auto for better height management */
   font-family: "JetBrainsMono";
-  font-size: .8rem;
-  letter-spacing: -.043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
-  background-color: inherit;
-  margin-top: 1.5rem;
-}
- .formInputTextBox::placeholder {
-  color: var(--darkestBlue) !important;
-  font-size: .8rem;
-
-}
- .formInputTextBox:focus {
-  outline: none;
-}formInputTextBox
- .formInputTextBox:-webkit-autofill,
- .formInputTextBox:-webkit-autofill:hover,
- .formInputTextBox:-webkit-autofill:focus,
- .formInputTextBox:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
-
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
 }
 
- .formInputTextBox:-webkit-autofill::first-line {
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
+.inputFieldAddress {
+  
+  width: 31.5rem;
 
+  height: auto; /* Changed from 1rem to auto for better height management */
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
 }
 
- .formInputTextBox:-webkit-autofill {
-  -webkit-box-shadow: none;
-  background-color: none;
-  font-family: "JetBrainsMono" !important;
-  font-size: .8rem !important;
+mat-error{
+  text-align: center;
 }
 
- .formInputTextBox:focus::placeholder {
-  color: transparent;
+.inputFieldCity {
+  width: 12.5rem;
+  height: 1rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+
+  color: var(--darkestBlue);
 }
 
-.linkLike:hover {
+.inputFieldState {
+  width: 8rem;
+  height: 1rem;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
+  color: var(--darkestBlue);
+}
+
+.button{
+  background-color: var(--offWhite2);
+  border: none;
+  cursor: pointer;
   text-decoration: underline;
+  font-family: "JetBrainsMono";
+  font-weight: 100;
+  font-size: .9rem;
   text-underline-offset: .5rem;
 }
 
-.linkLike{
-  background: none;        /* Remove background color */
-  width: auto;             /* Adjust width as necessary */
-  height: auto;            /* Adjust height as necessary */
-  padding: 0; 
-  text-align: center;
+.button:hover{
+  color: var(--lightBlue2);
+}
+
+textarea {
+
+ resize: none;
+
+
+}
+
+.inputFieldTextArea{
+  width: 31.5rem;
   font-family: "JetBrainsMono";
-  font-size: 1rem;
   font-weight: 100;
-  color: var(--darkestBlue) !important;
-  cursor: pointer;
-  border: none;
-  margin-top: 2rem;
-
-}
-.delete:hover {
-  text-decoration: underline;
-  text-underline-offset: .5rem;
+  font-size: .8rem;
+  color: var(--darkestBlue);
+  height: 15rem;
 }
 
-.delete{
-  background: none;        /* Remove background color */
-  width: auto;             /* Adjust width as necessary */
-  height: auto;            /* Adjust height as necessary */
-  padding: 0; 
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-size: 1rem;
-  font-weight: 100;
-  color: red !important;
-  cursor: pointer;
-  border: none;
-  margin-top: 2rem;
 
+
+.valid-input {
+    label-color: 1px solid green;
 }
+
+
+
+.loadingBox{
+  display: flex;
+  flex-direction: column;
+  height: 5rem
+}
+
+mat-progress-bar{
+  margin-top: -1.2rem;
+}
+

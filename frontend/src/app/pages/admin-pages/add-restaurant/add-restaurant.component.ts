@@ -9,17 +9,12 @@ import {
 } from '@angular/forms';
 import { RestaurantAndUserResponse, RestaurantResponse } from '../../../../../types';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
-import { SessionService } from '../../../services/session/session.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
-import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-add-restaurant',
@@ -28,12 +23,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     NgIf,
     FormsModule,
     CommonModule,
-    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule,
     MatProgressBarModule,
   ],
   templateUrl: './add-restaurant.component.html',
@@ -42,7 +35,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class AddRestaurantComponent implements OnInit {
   form!: FormGroup;
   errorMsg = '';
-  currentOwnerEmail = ['', this.restaurantValidator.isValidPhoneValidation()];
 
   constructor(
     private fb: FormBuilder,
@@ -96,9 +88,6 @@ export class AddRestaurantComponent implements OnInit {
         addFees: [false],
       }),
     });
-    console.log(this.form.get('details.owner'));
-
-    console.log(this.form);
   }
 
   private initDay() {
@@ -137,24 +126,23 @@ export class AddRestaurantComponent implements OnInit {
       if (control.hasError('required')) {
         return 'Name must be filled in.';
       }
-      // Generic catch-all for any other error types
       const errorKeys = Object.keys(control.errors);
       const firstErrorKey = errorKeys[0];
       const error = control.errors[firstErrorKey];
       return error.value || 'Invalid field';
     }
-    return ''; // Ensure a string is always returned
+    return '';
   }
 
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
     if (control) {
       console.log(control);
-      control.reset(''); // Reset without value to clear to `null` or use `''` to reset to empty string
+      control.reset(''); 
       control.markAsPristine();
       control.markAsUntouched();
       console.log(control);
-    } else console.log(control);
+    } 
   }
 
   async submitForm() {
@@ -166,7 +154,7 @@ export class AddRestaurantComponent implements OnInit {
         this.restaurantService.createRestaurant(this.form.value).subscribe({
           next: (response: RestaurantResponse) => {
             console.log('Successfully created restaurant:', response.message);
-            this.router.navigate(['/admin']); // Navigate to the admin page or dashboard
+            this.router.navigate(['/admin']);
             return;
           },
           error: (error) => {
@@ -204,10 +192,6 @@ export class AddRestaurantComponent implements OnInit {
       }
     }
   }
-
-
-
-
 
   cancel() {
     this.router.navigate(['/admin']);

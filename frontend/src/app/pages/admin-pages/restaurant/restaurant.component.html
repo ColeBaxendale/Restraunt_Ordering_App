@@ -1,0 +1,477 @@
+<div class="container">
+    <div class="header">
+      <h1>Editing Restaurant</h1>
+  
+      <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
+        <div *ngIf="errorMsg != ''">
+          <p>{{ errorMsg }}</p>
+        </div>
+  
+        <button class="buttonClass" [disabled]="false" (click)="submitForm()">
+          Submit
+        </button>
+        <button class="buttonClass" (click)="cancel()">Cancel</button>
+      </div>
+  
+      <div class="buttonContainer" *ngIf="loadingService.getLoading()">
+        <div *ngIf="errorMsg != ''">
+          <p>{{ errorMsg }}</p>
+        </div>
+  
+        <button class="buttonClassDisabled" [disabled]="true" (click)="submitForm()">
+          Submit
+        </button>
+        <button class="buttonClass" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  
+    <form [formGroup]="form" class="mainContainer">
+      <div class="leftContainer">
+        <div formGroupName="details" class="detailsContainer">
+          <h3>Details</h3>
+          <div class="subContainer">
+            <div>
+  
+            <mat-form-field class="inputField" appearance="outline">
+              <mat-label>Enter Restaurant Name</mat-label>
+              <input matInput formControlName="name" required="true" />
+              <mat-error *ngIf="form.get(['details', 'name'])?.hasError('required')">
+                {{ getErrorMessage("details.name") }}
+              </mat-error>
+              <mat-error *ngIf="form.get('details.name')?.errors?.['tooLarge']">
+                {{ form.get('details.name')?.errors?.['tooLarge'].value }}
+              </mat-error>
+              <mat-error *ngIf="form.get('details.name')?.errors?.['tooSmall']">
+                {{ form.get('details.name')?.errors?.['tooSmall'].value }}
+              </mat-error>
+              <mat-error *ngIf="form.get('details.name')?.errors?.['exists']">
+                {{ form.get('details.name')?.errors?.['exists'].value }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'name'])?.value"
+                (click)="clearInput('details.name')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-progress-bar
+            *ngIf="
+              loadingService.getLoading() &&
+              loadingService.getLoadingItem() === 'name'
+            "
+            mode="indeterminate"
+          ></mat-progress-bar>
+        </div>
+  
+  
+            <mat-form-field class="inputField" appearance="outline">
+              <mat-label>Telephone</mat-label>
+              <input matInput formControlName="phone" />
+              <mat-error *ngIf="form.get(['details', 'phone'])?.errors">
+                {{ getErrorMessage("details.phone") }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'phone'])?.value"
+                (click)="clearInput('details.phone')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+  
+          <div class="subContainer">
+            <mat-form-field class="inputFieldTextArea" appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                placeholder="Ex. Here at xxx we serve..."
+                formControlName="description"
+              ></textarea>
+              <mat-error *ngIf="form.get(['details', 'description'])?.errors">
+                {{ getErrorMessage("details.description") }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'description'])?.value"
+                (click)="clearInput('details.description')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div formGroupName="location" class="detailsContainer">
+            <h3>Location</h3>
+            <mat-form-field class="inputFieldAddress" appearance="outline">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" />
+              <mat-error
+                *ngIf="form.get(['details', 'location', 'address'])?.errors"
+              >
+                {{ getErrorMessage("details.location.address") }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'location', 'address'])?.value"
+                (click)="clearInput('details.location.address')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+  
+            <div class="subContainer">
+              <mat-form-field class="inputFieldCity" appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" />
+                <mat-error
+                  *ngIf="form.get(['details', 'location', 'city'])?.errors"
+                >
+                  {{ getErrorMessage("details.location.city") }}
+                </mat-error>
+                <button
+                  class="icon"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  *ngIf="form.get(['details', 'location', 'city'])?.value"
+                  (click)="clearInput('details.location.city')"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="inputFieldState" appearance="outline">
+                <mat-label>State</mat-label>
+                <input
+                  matInput
+                  formControlName="state"
+                  [class.valid-input]="
+                    form.get('state')?.valid && form.get('state')?.value
+                  "
+                />
+                <mat-error
+                  *ngIf="form.get(['details', 'location', 'state'])?.errors"
+                >
+                  {{ getErrorMessage("details.location.state") }}
+                </mat-error>
+                <button
+                  class="icon"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  *ngIf="form.get(['details', 'location', 'state'])?.value"
+                  (click)="clearInput('details.location.state')"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+  
+              <mat-form-field class="inputFieldState" appearance="outline">
+                <mat-label>Zip</mat-label>
+                <input
+                  matInput
+                  formControlName="zipCode"
+                  [class.valid-input]="
+                    form.get('zipCode')?.valid && form.get('zipCode')?.value
+                  "
+                />
+                <mat-error
+                  *ngIf="form.get(['details', 'location', 'zipCode'])?.errors"
+                >
+                  {{ getErrorMessage("details.location.zipCode") }}
+                </mat-error>
+                <button
+                  class="icon"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  *ngIf="form.get(['details', 'location', 'zipCode'])?.value"
+                  (click)="clearInput('details.location.zipCode')"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="rightContainer">
+        <div formGroupName="details">
+          <div formGroupName="operatingHours" class="detailsContainer">
+            <h3>Operating Hours</h3>
+  
+            <div formGroupName="monday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('monday')"
+                  >Monday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'monday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="tuesday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('tuesday')"
+                  >Tuesday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'tuesday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="wednesday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('wednesday')"
+                  >Wednesday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'wednesday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="thursday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('thursday')"
+                  >Thursday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'thursday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="friday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('friday')"
+                  >Friday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'friday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="saturday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('saturday')"
+                  >Saturday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'saturday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+  
+            <div formGroupName="sunday">
+              <div class="subContainer">
+                <mat-checkbox
+                  formControlName="isOpen"
+                  (change)="toggleDay('sunday')"
+                  >Sunday
+                </mat-checkbox>
+                <input type="time" class="formInputTime" formControlName="open" />
+                <input
+                  type="time"
+                  class="formInputTime"
+                  formControlName="close"
+                />
+              </div>
+              <div class="timeError">
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['requiredTimes'] }}
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder']"
+                >
+                  {{ form.get(['details', 'operatingHours', 'sunday'])?.errors?.['invalidOrder'] }}
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="rightMostContainer">
+        <div formGroupName="stripe" class="detailsContainer">
+          <h3>Stripe</h3>
+          <mat-form-field class="inputField" appearance="outline">
+            <mat-label>Stripe ID</mat-label>
+            <input matInput formControlName="stripeAccountId" />
+            <mat-error *ngIf="form.get(['stripe', 'stripeAccountId'])?.errors">
+              {{ getErrorMessage("stripe.stripeAccountId") }}
+            </mat-error>
+            <button
+              class="icon"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              *ngIf="form.get(['stripe', 'stripeAccountId'])?.value"
+              (click)="clearInput('stripe.stripeAccountId')"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-checkbox formControlName="addFees" class="marginbot"
+            >Add Fees To Customer?
+          </mat-checkbox>
+        </div>
+  
+        <div formGroupName="details" class="detailsContainer">
+          <h3>Owner</h3>
+          <div class="loadingBox">
+            <mat-form-field class="inputField" appearance="outline">
+              <mat-label>Owner Email</mat-label>
+              <input matInput formControlName="owner" />
+              <mat-error
+                *ngIf="form.get('details.owner')?.errors?.['invalidEmailFormat']"
+              >
+                {{ form.get('details.owner')?.errors?.['invalidEmailFormat'].value }}
+              </mat-error>
+              <mat-error *ngIf="form.get('details.owner')?.errors?.['exists']">
+                {{ form.get('details.owner')?.errors?.['exists'].value }}
+              </mat-error>
+              <button
+                class="icon"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                *ngIf="form.get(['details', 'owner'])?.value"
+                (click)="clearInput('details.owner')"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-progress-bar
+              *ngIf="
+                loadingService.getLoading() &&
+                loadingService.getLoadingItem() === 'owner'
+              "
+              mode="query"
+            ></mat-progress-bar>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
