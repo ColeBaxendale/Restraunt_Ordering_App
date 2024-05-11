@@ -7,9 +7,7 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
-import {
-  RestaurantResponse,
-} from '../../../../../types';
+import { RestaurantAndUserResponse, RestaurantResponse } from '../../../../../types';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
@@ -36,7 +34,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   templateUrl: './add-restaurant.component.html',
   styleUrl: './add-restaurant.component.css',
@@ -44,22 +42,29 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class AddRestaurantComponent implements OnInit {
   form!: FormGroup;
   errorMsg = '';
-  currentOwnerEmail =['', this.restaurantValidator.isValidPhoneValidation()];
+  currentOwnerEmail = ['', this.restaurantValidator.isValidPhoneValidation()];
 
   constructor(
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
-    public loadingService: LoadingService,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       details: this.fb.group({
         logo: [''],
-        name: ['', [Validators.required], [this.restaurantValidator.isValidNameValidation()]],
-        description: ['', this.restaurantValidator.isValidDescriptionValidation()],
+        name: [
+          '',
+          [Validators.required],
+          [this.restaurantValidator.isValidNameValidation()],
+        ],
+        description: [
+          '',
+          this.restaurantValidator.isValidDescriptionValidation(),
+        ],
         phone: ['', this.restaurantValidator.isValidPhoneValidation()],
         location: this.fb.group({
           address: ['', this.restaurantValidator.isValidAddressValidation()],
@@ -126,7 +131,6 @@ export class AddRestaurantComponent implements OnInit {
     }
   }
 
-  
   getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
@@ -141,8 +145,6 @@ export class AddRestaurantComponent implements OnInit {
     }
     return ''; // Ensure a string is always returned
   }
-  
-  
 
   clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
@@ -156,38 +158,49 @@ export class AddRestaurantComponent implements OnInit {
   }
 
   async submitForm() {
-    if(this.loadingService.getLoading()){
+    if (this.loadingService.getLoading()) {
       return;
     }
     if (this.form.valid) {
-      console.log('Form Data:', this.form.value);
-      this.restaurantService.createRestaurant(this.form.value).subscribe({
-        next: (response: RestaurantResponse) => {
-          console.log('Successfully created restaurant:', response.message);
-          this.router.navigate(['/admin']); // Navigate to the admin page or dashboard
-          return;
-
-        },
-        error: (error) => {
-          console.error('Failed to create restaurant:', error);
-          this.errorMsg = error.error.message || 'An error occurred during form submission.';
-          return;
-
-        }
-      });
-    } 
-    else{
+      if (this.form.get('details.owner')?.value === '') {
+        this.restaurantService.createRestaurant(this.form.value).subscribe({
+          next: (response: RestaurantResponse) => {
+            console.log('Successfully created restaurant:', response.message);
+            this.router.navigate(['/admin']); // Navigate to the admin page or dashboard
+            return;
+          },
+          error: (error) => {
+            console.error('Failed to create restaurant:', error);
+            this.errorMsg =
+              error.error.message || 'An error occurred during form submission.';
+            return;
+          },
+        });
+      } else {
+        this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
+          next: (response: RestaurantAndUserResponse) => {
+            console.log('Successfully created restaurant with owner:', response.message);
+            this.router.navigate(['/admin']); 
+            return;
+          },
+          error: (error) => {
+            console.error('Failed to create restaurant with owner:', error);
+            this.errorMsg =
+              error.error.message || 'An error occurred during form submission.';
+            return;
+          },
+        });
+      }
+    } else {
       const control = this.form.get('details.name');
-      if(control){
+      if (control) {
         if (control.hasError('required')) {
-           this.errorMsg = 'Name field is required.';
+          this.errorMsg = 'Name field is required.';
+        } else {
+          this.errorMsg = 'Errors occur in the form';
         }
-        else{
-          this.errorMsg = 'Errors occur in the form'
-        }
-      } else{
-        this.errorMsg = 'Errors occur in the form'
-
+      } else {
+        this.errorMsg = 'Errors occur in the form';
       }
     }
   }
@@ -195,9 +208,8 @@ export class AddRestaurantComponent implements OnInit {
 
 
 
+
   cancel() {
     this.router.navigate(['/admin']);
   }
-
-
 }

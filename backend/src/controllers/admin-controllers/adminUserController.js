@@ -30,9 +30,7 @@ exports.createUser = async (req, res, next) => {
     await newUser.save();
 
     // Fetch the user without the password and role fields
-    const userToSend = await User.findById(newUser._id).select(
-      "-password -role"
-    );
+    
 
     res.status(201).json({
       message: "New User added successfully",

@@ -78,6 +78,14 @@ export interface RestaurantResponse {
   error?: string;
 }
 
+export interface RestaurantAndUserResponse {
+  message: string;
+  restaurant?: Restaurant;
+  userId?: string;
+  user?: Omit<User, 'password'>;
+  error?: string;
+}
+
 export interface UserResponse {
   message: string; // A message about the result of the request, e.g., "User created successfully."
   userId?: string; // Optional user ID, provided on successful creation.

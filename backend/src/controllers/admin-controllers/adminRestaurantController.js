@@ -1,6 +1,7 @@
 const Restaurant = require("../../models/Restaurant"); // Adjust the path as necessary
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
 
 exports.createRestaurant = async (req, res, next) => {
   try {
@@ -93,18 +94,80 @@ exports.createRestaurant = async (req, res, next) => {
 };
 
 exports.createRestaurantWithOwner = async (req, res) => {
+  const session = await mongoose.startSession(); // Start a MongoDB session for transactions
+  session.startTransaction(); // Start the transaction
+
   try {
     const { email, details, admin, stripe } = req.body;
-
-    // Create user a
-
+    console.log(req.body);
     
+    if (!email || !details.name) {
+      throw new Error("Required fields are missing");
+    }
+
+    const existingUser = await User.findOne({ email: email }).session(session);
+    if (existingUser) {
+      throw new Error("User with this email already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash("Welcome1", 10);
+
+    const userInfo = {
+      email,
+      password: hashedPassword,
+      role: "owner",
+    };
+
+    const newUser = new User(userInfo);
+    await newUser.save({ session });
+
+    const nameLowerCase = details.name.toLowerCase();
+    const existingRestaurant = await Restaurant.findOne({
+      "details.nameLowerCase": nameLowerCase,
+    }).session(session);
+    if (existingRestaurant) {
+      throw new Error("A restaurant with the same name already exists");
+    }
+
+    const restaurantDetails = {
+      details: {
+        name: details.name,
+        nameLowerCase,
+        logo: details.logo || "",
+        description: details.description || "",
+        phone: details.phone || "",
+        location: details.location,
+        operatingHours: details.operatingHours,
+        ordersEnabled: details.ordersEnabled || false,
+        owner: newUser._id,
+        menuSections: details.menuSections || [],
+      },
+      admin,
+      stripe
+    };
+
+    const newRestaurant = new Restaurant(restaurantDetails);
+    await newRestaurant.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "New restaurant and owner created successfully",
+      restaurant: newRestaurant,
+      user: newUser,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to add new restaurant.", error: error.message });
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      message: "Failed to create restaurant and owner.",
+      error: error.message,
+    });
   }
 };
+
+
 
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;

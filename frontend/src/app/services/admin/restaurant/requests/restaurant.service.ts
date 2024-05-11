@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, finalize, map } from 'rxjs';
-import { Restaurant } from '../../../../../../types';
+import { Restaurant, RestaurantAndUserResponse } from '../../../../../../types';
 import { RestaurantResponse } from '../../../../../../types';
 import { LoadingService } from '../../../loading/loading.service';
 
@@ -68,6 +68,18 @@ export class RestaurantService {
     ).pipe(
       map((response: { exists: any; }) => response.exists), // Map the response to the existence boolean
       finalize(() => this.loadingService.setLoading(false, 'name')) // Reset loading state on completion or error
+    );
+  }
+
+  createRestaurantWithOwner(email: string, restaurantData: any): Observable<RestaurantAndUserResponse> {
+    const requestBody = {
+      email: email,
+      ...restaurantData
+    };
+    return this.http.post<RestaurantAndUserResponse>(
+      `${this.baseUrl}-with-owner`,
+      requestBody,
+      { withCredentials: true }
     );
   }
 }
