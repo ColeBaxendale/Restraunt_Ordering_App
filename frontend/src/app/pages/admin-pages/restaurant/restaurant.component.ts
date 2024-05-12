@@ -13,16 +13,10 @@ import {
 } from '@angular/forms';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
-import { OwnerEditDialogComponent } from '../../../components/admin-components/owner-edit-dialog/owner-edit-dialog.component';
-import { OwnerAddDialogComponent } from '../../../components/admin-components/owner-add-dialog/owner-add-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/admin/owner/requests/user.service';
-import { OwnerEditRestaurantDialogComponent } from '../../../components/admin-components/owner-edit-restaurant-dialog/owner-edit-restaurant-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
