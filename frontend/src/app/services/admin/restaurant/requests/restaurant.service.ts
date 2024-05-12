@@ -12,6 +12,8 @@ export class RestaurantService {
   private baseUrl = 'http://localhost:3000/admin/restaurants';
   private currentId!: string;
   private currentOwnerEmail!: string;
+  private currentRestaurantName!: string;
+
 
   constructor(private http: HttpClient,public loadingService: LoadingService) {}
 
@@ -30,6 +32,16 @@ export class RestaurantService {
   getCurrentOwnerEmail(): string {
     return this.currentOwnerEmail;
   }
+
+  setCurrentRestaurantName(currentRestaurantName: string) {
+    this.currentRestaurantName = currentRestaurantName;
+  }
+
+  getCurrentRestaurantName(): string {
+    return this.currentRestaurantName;
+  }
+
+
 
   createRestaurant(restaurantData: any): Observable<RestaurantResponse> {
     return this.http.post<RestaurantResponse>(

@@ -49,6 +49,42 @@ export class RestaurantValidatorService {
     };
   }
 
+  isValidNameEditValidation(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+      if (!value || value === '') {
+        return of({ required: { value: 'Name must be filled in' } });
+      }
+
+      if (value.length > 50) {
+        // Wrap the error object in 'of()' to return an Observable
+        return of({ tooLarge: { value: 'Name must be less than 50 characters' } });
+      }
+  
+      if (value.length < 5) {
+        // Wrap the error object in 'of()' to return an Observable
+        return of({ tooSmall: { value: 'Name must be more than 4 characters' } });
+      }
+      console.log(value);
+      console.log(this.restaurantService.getCurrentRestaurantName());
+      
+      console.log('comparing: ' + this.restaurantService.getCurrentRestaurantName().toLowerCase() + ' + ' + value.toLowerCase());
+      
+      if(this.restaurantService.getCurrentRestaurantName().toLowerCase() === value.toLowerCase()){
+        console.log('compared and the same');
+        
+        return of(null);
+      }
+      else{
+        console.log('compared and not the same');
+
+        return this.restaurantService.doesRestaurantExist(value).pipe(
+          map(restaurantExists => restaurantExists ? { exists: { value: 'This name is already in use.' } } : null)
+        );
+      };
+      }
+  }
+
   isValidPhoneValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;

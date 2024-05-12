@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  OperatingHours,
-  Restaurant,
-  RestaurantResponse,
-  User,
-  UserResponse,
-  WeeklyOperatingHours,
-} from '../../../../../types';
 import { SessionService } from '../../../services/session/session.service';
 import { Subject, finalize, takeUntil } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
@@ -34,6 +26,8 @@ import { merge } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RestaurantResponse } from '../../../../../types';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -46,14 +40,19 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
+
   ],
   templateUrl: './restaurant.component.html',
   styleUrl: './restaurant.component.css',
 })
 export class RestaurantComponent implements OnInit {
   errorMsg: '' | undefined;
+  currentName: string = '';
   private unsubscribe$ = new Subject<void>();
   form!: FormGroup;
+  private restaurantId = this.restaurantService.getCurrentId();
+  private userId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -72,6 +71,8 @@ export class RestaurantComponent implements OnInit {
     const restaurantId = this.restaurantService.getCurrentId();
     if (restaurantId) {
       this.loadRestaurantData(restaurantId);
+      this.loadingService.setLoading(false,'');
+
     } else {
       this.router.navigate(['/admin']);
     }
@@ -84,7 +85,7 @@ export class RestaurantComponent implements OnInit {
         name: [
           '',
           [Validators.required],
-          [this.restaurantValidator.isValidNameValidation()],
+          [this.restaurantValidator.isValidNameEditValidation()],
         ],
         description: [
           '',
@@ -158,19 +159,22 @@ export class RestaurantComponent implements OnInit {
   }
 
   private loadRestaurantData(restaurantId: string) {
+    this.loadingService.setLoading(true,'page');
     this.restaurantService
       .getRestaurantById(restaurantId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
+          this.restaurantService.setCurrentRestaurantName(response.details.name);
           this.form.patchValue(response);
+          this.currentName = this.restaurantService.getCurrentRestaurantName();
           if (response.details.owner) {
+            this.userId = response.details.owner;
             this.userService
               .getUserById(response.details.owner)
               .pipe(takeUntil(this.unsubscribe$))
               .subscribe({
                 next: (userResponse) => {
-                  console.log(userResponse);
                   if (userResponse.user?.email) {
                     this.restaurantService.setCurrentOwnerEmail(
                       userResponse.user.email ?? ''
@@ -199,6 +203,8 @@ export class RestaurantComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
     this.restaurantService.setCurrentOwnerEmail('');
+    this.restaurantService.setCurrentRestaurantName('');
+
   }
 
   getErrorMessage(field: string): string {
@@ -229,18 +235,38 @@ export class RestaurantComponent implements OnInit {
   cancel() {
     this.router.navigate(['/admin']);
     this.restaurantService.setCurrentOwnerEmail('');
+    this.restaurantService.setCurrentRestaurantName('');
+
   }
 
   submitForm() {
+    console.log('submit');
+    
     if (this.loadingService.getLoading()) {
+      console.log('loading while submit');
       return;
     }
+
     if (this.form.valid) {
       if (this.restaurantService.getCurrentOwnerEmail() === '') {
-        if (this.form.get('details.owner')?.value != '') {
+        if (this.form.get('details.owner')?.value != null) {
           // CREATE NEW USER AND UPDATE RESTAURANT
+          // MUST DO BACK END SESSION ROUTE AS WELL 
         } else {
-          // UPDATE RESTAURANT WITHOUT TOUCHING OWNER
+          // UPDATE RESTAURANT WITHOUT OWNER
+          this.restaurantService.updateRestaurant(this.restaurantId,this.form.value).subscribe({
+            next: (response: RestaurantResponse) => {
+              console.log('Successfully updateed restaurant:', response.message);
+              this.router.navigate(['/admin']);
+              return;
+            },
+            error: (error) => {
+              console.error('Failed to create restaurant:', error);
+              this.errorMsg =
+                error.error.message || 'An error occurred during form submission.';
+              return;
+            },
+          });
         }
       } else {
         if (
@@ -248,10 +274,27 @@ export class RestaurantComponent implements OnInit {
           this.form.get('details.owner')?.value.toLowerCase()
         ) {
           // UPDATE RESTAURANT WITHOUT CHANGING USER
+          this.form.patchValue({details:{owner:this.userId}})
+          this.restaurantService.updateRestaurant(this.restaurantId,this.form.value).subscribe({
+            next: (response: RestaurantResponse) => {
+              console.log('Successfully updateed restaurant:', response.message);
+              this.router.navigate(['/admin']);
+              return;
+            },
+            error: (error) => {
+              console.error('Failed to create restaurant:', error);
+              this.errorMsg =
+                error.error.message || 'An error occurred during form submission.';
+              return;
+            },
+          });
         } else {
           // DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
         }
       }
     }
+
+
+
   }
 }

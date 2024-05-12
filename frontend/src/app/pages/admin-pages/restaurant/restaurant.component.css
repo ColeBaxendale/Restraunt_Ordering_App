@@ -236,3 +236,8 @@ mat-progress-bar{
   margin-top: -1.2rem;
 }
 
+.loadingBottom{
+margin-left: 3rem;
+margin-right: 3rem;
+
+}

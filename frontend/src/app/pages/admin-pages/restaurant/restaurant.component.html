@@ -1,6 +1,6 @@
 <div class="container">
     <div class="header">
-      <h1>Editing Restaurant</h1>
+      <h1>Editing {{currentName}}</h1>
   
       <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
         <div *ngIf="errorMsg != ''">
@@ -473,5 +473,17 @@
         </div>
       </div>
     </form>
+
+
   </div>
+  <div class="loadingBottom">
+    <mat-progress-bar
+    *ngIf="
+      loadingService.getLoading() &&
+      loadingService.getLoadingItem() === 'page'
+    "
+    mode="query"
+  ></mat-progress-bar>
+  </div>
+
   
