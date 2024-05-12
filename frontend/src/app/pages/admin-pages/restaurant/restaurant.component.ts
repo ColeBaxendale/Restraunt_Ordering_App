@@ -35,13 +35,12 @@ import { RestaurantResponse } from '../../../../../types';
     MatCheckboxModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-
   ],
   templateUrl: './restaurant.component.html',
   styleUrl: './restaurant.component.css',
 })
 export class RestaurantComponent implements OnInit {
-  errorMsg: '' | undefined;
+  errorMsg = '';
   currentName: string = '';
   private unsubscribe$ = new Subject<void>();
   form!: FormGroup;
@@ -65,8 +64,7 @@ export class RestaurantComponent implements OnInit {
     const restaurantId = this.restaurantService.getCurrentId();
     if (restaurantId) {
       this.loadRestaurantData(restaurantId);
-      this.loadingService.setLoading(false,'');
-
+      this.loadingService.setLoading(false, '');
     } else {
       this.router.navigate(['/admin']);
     }
@@ -152,14 +150,34 @@ export class RestaurantComponent implements OnInit {
   }
 
   private loadRestaurantData(restaurantId: string) {
-    this.loadingService.setLoading(true,'page');
+    this.loadingService.setLoading(true, 'page');
     this.restaurantService
       .getRestaurantById(restaurantId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: (response) => {
-          this.restaurantService.setCurrentRestaurantName(response.details.name);
+          this.restaurantService.setCurrentRestaurantName(
+            response.details.name
+          );
           this.form.patchValue(response);
+          Object.keys(response.details.operatingHours).forEach((day) => {
+            const dayGroup = this.form.get(`details.operatingHours.${day}`);
+            if (dayGroup) {
+              // Check if dayGroup is not null
+              const openControl = dayGroup.get('open');
+              const closeControl = dayGroup.get('close');
+              if (response.details.operatingHours[day].isOpen) {
+                openControl?.enable();
+                closeControl?.enable();
+              } else {
+                openControl?.disable();
+                closeControl?.disable();
+              }
+            }
+          });
+
+          console.log(response);
+
           this.currentName = this.restaurantService.getCurrentRestaurantName();
           if (response.details.owner) {
             this.userId = response.details.owner;
@@ -172,9 +190,6 @@ export class RestaurantComponent implements OnInit {
                     this.restaurantService.setCurrentOwnerEmail(
                       userResponse.user.email ?? ''
                     );
-                  } else {
-                    error: (error: any) =>
-                      console.error('Error setting email:', error);
                   }
                   this.form.patchValue({
                     details: {
@@ -197,7 +212,6 @@ export class RestaurantComponent implements OnInit {
     this.unsubscribe$.complete();
     this.restaurantService.setCurrentOwnerEmail('');
     this.restaurantService.setCurrentRestaurantName('');
-
   }
 
   getErrorMessage(field: string): string {
@@ -229,12 +243,11 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/admin']);
     this.restaurantService.setCurrentOwnerEmail('');
     this.restaurantService.setCurrentRestaurantName('');
-
   }
 
   submitForm() {
     console.log('submit');
-    
+
     if (this.loadingService.getLoading()) {
       console.log('loading while submit');
       return;
@@ -244,50 +257,70 @@ export class RestaurantComponent implements OnInit {
       if (this.restaurantService.getCurrentOwnerEmail() === '') {
         if (this.form.get('details.owner')?.value != null) {
           // CREATE NEW USER AND UPDATE RESTAURANT
-          // MUST DO BACK END SESSION ROUTE AS WELL 
+          // MUST DO BACK END SESSION ROUTE AS WELL
         } else {
           // UPDATE RESTAURANT WITHOUT OWNER
-          this.restaurantService.updateRestaurant(this.restaurantId,this.form.value).subscribe({
-            next: (response: RestaurantResponse) => {
-              console.log('Successfully updateed restaurant:', response.message);
-              this.router.navigate(['/admin']);
-              return;
-            },
-            error: (error) => {
-              console.error('Failed to create restaurant:', error);
-              this.errorMsg =
-                error.error.message || 'An error occurred during form submission.';
-              return;
-            },
-          });
+          this.restaurantService
+            .updateRestaurant(this.restaurantId, this.form.value)
+            .subscribe({
+              next: (response: RestaurantResponse) => {
+                console.log(
+                  'Successfully updateed restaurant:',
+                  response.message
+                );
+                this.router.navigate(['/admin']);
+                return;
+              },
+              error: (error) => {
+                console.error('Failed to create restaurant:', error);
+                this.errorMsg =
+                  error.error.message ||
+                  'An error occurred during form submission.';
+                return;
+              },
+            });
         }
       } else {
         if (
           this.restaurantService.getCurrentOwnerEmail().toLowerCase() ===
           this.form.get('details.owner')?.value.toLowerCase()
         ) {
-          // UPDATE RESTAURANT WITHOUT CHANGING USER
-          this.form.patchValue({details:{owner:this.userId}}) // send to back end seperatly?
-          this.restaurantService.updateRestaurant(this.restaurantId,this.form.value).subscribe({
-            next: (response: RestaurantResponse) => {
-              console.log('Successfully updateed restaurant:', response.message);
-              this.router.navigate(['/admin']);
-              return;
-            },
-            error: (error) => {
-              console.error('Failed to create restaurant:', error);
-              this.errorMsg =
-                error.error.message || 'An error occurred during form submission.';
-              return;
-            },
-          });
+          // UPDATE RESTAURANT WITHOUT CHANGING OWNER
+          this.form.patchValue({ details: { owner: this.userId } }); // send to back end seperatly?
+          this.restaurantService
+            .updateRestaurant(this.restaurantId, this.form.value)
+            .subscribe({
+              next: (response: RestaurantResponse) => {
+                console.log(
+                  'Successfully updateed restaurant:',
+                  response.message
+                );
+                this.router.navigate(['/admin']);
+                return;
+              },
+              error: (error) => {
+                console.error('Failed to create restaurant:', error);
+                this.errorMsg =
+                  error.error.message ||
+                  'An error occurred during form submission.';
+                return;
+              },
+            });
         } else {
           // DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
         }
       }
+    } else {
+      const control = this.form.get('details.name');
+      if (control) {
+        if (control.hasError('required')) {
+          this.errorMsg = 'Name field is required.';
+        } else {
+          this.errorMsg = 'Errors occur in the form';
+        }
+      } else {
+        this.errorMsg = 'Errors occur in the form';
+      }
     }
-
-
-
   }
 }
