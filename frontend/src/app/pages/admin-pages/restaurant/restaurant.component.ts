@@ -246,33 +246,36 @@ export class RestaurantComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('submit');
-
     if (this.loadingService.getLoading()) {
       console.log('loading while submit');
       return;
     }
-
-    if (this.form.valid) {
-      if (this.restaurantService.getCurrentOwnerEmail() === '') {
-        if (this.form.get('details.owner')?.value != null) {
-          this. updateRestaurantWithNewOwner();
-        } else {
-          this.updateRsetaurantWithNoOwner();
-        }
-      } else {
-        if (
-          this.restaurantService.getCurrentOwnerEmail().toLowerCase() === this.form.get('details.owner')?.value.toLowerCase()
-        ) {
-          this.updateRestaurantWithoutOwner();
-        } else {
-          this.updateRestaurantWithOldAndNewOwner();
-        }
-      }
-    } else {
+    if (!this.form.valid) {
       this.errorHandle();
+      return;
     }
+
+    if (this.restaurantService.getCurrentOwnerEmail() != '') {
+      if (this.restaurantService.getCurrentOwnerEmail().toLowerCase() != this.form.get('details.owner')?.value.toLowerCase()) {
+        // DELETE AND ADD NEW OWNER
+        this.updateRestaurantWithOldAndNewOwner();
+        return;
+      }
+      // NO CHANGE TO ALREADY MADE OWNER
+      this.updateRestaurantWithSameOwner();
+      return;
+    }
+    if (this.form.get('details.owner')?.value != null) {
+      // CREATE NEW OWNER
+      this. updateRestaurantWithNewOwner();
+      return;
+    }
+    // NO OWNER AT ALL IN THIS ROUTE
+    this.updateRestaurantWithNoOwner();
+    return;
   }
+
+
 
   private errorHandle(){
     const control = this.form.get('details.name');
@@ -288,19 +291,19 @@ export class RestaurantComponent implements OnInit {
   }
 
   private updateRestaurantWithNewOwner(){
-      // CREATE NEW USER AND UPDATE RESTAURANT
+      // @DO CREATE NEW USER AND UPDATE RESTAURANT
       // MUST DO BACK END SESSION ROUTE AS WELL
 
   }
 
   private updateRestaurantWithOldAndNewOwner(){
-      // DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
+      //@DO  DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
 
 
   }
 
 
-  private updateRestaurantWithoutOwner() {
+  private updateRestaurantWithSameOwner() {
     // UPDATE RESTAURANT WITHOUT CHANGING OWNER
     this.form.patchValue({ details: { owner: this.userId } });
     this.restaurantService
@@ -320,7 +323,7 @@ export class RestaurantComponent implements OnInit {
       });
   }
 
-  private updateRsetaurantWithNoOwner() {
+  private updateRestaurantWithNoOwner() {
     // UPDATE RESTAURANT WITHOUT OWNER
     this.restaurantService
       .updateRestaurant(this.restaurantId, this.form.value)
