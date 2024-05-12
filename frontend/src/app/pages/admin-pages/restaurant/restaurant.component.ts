@@ -274,7 +274,7 @@ export class RestaurantComponent implements OnInit {
           this.form.get('details.owner')?.value.toLowerCase()
         ) {
           // UPDATE RESTAURANT WITHOUT CHANGING USER
-          this.form.patchValue({details:{owner:this.userId}})
+          this.form.patchValue({details:{owner:this.userId}}) // send to back end seperatly?
           this.restaurantService.updateRestaurant(this.restaurantId,this.form.value).subscribe({
             next: (response: RestaurantResponse) => {
               console.log('Successfully updateed restaurant:', response.message);
