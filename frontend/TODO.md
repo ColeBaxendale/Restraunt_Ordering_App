@@ -1,4 +1,4 @@
-## EESTAURANT EDIT PAGE:
+## RESTAURANT EDIT PAGE:
 @DO
 - finish update on submit method
 @DO
