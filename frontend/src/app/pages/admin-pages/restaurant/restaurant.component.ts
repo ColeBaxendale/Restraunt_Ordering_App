@@ -127,7 +127,6 @@ export class RestaurantComponent implements OnInit {
       }),
     });
   }
-
   private initDay() {
     return this.fb.group(
       {
