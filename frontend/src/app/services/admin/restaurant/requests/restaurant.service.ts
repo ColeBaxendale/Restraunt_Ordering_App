@@ -66,10 +66,10 @@ export class RestaurantService {
     });
   }
 
-  updateRestaurant(
-    id: string,
-    restaurant: Restaurant
-  ): Observable<RestaurantResponse> {
+  updateRestaurant(id: string,restaurant: Restaurant): Observable<RestaurantResponse> {
+    if(this.getCurrentOwnerId()){
+      restaurant.details.owner = this.getCurrentOwnerId();
+    }
     return this.http.put<RestaurantResponse>(
       `${this.baseUrl}/${id}`,
       restaurant,

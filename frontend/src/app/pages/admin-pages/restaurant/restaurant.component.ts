@@ -213,6 +213,8 @@ export class RestaurantComponent implements OnInit {
     this.unsubscribe$.complete();
     this.restaurantService.setCurrentOwnerEmail('');
     this.restaurantService.setCurrentRestaurantName('');
+    this.restaurantService.setCurrentOwnerId('');
+
   }
 
   getErrorMessage(field: string): string {
@@ -263,26 +265,39 @@ export class RestaurantComponent implements OnInit {
       if (currentOwnerEmail.toLowerCase() !== formOwnerEmail.toLowerCase()) {
         // DELETE AND ADD NEW OWNER
         this.updateRestaurantWithOldAndNewOwner();
+        console.log("updateRestaurantWithOldAndNewOwner");
+        
         return;
       }
       // NO CHANGE TO ALREADY MADE OWNER
-      this.updateRestaurantWithSameOwner();
+      this.updateRestaurantWithNoOwnerChange();
+      console.log("updateRestaurantWithNoOwnerChange 1");
+
       return;
     }
     
-  
     // Handle the case where no owner is set initially and a new one is being added
     if (formOwnerEmail) {
       // CREATE NEW OWNER
       this.updateRestaurantWithNewOwner();
+      console.log("updateRestaurantWithNewOwner");
+
+      
       return;
     }
   
+    if(currentOwnerEmail && !formOwnerEmail){
+      this.updateRestaurantWithOwnerRemoval();
+      console.log("updateRestaurantWithOwnerRemoval");
+      return;
+
+    }
     // Handle the case where there is no owner associated with the form
-    this.updateRestaurantWithNoOwner();
+    this.updateRestaurantWithNoOwnerChange();
+    console.log("updateRestaurantWithNoOwnerChange 2");
+
+    return;
   }
-
-
 
   private errorHandle(){
     const control = this.form.get('details.name');
@@ -306,31 +321,14 @@ export class RestaurantComponent implements OnInit {
   private updateRestaurantWithOldAndNewOwner(){
       //@DO  DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
 
+  }
 
+  private updateRestaurantWithOwnerRemoval(){
+    // @DO DELETE OLD OWNER AND DO NOT REPLACE IN FORM 
   }
 
 
-  private updateRestaurantWithSameOwner() {
-    // UPDATE RESTAURANT WITHOUT CHANGING OWNER
-    this.form.patchValue({ details: { owner: this.userId } });
-    this.restaurantService
-      .updateRestaurant(this.restaurantId, this.form.value)
-      .subscribe({
-        next: (response: RestaurantResponse) => {
-          console.log('Successfully updateed restaurant:', response.message);
-          this.router.navigate(['/admin']);
-          return;
-        },
-        error: (error) => {
-          console.error('Failed to create restaurant:', error);
-          this.errorMsg =
-            error.error.message || 'An error occurred during form submission.';
-          return;
-        },
-      });
-  }
-
-  private updateRestaurantWithNoOwner() {
+  private updateRestaurantWithNoOwnerChange() {
     // UPDATE RESTAURANT WITHOUT OWNER
     this.restaurantService
       .updateRestaurant(this.restaurantId, this.form.value)
