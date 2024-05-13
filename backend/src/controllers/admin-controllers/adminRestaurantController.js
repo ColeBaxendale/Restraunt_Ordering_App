@@ -194,32 +194,39 @@ exports.updateRestaurant = async (req, res) => {
       return res.status(404).json({ message: "Restaurant not found." });
     }
 
-    if (updates.details && updates.details.name != restaurant.details.name) {
+    // Update name and synchronize nameLowerCase
+    if (updates.details && updates.details.name && updates.details.name !== restaurant.details.name) {
       restaurant.details.name = updates.details.name;
       restaurant.details.nameLowerCase = updates.details.name.toLowerCase();
     }
 
-    if (updates.details && updates.details.owner == undefined) {
-      updates.details.owner = null; 
+    // Ensure owner is cleared if set to undefined in the update
+    if (updates.details && updates.details.owner === undefined) {
+      restaurant.details.owner = null;
     }
 
+    // Generic update for details except owner if undefined
     if (updates.details && typeof updates.details === "object") {
-      Object.keys(updates.details).forEach((key) => {
-        restaurant.details[key] = updates.details[key];
+      Object.keys(updates.details).forEach(key => {
+        if (key !== 'owner' || updates.details.owner !== undefined) {
+          restaurant.details[key] = updates.details[key];
+        }
       });
     }
 
+    // Update admin details except for overallIncome
     if (updates.admin && typeof updates.admin === "object") {
-      Object.keys(updates.admin).forEach((key) => {
-        if (key !== "nameLowerCase") {
+      Object.keys(updates.admin).forEach(key => {
+        if (key !== 'overallIncome') {
           restaurant.admin[key] = updates.admin[key];
         }
       });
     }
 
+    // Update stripe details
     if (updates.stripe && typeof updates.stripe === "object") {
-      Object.keys(updates.stripe).forEach((key) => {
-        restaurant.stripe[key] = updates.stripe[key];
+      Object.keys(updates.stripe).forEach(key => {
+          restaurant.stripe[key] = updates.stripe[key];
       });
     }
 
@@ -238,6 +245,7 @@ exports.updateRestaurant = async (req, res) => {
     });
   }
 };
+
 
 const createOwnerAndUpdateRestaurant = async (req, res) => {
   // const session = await mongoose.startSession();
