@@ -1,6 +1,6 @@
 ## RESTAURANT EDIT PAGE:
 @DO 
-- backend methods for updating restaurant with owner delete and creation
+- backend methods for updating restaurant with owner delete and creation and owner delete with no creation
 - front end restaurant service implementation of the methods above
 @DO
 - finish update on submit method
