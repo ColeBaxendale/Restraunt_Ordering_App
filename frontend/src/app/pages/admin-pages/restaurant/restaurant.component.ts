@@ -130,7 +130,7 @@ export class RestaurantComponent implements OnInit {
     );
   }
 
-  toggleDay(day: string): void {
+  public toggleDay(day: string): void {
     const dayGroup = this.form.get(`details.operatingHours.${day}`);
     if (dayGroup) {
       const isOpen = dayGroup.get('isOpen')?.value;
@@ -217,7 +217,7 @@ export class RestaurantComponent implements OnInit {
 
   }
 
-  getErrorMessage(field: string): string {
+  public getErrorMessage(field: string): string {
     const control = this.form.get(field);
     if (control && control.errors) {
       if (control.hasError('required')) {
@@ -231,7 +231,7 @@ export class RestaurantComponent implements OnInit {
     return '';
   }
 
-  clearInput(path: string | Array<string | number>) {
+  public clearInput(path: string | Array<string | number>) {
     const control = this.form.get(path);
     if (control) {
       console.log(control);
@@ -242,16 +242,17 @@ export class RestaurantComponent implements OnInit {
     }
   }
 
-  cancel() {
+  public cancel() {
     this.router.navigate(['/admin']);
     this.restaurantService.setCurrentOwnerEmail('');
     this.restaurantService.setCurrentRestaurantName('');
   }
-  submitForm() {
+  public submitForm() {
     if (this.loadingService.getLoading()) {
-      console.log('loading while submit');
+      console.log('Loading... Submission halted.');
       return;
     }
+  
     if (!this.form.valid) {
       this.errorHandle();
       return;
@@ -260,57 +261,34 @@ export class RestaurantComponent implements OnInit {
     const currentOwnerEmail = this.restaurantService.getCurrentOwnerEmail();
     const formOwnerEmail = this.form.get('details.owner')?.value;
   
-    // Ensure both emails are defined before comparing them to avoid errors
-    if (currentOwnerEmail && formOwnerEmail) {
-      if (currentOwnerEmail.toLowerCase() !== formOwnerEmail.toLowerCase()) {
-        // DELETE AND ADD NEW OWNER
-        this.updateRestaurantWithOldAndNewOwner();
-        console.log("updateRestaurantWithOldAndNewOwner");
-        
-        return;
-      }
-      // NO CHANGE TO ALREADY MADE OWNER
-      this.updateRestaurantWithNoOwnerChange();
-      console.log("updateRestaurantWithNoOwnerChange 1");
-
-      return;
-    }
-    
-    // Handle the case where no owner is set initially and a new one is being added
-    if (formOwnerEmail) {
-      // CREATE NEW OWNER
-      this.updateRestaurantWithNewOwner();
-      console.log("updateRestaurantWithNewOwner");
-
-      
+    // Check if there is a change in owner email
+    if (currentOwnerEmail && formOwnerEmail && currentOwnerEmail.toLowerCase() !== formOwnerEmail.toLowerCase()) {
+      // Owner email has changed
+      console.log('Owner email has changed. Updating owner...');
+      this.updateRestaurantWithOldAndNewOwner();
       return;
     }
   
-    if(currentOwnerEmail && !formOwnerEmail){
-      this.updateRestaurantWithOwnerRemoval();
-      console.log("updateRestaurantWithOwnerRemoval");
+    if (!currentOwnerEmail && formOwnerEmail) {
+      // No current owner but a new owner email has been submitted
+      console.log('Adding new owner...');
+      this.updateRestaurantWithNewOwner();
       return;
-
     }
-    // Handle the case where there is no owner associated with the form
+  
+    if (currentOwnerEmail && !formOwnerEmail) {
+      // Current owner exists but form submission removes it
+      console.log('Removing current owner...');
+      this.updateRestaurantWithOwnerRemoval();
+      return;
+    }
+
+    // No changes to owner
+    console.log('No changes to owner. Updating restaurant information only...');
     this.updateRestaurantWithNoOwnerChange();
-    console.log("updateRestaurantWithNoOwnerChange 2");
-
-    return;
   }
+  
 
-  private errorHandle(){
-    const control = this.form.get('details.name');
-      if (control) {
-        if (control.hasError('required')) {
-          this.errorMsg = 'Name field is required.';
-        } else {
-          this.errorMsg = 'Errors occur in the form';
-        }
-      } else {
-        this.errorMsg = 'Errors occur in the form';
-      }
-  }
 
   private updateRestaurantWithNewOwner(){
       // @DO CREATE NEW USER AND UPDATE RESTAURANT
@@ -346,4 +324,19 @@ export class RestaurantComponent implements OnInit {
         },
       });
   }
+
+
+  private errorHandle(){
+    const control = this.form.get('details.name');
+      if (control) {
+        if (control.hasError('required')) {
+          this.errorMsg = 'Name field is required.';
+        } else {
+          this.errorMsg = 'Errors occur in the form';
+        }
+      } else {
+        this.errorMsg = 'Errors occur in the form';
+      }
+  }
+
 }
