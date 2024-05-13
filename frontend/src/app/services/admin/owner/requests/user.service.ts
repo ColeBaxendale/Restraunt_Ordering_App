@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, finalize, map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { User, UserResponse } from '../../../../../../types';
 import { LoadingService } from '../../../loading/loading.service';
 
