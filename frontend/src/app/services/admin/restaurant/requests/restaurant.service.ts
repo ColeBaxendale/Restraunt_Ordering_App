@@ -60,6 +60,18 @@ export class RestaurantService {
     );
   }
 
+  createRestaurantWithOwner(email: string, restaurantData: any): Observable<RestaurantAndUserResponse> {
+    const requestBody = {
+      email: email,
+      ...restaurantData
+    };
+    return this.http.post<RestaurantAndUserResponse>(
+      `${this.baseUrl}-with-owner`,
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+
   getRestaurantById(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {
       withCredentials: true,
@@ -101,15 +113,5 @@ export class RestaurantService {
     );
   }
 
-  createRestaurantWithOwner(email: string, restaurantData: any): Observable<RestaurantAndUserResponse> {
-    const requestBody = {
-      email: email,
-      ...restaurantData
-    };
-    return this.http.post<RestaurantAndUserResponse>(
-      `${this.baseUrl}-with-owner`,
-      requestBody,
-      { withCredentials: true }
-    );
-  }
+
 }
