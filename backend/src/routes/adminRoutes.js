@@ -20,6 +20,8 @@ router.get('/logout', (req, res) => {
 router.post('/restaurants', verifyToken, checkRole(['admin']), adminRestaurantController.createRestaurant);
 router.post('/restaurants-with-owner', verifyToken, checkRole(['admin']), adminRestaurantController.createRestaurantWithOwner);
 router.get('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.getRestaurant);
+router.put('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.updateRestaurant);
+
 // router.put('/restaurants/:id/create-owner', verifyToken, checkRole(['admin']), adminRestaurantController.createOwnerAndUpdateRestaurant);
 // router.put('/restaurants/:id/delete-owner', verifyToken, checkRole(['admin']), adminRestaurantController.deleteOwnerAndUpdateRestaurant);
 
