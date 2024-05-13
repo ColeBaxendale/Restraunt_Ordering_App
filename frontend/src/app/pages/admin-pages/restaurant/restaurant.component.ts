@@ -186,10 +186,11 @@ export class RestaurantComponent implements OnInit {
               .pipe(takeUntil(this.unsubscribe$))
               .subscribe({
                 next: (userResponse) => {
-                  if (userResponse.user?.email) {
+                  if (userResponse.user?.email && userResponse.user._id) {
                     this.restaurantService.setCurrentOwnerEmail(
                       userResponse.user.email ?? ''
                     );
+                  this.restaurantService.setCurrentOwnerId(userResponse.user._id);
                   }
                   this.form.patchValue({
                     details: {
@@ -244,7 +245,6 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.setCurrentOwnerEmail('');
     this.restaurantService.setCurrentRestaurantName('');
   }
-
   submitForm() {
     if (this.loadingService.getLoading()) {
       console.log('loading while submit');
@@ -254,9 +254,13 @@ export class RestaurantComponent implements OnInit {
       this.errorHandle();
       return;
     }
-
-    if (this.restaurantService.getCurrentOwnerEmail() != '') {
-      if (this.restaurantService.getCurrentOwnerEmail().toLowerCase() != this.form.get('details.owner')?.value.toLowerCase()) {
+  
+    const currentOwnerEmail = this.restaurantService.getCurrentOwnerEmail();
+    const formOwnerEmail = this.form.get('details.owner')?.value;
+  
+    // Ensure both emails are defined before comparing them to avoid errors
+    if (currentOwnerEmail && formOwnerEmail) {
+      if (currentOwnerEmail.toLowerCase() !== formOwnerEmail.toLowerCase()) {
         // DELETE AND ADD NEW OWNER
         this.updateRestaurantWithOldAndNewOwner();
         return;
@@ -265,14 +269,17 @@ export class RestaurantComponent implements OnInit {
       this.updateRestaurantWithSameOwner();
       return;
     }
-    if (this.form.get('details.owner')?.value != null) {
+    
+  
+    // Handle the case where no owner is set initially and a new one is being added
+    if (formOwnerEmail) {
       // CREATE NEW OWNER
-      this. updateRestaurantWithNewOwner();
+      this.updateRestaurantWithNewOwner();
       return;
     }
-    // NO OWNER AT ALL IN THIS ROUTE
+  
+    // Handle the case where there is no owner associated with the form
     this.updateRestaurantWithNoOwner();
-    return;
   }
 
 

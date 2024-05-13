@@ -12,6 +12,7 @@ export class RestaurantService {
   private baseUrl = 'http://localhost:3000/admin/restaurants';
   private currentId!: string;
   private currentOwnerEmail!: string;
+  private currentOwnerId!: string;
   private currentRestaurantName!: string;
 
 
@@ -23,6 +24,14 @@ export class RestaurantService {
 
   getCurrentId(): string {
     return this.currentId;
+  }
+
+  setCurrentOwnerId(id: string) {
+    this.currentOwnerId = id;
+  }
+
+  getCurrentOwnerId(): string {
+    return this.currentOwnerId;
   }
 
   setCurrentOwnerEmail(currentOwnerEmail: string) {
