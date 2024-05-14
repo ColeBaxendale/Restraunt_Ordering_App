@@ -20,7 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RestaurantResponse } from '../../../../../types';
+import { RestaurantAndUserResponse, RestaurantResponse } from '../../../../../types';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -290,9 +290,21 @@ export class RestaurantComponent implements OnInit {
 
 
   private updateRestaurantWithNewOwner(){
-      // @DO CREATE NEW USER AND UPDATE RESTAURANT
-      // MUST DO BACK END SESSION ROUTE AS WELL
-
+    this.restaurantService
+    .updateRestaurantWithNewOwner(this.restaurantId, this.form.value)
+    .subscribe({
+      next: (response: RestaurantAndUserResponse) => {
+        console.log('Successfully updateed restaurant:', response.message);
+        this.router.navigate(['/admin']);
+        return;
+      },
+      error: (error) => {
+        console.error('Failed to create restaurant:', error);
+        this.errorMsg =
+          error.error.message || 'An error occurred during form submission.';
+        return;
+      },
+    });
   }
 
   private updateRestaurantWithOldAndNewOwner(){

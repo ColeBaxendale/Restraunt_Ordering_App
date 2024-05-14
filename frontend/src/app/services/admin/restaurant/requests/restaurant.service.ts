@@ -89,6 +89,14 @@ export class RestaurantService {
     );
   }
 
+  updateRestaurantWithNewOwner(id: string, restaurant: Restaurant): Observable<RestaurantAndUserResponse> {
+    return this.http.put<RestaurantAndUserResponse>(
+      `${this.baseUrl}/${id}/create-owner`,
+      restaurant,
+      { withCredentials: true }
+    );
+  }
+
   deleteRestaurant(id: string): Observable<RestaurantResponse> {
     return this.http.delete<RestaurantResponse>(`${this.baseUrl}/${id}`, {
       withCredentials: true,
