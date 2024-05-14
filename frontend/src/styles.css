@@ -51,3 +51,14 @@ html {
     font-style: normal;
   }
   
+
+  /* styles.css */
+.success-snackbar {
+  background-color: green;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: red;
+  color: white;
+}

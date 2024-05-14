@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NotificationService } from '../../../services/notification/notification.service';
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
@@ -41,7 +42,8 @@ export class AddRestaurantComponent implements OnInit {
     private restaurantService: RestaurantService,
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -154,6 +156,7 @@ export class AddRestaurantComponent implements OnInit {
         this.restaurantService.createRestaurant(this.form.value).subscribe({
           next: (response: RestaurantResponse) => {
             console.log('Successfully created restaurant:', response.message);
+            this.notificationService.showSuccess('Successfully created new restaurant "Restaurant Name"');
             this.router.navigate(['/admin']);
             return;
           },
@@ -168,6 +171,7 @@ export class AddRestaurantComponent implements OnInit {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
             console.log('Successfully created restaurant with owner:', response.message);
+            this.notificationService.showSuccess('Successfully created new restaurant "Restaurant Name"');
             this.router.navigate(['/admin']); 
             return;
           },

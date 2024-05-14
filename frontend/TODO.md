@@ -1,8 +1,8 @@
 ## RESTAURANT EDIT PAGE:
 @DO
-- add in reset owner account button under owner if owner exsists
+- Style the reset owner password button
 @DO
-- implement alerts / confirmation pop ups 
+- implement alerts / confirmation pop ups (did alerts and errors)
 @DO
 - bug test all of admin side of things 
 @DO
@@ -24,6 +24,8 @@ creation
 - finish update on submit method
 
 @DONE
+- add in reset owner account button under owner if owner exsists
+
 
 @DONE
 
