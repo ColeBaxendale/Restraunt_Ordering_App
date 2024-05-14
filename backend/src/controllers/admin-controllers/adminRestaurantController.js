@@ -336,7 +336,83 @@ exports.createOwnerAndUpdateRestaurant = async (req, res) => {
 };
 
 
+const deleteOwnerAndUpdateRestaurant = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
+  try {
+    const { id } = req.params;
+    const { details, admin, stripe } = req.body;  
+
+    if (!details || !details.name || !details.owner) {
+      throw new Error("Required fields are missing");
+    }
+    const email = details.owner
+
+    const existingUser = await User.findOneAndDelete({ email: email }).session(session);
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    let restaurant = await Restaurant.findById(id);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found." });
+    }
+
+    // Name handling
+    if (details.name && details.name !== restaurant.details.name) {
+      restaurant.details.name = details.name;
+      restaurant.details.nameLowerCase = details.name.toLowerCase();
+    }
+
+    // Owner delete
+    restaurant.details.owner = null;
+
+    // Details update
+    if (typeof details === "object") {
+      Object.keys(details).forEach((key) => {
+        if (key !== "owner") {
+          restaurant.details[key] = details[key];
+        }
+      });
+    }
+
+    // Admin update, excluding overallIncome
+    if (admin && typeof admin === "object") {
+      Object.keys(admin).forEach((key) => {
+        if (key !== "overallIncome") {
+          restaurant.admin[key] = admin[key];
+        }
+      });
+    }
+
+    // Stripe update
+    if (stripe && typeof stripe === "object") {
+      Object.keys(stripe).forEach((key) => {
+        restaurant.stripe[key] = stripe[key];
+      });
+    }
+
+    // Save the updated document
+    await restaurant.save();
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "Owner created and restaurant updated",
+      user: newUser,
+      restaurant,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      message: "Failed to create owner and update restaurant",
+      error: error.message,
+    });
+  }
+};
 
 exports.deleteRestaurant = async (req, res, next) => {
   const { id } = req.params;
