@@ -18,7 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RestaurantAndUserResponse, RestaurantResponse } from '../../../../../types';
+import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../../../../../types';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -45,7 +45,7 @@ export class RestaurantComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private restaurantService: RestaurantService,
+    public restaurantService: RestaurantService,
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
@@ -368,5 +368,22 @@ export class RestaurantComponent implements OnInit {
         this.errorMsg = 'Errors occur in the form';
       }
   }
+
+public resetOwner() {
+  const ownerId = this.restaurantService.getCurrentOwnerId();
+  if (ownerId) {
+    this.userService.resetUser(ownerId).subscribe({
+      next: (response: UserResponse) => {
+        console.log('Successfully reset user:', response.message);
+        this.router.navigate(['/admin']);
+      },
+      error: (error) => {
+        console.error('Failed to reset user:', error);
+        this.errorMsg = error.error.message || 'An error occurred during form submission.';
+      },
+    });
+  }
+}
+
 
 }

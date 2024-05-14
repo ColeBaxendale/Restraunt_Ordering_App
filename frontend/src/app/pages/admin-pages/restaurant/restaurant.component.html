@@ -469,6 +469,9 @@
               "
               mode="query"
             ></mat-progress-bar>
+            <div *ngIf="restaurantService.getCurrentOwnerEmail()">
+              <button class="buttonClass"(click)="resetOwner()"> Reset Owner Password</button>
+            </div>
           </div>
         </div>
       </div>

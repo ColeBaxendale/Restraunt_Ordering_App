@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { User, UserResponse } from '../../../../../../types';
@@ -30,11 +30,16 @@ export class UserService {
     });
   }
 
-  resetUser(id: string): Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${this.baseUrl}/${id}/reset`, {
-      withCredentials: true,
-    });
-  }
+resetUser(id: string): Observable<UserResponse> {
+  const token = localStorage.getItem('token'); // Adjust based on how you store the token
+  return this.http.post<UserResponse>(`${this.baseUrl}/${id}/reset`, {}, {
+    headers: new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
+    }),
+    withCredentials: true,
+  });
+}
+
 
   deleteUser(id: string): Observable<UserResponse> {
     return this.http.delete<UserResponse>(`${this.baseUrl}/${id}`, {

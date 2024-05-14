@@ -36,7 +36,7 @@ router.post('/users/check-email', verifyToken, checkRole(['admin']), adminUserCo
 
 router.get('/users', verifyToken, checkRole(['admin']), adminUserController.getAllUsers);
 router.get('/users/:id', verifyToken, checkRole(['admin']), adminUserController.getUserById);
-// router.post('/users/:id/reset', checkRole(['admin']).resetUserPassword);
+router.post('/users/:id/reset', verifyToken, checkRole(['admin']), adminUserController.resetUserPassword);
 router.delete('/users/:id', verifyToken, checkRole(['admin']), adminUserController.deleteUser);
 
 module.exports = router;
