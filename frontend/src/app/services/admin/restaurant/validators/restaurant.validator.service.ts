@@ -324,7 +324,7 @@ export class RestaurantValidatorService {
         return of({ invalidEmailFormat: { value: 'Invalid Owner Email' } });
       }
       
-      if(oldEmail.toLowerCase() === value.toLowerCase()){
+      if(oldEmail && oldEmail.toLowerCase() === value.toLowerCase()){
         return of(null);
       }
       else{

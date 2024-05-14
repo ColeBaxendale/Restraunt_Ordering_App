@@ -89,6 +89,38 @@ export class RestaurantService {
     );
   }
 
+  updateRestaurantWithNewOwner(id: string, restaurant: Restaurant): Observable<RestaurantAndUserResponse> {
+    return this.http.put<RestaurantAndUserResponse>(
+      `${this.baseUrl}/${id}/create-owner`,
+      restaurant,
+      { withCredentials: true }
+    );
+  }
+
+  deleteOwnerAndUpdateRestaurant(id: string, restaurant: Restaurant): Observable<RestaurantAndUserResponse> {
+    const requestBody = {
+      email: this.getCurrentOwnerEmail(),
+      ...restaurant
+    };
+    return this.http.put<RestaurantAndUserResponse>(
+      `${this.baseUrl}/${id}/delete-owner`,
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+
+  deleteOwnerAddNewOwnerUpdateRestaurant(id: string, restaurant: Restaurant): Observable<RestaurantAndUserResponse> {
+    const requestBody = {
+      email: this.getCurrentOwnerEmail(),
+      ...restaurant
+    };
+    return this.http.put<RestaurantAndUserResponse>(
+      `${this.baseUrl}/${id}/delete-and-add-owner`,
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+
   deleteRestaurant(id: string): Observable<RestaurantResponse> {
     return this.http.delete<RestaurantResponse>(`${this.baseUrl}/${id}`, {
       withCredentials: true,

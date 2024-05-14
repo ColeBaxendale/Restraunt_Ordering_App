@@ -1,7 +1,7 @@
 const Restaurant = require("../../models/Restaurant"); // Adjust the path as necessary
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 exports.createRestaurant = async (req, res, next) => {
   try {
@@ -36,7 +36,7 @@ exports.createRestaurant = async (req, res, next) => {
     const restaurantDetails = {
       details: {
         name: details.name,
-        nameLowerCase, 
+        nameLowerCase,
         logo: details.logo || "",
         description: details.description || "",
         phone: details.phone || "",
@@ -98,7 +98,7 @@ exports.createRestaurantWithOwner = async (req, res) => {
 
   try {
     const { email, details, admin, stripe } = req.body;
-    
+
     if (!email || !details.name) {
       throw new Error("Required fields are missing");
     }
@@ -141,7 +141,7 @@ exports.createRestaurantWithOwner = async (req, res) => {
         menuSections: details.menuSections || [],
       },
       admin,
-      stripe
+      stripe,
     };
 
     const newRestaurant = new Restaurant(restaurantDetails);
@@ -164,8 +164,6 @@ exports.createRestaurantWithOwner = async (req, res) => {
     });
   }
 };
-
-
 
 exports.getRestaurant = async (req, res, next) => {
   const { id } = req.params;
@@ -194,29 +192,40 @@ exports.updateRestaurant = async (req, res) => {
       return res.status(404).json({ message: "Restaurant not found." });
     }
 
-    if (updates.details && updates.details.name != restaurant.details.name) {
+    // Update name and synchronize nameLowerCase
+    if (
+      updates.details &&
+      updates.details.name &&
+      updates.details.name !== restaurant.details.name
+    ) {
       restaurant.details.name = updates.details.name;
       restaurant.details.nameLowerCase = updates.details.name.toLowerCase();
     }
 
-    if (updates.details && updates.details.owner == undefined) {
-      updates.details.owner = null; 
+    // Ensure owner is cleared if set to undefined in the update
+    if (updates.details && updates.details.owner === undefined) {
+      restaurant.details.owner = null;
     }
 
+    // Generic update for details except owner if undefined
     if (updates.details && typeof updates.details === "object") {
       Object.keys(updates.details).forEach((key) => {
-        restaurant.details[key] = updates.details[key];
+        if (key !== "owner" || updates.details.owner !== undefined) {
+          restaurant.details[key] = updates.details[key];
+        }
       });
     }
 
+    // Update admin details except for overallIncome
     if (updates.admin && typeof updates.admin === "object") {
       Object.keys(updates.admin).forEach((key) => {
-        if (key !== "nameLowerCase") {
+        if (key !== "overallIncome") {
           restaurant.admin[key] = updates.admin[key];
         }
       });
     }
 
+    // Update stripe details
     if (updates.stripe && typeof updates.stripe === "object") {
       Object.keys(updates.stripe).forEach((key) => {
         restaurant.stripe[key] = updates.stripe[key];
@@ -239,75 +248,266 @@ exports.updateRestaurant = async (req, res) => {
   }
 };
 
-const createOwnerAndUpdateRestaurant = async (req, res) => {
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
-  // try {
-  //   const { email, restaurantData } = req.body;
-    
-  //   if (!email || !details.name) {
-  //     throw new Error("Required fields are missing");
-  //   }
+exports.createOwnerAndUpdateRestaurant = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  //   const existingUser = await User.findOne({ email: email }).session(session);
-  //   if (existingUser) {
-  //     throw new Error("User with this email already exists");
-  //   }
+  try {
+    const { id } = req.params;
+    const { details, admin, stripe } = req.body;  // Directly destructuring from req.body
 
-  //   const hashedPassword = await bcrypt.hash("Welcome1", 10);
+    if (!details || !details.name || !details.owner) {
+      throw new Error("Required fields are missing");
+    }
+    const email = details.owner
 
-  //   const userInfo = {
-  //     email,
-  //     password: hashedPassword,
-  //     role: "owner",
-  //   };
-    
-  //   const newUser = new User(userInfo);
-  //   await newUser.save({ session });
+    const existingUser = await User.findOne({ email: email }).session(session);
+    if (existingUser) {
+      throw new Error("User with this email already exists");
+    }
 
-  //   // Update restaurant with new owner ID
-  //   restaurantData.owner = savedUser._id;
-  //   const updatedRestaurant = await Restaurant.findByIdAndUpdate(
-  //     restaurantData.restaurantId,
-  //     { $set: restaurantData },
-  //     { new: true, session }
-  //   );
+    const hashedPassword = await bcrypt.hash("Welcome1", 10);
+    const userInfo = {
+      email,
+      password: hashedPassword,
+      role: "owner",
+    };
 
-  //   await session.commitTransaction();
-  //   session.endSession();
-  //   res.status(201).json({ message: 'Owner created and restaurant updated', user: savedUser, restaurant: updatedRestaurant });
-  // } catch (error) {
-  //   await session.abortTransaction();
-  //   session.endSession();
-  //   res.status(500).json({ message: 'Failed to create owner and update restaurant', error: error.message });
-  // }
+    const newUser = new User(userInfo);
+    await newUser.save({ session });
+
+    let restaurant = await Restaurant.findById(id);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found." });
+    }
+
+    // Name handling
+    if (details.name && details.name !== restaurant.details.name) {
+      restaurant.details.name = details.name;
+      restaurant.details.nameLowerCase = details.name.toLowerCase();
+    }
+
+    // Owner update
+    restaurant.details.owner = newUser._id;
+
+    // Details update
+    if (typeof details === "object") {
+      Object.keys(details).forEach((key) => {
+        if (key !== "owner") {
+          restaurant.details[key] = details[key];
+        }
+      });
+    }
+
+    // Admin update, excluding overallIncome
+    if (admin && typeof admin === "object") {
+      Object.keys(admin).forEach((key) => {
+        if (key !== "overallIncome") {
+          restaurant.admin[key] = admin[key];
+        }
+      });
+    }
+
+    // Stripe update
+    if (stripe && typeof stripe === "object") {
+      Object.keys(stripe).forEach((key) => {
+        restaurant.stripe[key] = stripe[key];
+      });
+    }
+
+    // Save the updated document
+    await restaurant.save();
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "Owner created and restaurant updated",
+      user: newUser,
+      restaurant,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      message: "Failed to create owner and update restaurant",
+      error: error.message,
+    });
+  }
 };
 
-const deleteOwnerAndUpdateRestaurant = async (req, res) => {
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
-  // try {
-  //   const { newOwnerId, restaurantId } = req.body;
 
-  //   // Optionally, remove the old owner if needed (not recommended generally)
-  //   // await User.findByIdAndDelete(oldOwnerId, { session });
+exports.deleteOwnerAndUpdateRestaurant = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-  //   // Update restaurant with new owner ID
-  //   const updatedRestaurant = await Restaurant.findByIdAndUpdate(
-  //     restaurantId,
-  //     { $set: { owner: newOwnerId } },
-  //     { new: true, session }
-  //   );
+  try {
+    const { id } = req.params;
+    const { email, details, admin, stripe } = req.body;  
 
-  //   await session.commitTransaction();
-  //   session.endSession();
-  //   res.status(200).json({ message: 'Restaurant updated with new owner', restaurant: updatedRestaurant });
-  // } catch (error) {
-  //   await session.abortTransaction();
-  //   session.endSession();
-  //   res.status(500).json({ message: 'Failed to update restaurant owner', error: error.message });
-  // }
+    if (!details || !details.name || !email) {
+      throw new Error("Required fields are missing");
+    }
+
+    const existingUser = await User.findOneAndDelete({ email: email }).session(session);
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    let restaurant = await Restaurant.findById(id);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found." });
+    }
+
+    // Name handling
+    if (details.name && details.name !== restaurant.details.name) {
+      restaurant.details.name = details.name;
+      restaurant.details.nameLowerCase = details.name.toLowerCase();
+    }
+
+    // Owner delete
+    restaurant.details.owner = null;
+
+    // Details update
+    if (typeof details === "object") {
+      Object.keys(details).forEach((key) => {
+        if (key !== "owner") {
+          restaurant.details[key] = details[key];
+        }
+      });
+    }
+
+    // Admin update, excluding overallIncome
+    if (admin && typeof admin === "object") {
+      Object.keys(admin).forEach((key) => {
+        if (key !== "overallIncome") {
+          restaurant.admin[key] = admin[key];
+        }
+      });
+    }
+
+    // Stripe update
+    if (stripe && typeof stripe === "object") {
+      Object.keys(stripe).forEach((key) => {
+        restaurant.stripe[key] = stripe[key];
+      });
+    }
+
+    // Save the updated document
+    await restaurant.save();
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "Owner deleted and restaurant updated",
+      user: existingUser,
+      restaurant,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      message: "Failed to delete owner and update restaurant",
+      error: error.message,
+    });
+  }
 };
+
+exports.deleteOwnerAddNewOwnerUpdateRestaurant = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const { id } = req.params;
+    const { email, details, admin, stripe } = req.body;  
+    console.log(req.body);
+
+    if (!details || !details.name || !email || !details.owner) {
+      throw new Error("Required fields are missing");
+    }
+
+    const userToDelete = await User.findOneAndDelete({ email: email }).session(session);
+
+    if (!userToDelete) {
+      return res.status(404).json({ message: "Old Owner not found." });
+    }
+
+    const newEmail = details.owner
+
+    const existingUser = await User.findOne({ email: newEmail }).session(session);
+    if (existingUser) {
+      throw new Error("User with this email already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash("Welcome1", 10);
+    const userInfo = {
+      email: newEmail,
+      password: hashedPassword,
+      role: "owner",
+    };
+
+    const newUser = new User(userInfo);
+    await newUser.save({ session });
+
+    let restaurant = await Restaurant.findById(id);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found." });
+    }
+
+    // Name handling
+    if (details.name && details.name !== restaurant.details.name) {
+      restaurant.details.name = details.name;
+      restaurant.details.nameLowerCase = details.name.toLowerCase();
+    }
+
+    // Owner add
+    restaurant.details.owner = newUser._id;
+
+    // Details update
+    if (typeof details === "object") {
+      Object.keys(details).forEach((key) => {
+        if (key !== "owner") {
+          restaurant.details[key] = details[key];
+        }
+      });
+    }
+
+    // Admin update, excluding overallIncome
+    if (admin && typeof admin === "object") {
+      Object.keys(admin).forEach((key) => {
+        if (key !== "overallIncome") {
+          restaurant.admin[key] = admin[key];
+        }
+      });
+    }
+
+    // Stripe update
+    if (stripe && typeof stripe === "object") {
+      Object.keys(stripe).forEach((key) => {
+        restaurant.stripe[key] = stripe[key];
+      });
+    }
+
+    // Save the updated document
+    await restaurant.save();
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "Owner deleted and new owner added and restaurant updated",
+      user: existingUser,
+      restaurant,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      message: "Failed to delete owner and update restaurant",
+      error: error.message,
+    });
+  }
+};
+
 
 
 

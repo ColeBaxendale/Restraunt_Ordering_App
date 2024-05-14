@@ -83,6 +83,7 @@ export interface RestaurantAndUserResponse {
   restaurant?: Restaurant;
   userId?: string;
   user?: Omit<User, 'password'>;
+  email?: string;
   error?: string;
 }
 

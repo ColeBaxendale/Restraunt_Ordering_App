@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SessionService } from '../../../services/session/session.service';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { NgIf, CommonModule } from '@angular/common';
 import {
@@ -12,7 +11,6 @@ import {
 } from '@angular/forms';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
 import { RestaurantValidatorService } from '../../../services/admin/restaurant/validators/restaurant.validator.service';
-import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../../services/admin/owner/requests/user.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RestaurantResponse } from '../../../../../types';
+import { RestaurantAndUserResponse, RestaurantResponse } from '../../../../../types';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -44,15 +42,11 @@ export class RestaurantComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
   form!: FormGroup;
   private restaurantId = this.restaurantService.getCurrentId();
-  private userId: string = '';
 
   constructor(
-    private route: ActivatedRoute,
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     private router: Router,
-    private dialog: MatDialog,
-    private sessionService: SessionService,
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private userService: UserService
@@ -179,7 +173,6 @@ export class RestaurantComponent implements OnInit {
 
           this.currentName = this.restaurantService.getCurrentRestaurantName();
           if (response.details.owner) {
-            this.userId = response.details.owner;
             this.userService
               .getUserById(response.details.owner)
               .pipe(takeUntil(this.unsubscribe$))
@@ -290,23 +283,61 @@ export class RestaurantComponent implements OnInit {
 
 
   private updateRestaurantWithNewOwner(){
-      // @DO CREATE NEW USER AND UPDATE RESTAURANT
-      // MUST DO BACK END SESSION ROUTE AS WELL
-
+    this.restaurantService
+    .updateRestaurantWithNewOwner(this.restaurantId, this.form.value)
+    .subscribe({
+      next: (response: RestaurantAndUserResponse) => {
+        console.log('Successfully updateed restaurant:', response.message);
+        this.router.navigate(['/admin']);
+        return;
+      },
+      error: (error) => {
+        console.error('Failed to create restaurant:', error);
+        this.errorMsg =
+          error.error.message || 'An error occurred during form submission.';
+        return;
+      },
+    });
   }
 
   private updateRestaurantWithOldAndNewOwner(){
-      //@DO  DELETE OLD OWNER AND UPDATE RESTAURANT WITH NEW OWNER
-
+    this.restaurantService
+    .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
+    .subscribe({
+      next: (response: RestaurantAndUserResponse) => {
+        console.log('Successfully updateed restaurant:', response.message);
+        this.router.navigate(['/admin']);
+        return;
+      },
+      error: (error) => {
+        console.error('Failed to create restaurant:', error);
+        this.errorMsg =
+          error.error.message || 'An error occurred during form submission.';
+        return;
+      },
+    });
   }
 
   private updateRestaurantWithOwnerRemoval(){
-    // @DO DELETE OLD OWNER AND DO NOT REPLACE IN FORM 
+    this.restaurantService
+    .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
+    .subscribe({
+      next: (response: RestaurantAndUserResponse) => {
+        console.log('Successfully updateed restaurant:', response.message);
+        this.router.navigate(['/admin']);
+        return;
+      },
+      error: (error) => {
+        console.error('Failed to create restaurant:', error);
+        this.errorMsg =
+          error.error.message || 'An error occurred during form submission.';
+        return;
+      },
+    });
   }
 
 
   private updateRestaurantWithNoOwnerChange() {
-    // UPDATE RESTAURANT WITHOUT OWNER
     this.restaurantService
       .updateRestaurant(this.restaurantId, this.form.value)
       .subscribe({
