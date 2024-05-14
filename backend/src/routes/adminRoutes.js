@@ -23,7 +23,7 @@ router.get('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestauran
 router.put('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.updateRestaurant);
 
 router.put('/restaurants/:id/create-owner', verifyToken, checkRole(['admin']), adminRestaurantController.createOwnerAndUpdateRestaurant);
-// router.put('/restaurants/:id/delete-owner', verifyToken, checkRole(['admin']), adminRestaurantController.deleteOwnerAndUpdateRestaurant);
+router.put('/restaurants/:id/delete-owner', verifyToken, checkRole(['admin']), adminRestaurantController.deleteOwnerAndUpdateRestaurant);
 
 router.delete('/restaurants/:id', verifyToken, checkRole(['admin']), adminRestaurantController.deleteRestaurant);
 router.get('/restaurants', verifyToken, checkRole(['admin']), adminRestaurantController.getAllRestaurants);

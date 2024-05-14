@@ -313,7 +313,21 @@ export class RestaurantComponent implements OnInit {
   }
 
   private updateRestaurantWithOwnerRemoval(){
-    // @DO DELETE OLD OWNER AND DO NOT REPLACE IN FORM 
+    this.restaurantService
+    .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
+    .subscribe({
+      next: (response: RestaurantAndUserResponse) => {
+        console.log('Successfully updateed restaurant:', response.message);
+        this.router.navigate(['/admin']);
+        return;
+      },
+      error: (error) => {
+        console.error('Failed to create restaurant:', error);
+        this.errorMsg =
+          error.error.message || 'An error occurred during form submission.';
+        return;
+      },
+    });
   }
 
 

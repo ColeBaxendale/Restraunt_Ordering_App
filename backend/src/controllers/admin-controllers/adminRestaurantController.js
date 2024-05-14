@@ -336,18 +336,17 @@ exports.createOwnerAndUpdateRestaurant = async (req, res) => {
 };
 
 
-const deleteOwnerAndUpdateRestaurant = async (req, res) => {
+exports.deleteOwnerAndUpdateRestaurant = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
 
   try {
     const { id } = req.params;
-    const { details, admin, stripe } = req.body;  
+    const { email, details, admin, stripe } = req.body;  
 
-    if (!details || !details.name || !details.owner) {
+    if (!details || !details.name || !email) {
       throw new Error("Required fields are missing");
     }
-    const email = details.owner
 
     const existingUser = await User.findOneAndDelete({ email: email }).session(session);
 
@@ -400,15 +399,15 @@ const deleteOwnerAndUpdateRestaurant = async (req, res) => {
     session.endSession();
 
     res.status(201).json({
-      message: "Owner created and restaurant updated",
-      user: newUser,
+      message: "Owner deleted and restaurant updated",
+      user: existingUser,
       restaurant,
     });
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
     res.status(500).json({
-      message: "Failed to create owner and update restaurant",
+      message: "Failed to delete owner and update restaurant",
       error: error.message,
     });
   }
