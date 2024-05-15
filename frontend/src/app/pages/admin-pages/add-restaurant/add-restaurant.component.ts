@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {
   FormsModule,
   Validators,
@@ -43,7 +43,7 @@ export class AddRestaurantComponent implements OnInit {
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
-    private notificationService: NotificationService
+    private notifcationService: NotificationService, private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit(): void {
@@ -156,14 +156,13 @@ export class AddRestaurantComponent implements OnInit {
         this.restaurantService.createRestaurant(this.form.value).subscribe({
           next: (response: RestaurantResponse) => {
             console.log('Successfully created restaurant:', response.message);
-            this.notificationService.showSuccess('Successfully created new restaurant "Restaurant Name"');
+            this.notifcationService.showMessage(this.viewContainerRef, 'Successfully created new restaurant: ' + response.restaurant?.details.name);
             this.router.navigate(['/admin']);
             return;
           },
           error: (error) => {
             console.error('Failed to create restaurant:', error);
-            this.errorMsg =
-              error.error.message || 'An error occurred during form submission.';
+            this.notifcationService.showError(this.viewContainerRef, error.error.message || 'An error occurred during form submission.');
             return;
           },
         });
@@ -171,15 +170,13 @@ export class AddRestaurantComponent implements OnInit {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
             console.log('Successfully created restaurant with owner:', response.message);
-            this.notificationService.showSuccess('Successfully created new restaurant "Restaurant Name"');
+            this.notifcationService.showMessage(this.viewContainerRef, 'Successfully created new restaurant  ' + response.restaurant?.details.name);
             this.router.navigate(['/admin']); 
             return;
           },
           error: (error) => {
             console.error('Failed to create restaurant with owner:', error);
-            this.errorMsg =
-              error.error.message || 'An error occurred during form submission.';
-            return;
+            this.notifcationService.showError(this.viewContainerRef, error.error.message || 'An error occurred during form submission.');
           },
         });
       }
@@ -187,12 +184,14 @@ export class AddRestaurantComponent implements OnInit {
       const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.errorMsg = 'Name field is required.';
+        this.notifcationService.showError(this.viewContainerRef, 'Name field is required.');
         } else {
-          this.errorMsg = 'Errors occur in the form';
+        this.notifcationService.showError(this.viewContainerRef, 'Errors occur in the form');
+
         }
       } else {
-        this.errorMsg = 'Errors occur in the form';
+        this.notifcationService.showError(this.viewContainerRef, 'Errors occur in the form');
+        
       }
     }
   }

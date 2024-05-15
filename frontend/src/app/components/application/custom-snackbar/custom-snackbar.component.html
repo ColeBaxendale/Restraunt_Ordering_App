@@ -1,0 +1,7 @@
+<div class="custom-snackbar" [ngClass]="{ 'show': isVisible, 'message-snackbar': type === 'message', 'error-snackbar': type === 'error', 'confirmation-snackbar': type === 'confirmation' }">
+    <span>{{ message }}</span>
+    <div *ngIf="type === 'confirmation'" class="button-container">
+      <button (click)="confirm()">Confirm</button>
+      <button (click)="cancel()">Cancel</button>
+    </div>
+  </div>
