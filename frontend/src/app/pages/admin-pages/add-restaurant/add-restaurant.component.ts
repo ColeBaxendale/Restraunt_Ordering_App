@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import {
   FormsModule,
   Validators,
@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AlertService } from 'easy-angular-alerts';
+
 @Component({
   selector: 'app-add-restaurant',
   standalone: true,
@@ -31,11 +32,14 @@ import { AlertService } from 'easy-angular-alerts';
     MatProgressBarModule,
   ],
   templateUrl: './add-restaurant.component.html',
-  styleUrl: './add-restaurant.component.css',
+  styleUrls: ['./add-restaurant.component.css'],
 })
-export class AddRestaurantComponent implements OnInit {
+export class AddRestaurantComponent implements OnInit, AfterViewInit {
+  @ViewChild('alertContainer', { read: ViewContainerRef }) alertContainer!: ViewContainerRef;
+  
   form!: FormGroup;
   errorMsg = '';
+
 
   constructor(
     private fb: FormBuilder,
@@ -91,6 +95,10 @@ export class AddRestaurantComponent implements OnInit {
         addFees: [false],
       }),
     });
+  }
+
+  ngAfterViewInit() {
+    this.alertService.setViewContainerRef(this.alertContainer);
   }
 
   private initDay() {
@@ -218,14 +226,7 @@ export class AddRestaurantComponent implements OnInit {
             message: 'This is a simple alert!',
             backgroundColor: '#0E1C36',
             textColor: 'white',
-            verticalPosition: 'bottom',
-            horizontalPosition: 'left',
             duration: 3000,
-            fontSize: '16px',
-            fontFamily: 'JetBrainsMono',
-            animation: 'fadeIn 3s',
-            icon: '🔔',
-            boxShadow: '2px 2px 12px rgba(0, 0, 0, 0 2)'
           });
         } else {
           // this.alertService.showAlert({
