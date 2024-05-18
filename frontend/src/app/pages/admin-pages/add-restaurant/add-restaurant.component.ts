@@ -221,12 +221,11 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
       const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
+          console.log('here');
+          
           this.alertService.showAlert({
             type: 'simple',
             message: 'This is a simple alert!',
-            backgroundColor: '#0E1C36',
-            textColor: 'white',
-            duration: 3000,
           });
         } else {
           // this.alertService.showAlert({
