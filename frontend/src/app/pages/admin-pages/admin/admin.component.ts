@@ -15,7 +15,6 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { DividerModule } from 'primeng/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,7 +43,7 @@ import { CurrentAlertService } from '../../../services/session/alerts/current.al
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit{
   restaurants: Restaurant[] = [];
   selectedRestaurant: Restaurant | null = null;
   totalIncome: number = 0;
@@ -57,18 +56,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
   filteredRestaurants: Restaurant[] = [];
   errorMsg!: string;
   confirmationMsg!: string;
-  @ViewChild('alertContainer', { read: ViewContainerRef }) alertContainer!: ViewContainerRef;
 
   constructor(
     private fb: FormBuilder,
     private restaurantService: RestaurantService,
     public dialog: MatDialog,
-    private http: HttpClient,
     private router: Router,
     private sessionService: SessionService,
     public loadingService: LoadingService,
-    private alertService: AlertService,
-    private viewContainerRef: ViewContainerRef,
     private currentAlertServcice: CurrentAlertService
   ) {
     this.formGroup = this.fb.group({
@@ -80,25 +75,15 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.deleteDialog = false;
     this.loadRestaurants();
     if(this.currentAlertServcice.getCurrentMessage()){
-      console.log('in the alert things22');
-      console.log(this.currentAlertServcice.getCurrentMessage());
-      
-      this.alertService.showAlert({
-        type: 'simple',
-        message: this.currentAlertServcice.getCurrentMessage(),
-        verticalPosition: 'bottom',
-        horizontalPosition: 'right',
-        fontFamily: 'JetBrainsMono',
-        borderStyle: 'none'
-      });
+      this.currentAlertServcice.showAlertBottomRight(
+        'simple',
+        this.currentAlertServcice.getCurrentMessage()
+      )
       this.currentAlertServcice.setCurrentMessge('');
     }
    
   }
 
-  ngAfterViewInit() {
-    this.alertService.setViewContainerRef(this.alertContainer);
-  }
 
 
   clearSearch(): void {

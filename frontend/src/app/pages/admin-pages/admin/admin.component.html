@@ -23,7 +23,6 @@
     </div>
   </div>
 
-  <!-- Fixed ngIf directive below -->
   <div class="restaurantContainer" *ngIf="restaurants.length > 0">
     <mat-card class="card" *ngFor="let restaurant of filteredRestaurants">
       <mat-card-subtitle
@@ -74,9 +73,6 @@
     </div>
   </div>
 
-  <!-- <form [formGroup]="formGroup">
-      <p-autoComplete formControlName="selectedRestaurant" [suggestions]="filteredRestaurants" (completeMethod)="filterRestaurants($event)" field="details.name" placeholder="Search Restaurants"></p-autoComplete>
-    </form> -->
     <div class="loadingContainer" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'restaurants'">
     <mat-spinner [diameter]="100"mode="indeterminate"></mat-spinner>
 
