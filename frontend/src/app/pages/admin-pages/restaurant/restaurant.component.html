@@ -3,6 +3,8 @@
       <h1>Editing {{currentName}}</h1>
   
       <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
+        <div >
+        </div>
   
         <button class="buttonClass" [disabled]="false" (click)="submitForm()">
           Submit
@@ -11,6 +13,7 @@
       </div>
   
       <div class="buttonContainer" *ngIf="loadingService.getLoading()">
+        <div>
         </div>
   
         <button class="buttonClassDisabled" [disabled]="true" (click)="submitForm()">
@@ -18,6 +21,7 @@
         </button>
         <button class="buttonClass" (click)="cancel()">Cancel</button>
       </div>
+    </div>
   
     <form [formGroup]="form" class="mainContainer">
       <div class="leftContainer">
