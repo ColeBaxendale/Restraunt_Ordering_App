@@ -19,6 +19,8 @@ import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../../../../../types';
+import { AlertService } from 'easy-angular-alerts';
+import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -37,7 +39,6 @@ import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../
   styleUrl: './restaurant.component.css',
 })
 export class RestaurantComponent implements OnInit {
-  errorMsg = '';
   currentName: string = '';
   private unsubscribe$ = new Subject<void>();
   form!: FormGroup;
@@ -49,7 +50,9 @@ export class RestaurantComponent implements OnInit {
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService,
+    private currentAlertService: CurrentAlertService
   ) {}
 
   ngOnInit() {
@@ -156,7 +159,6 @@ export class RestaurantComponent implements OnInit {
           Object.keys(response.details.operatingHours).forEach((day) => {
             const dayGroup = this.form.get(`details.operatingHours.${day}`);
             if (dayGroup) {
-              // Check if dayGroup is not null
               const openControl = dayGroup.get('open');
               const closeControl = dayGroup.get('close');
               if (response.details.operatingHours[day].isOpen) {
@@ -191,12 +193,28 @@ export class RestaurantComponent implements OnInit {
                   });
                 },
                 error: (error) =>
-                  console.error('Error fetching user data:', error),
+                  this.alertService.showAlert({
+                    type: 'error',
+                    message: 'Error fetching user data:' + error,
+                    verticalPosition: 'bottom',
+                    horizontalPosition: 'right',
+                    fontFamily: 'JetBrainsMono',
+                    fontSize: '1rem',
+                    borderStyle: 'none'
+                  })
               });
           }
         },
         error: (error) =>
-          console.error('Error fetching restaurant data:', error),
+          this.alertService.showAlert({
+            type: 'error',
+            message: 'Error fetching restaurant data:' + error,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+            fontFamily: 'JetBrainsMono',
+            fontSize: '1rem',
+            borderStyle: 'none'
+          })
       });
   }
 
@@ -213,7 +231,15 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get(field);
     if (control && control.errors) {
       if (control.hasError('required')) {
-        return 'Name must be filled in.';
+        this.alertService.showAlert({
+          type: 'error',
+          message: 'Error, name field must be filled in.',
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          fontFamily: 'JetBrainsMono',
+          fontSize: '1rem',
+          borderStyle: 'none'
+        });
       }
       const errorKeys = Object.keys(control.errors);
       const firstErrorKey = errorKeys[0];
@@ -293,8 +319,8 @@ export class RestaurantComponent implements OnInit {
       },
       error: (error) => {
         console.error('Failed to create restaurant:', error);
-        this.errorMsg =
-          error.error.message || 'An error occurred during form submission.';
+        // this.errorMsg =
+        //   error.error.message || 'An error occurred during form submission.';
         return;
       },
     });
@@ -311,8 +337,8 @@ export class RestaurantComponent implements OnInit {
       },
       error: (error) => {
         console.error('Failed to create restaurant:', error);
-        this.errorMsg =
-          error.error.message || 'An error occurred during form submission.';
+        // this.errorMsg =
+        //   error.error.message || 'An error occurred during form submission.';
         return;
       },
     });
@@ -329,8 +355,8 @@ export class RestaurantComponent implements OnInit {
       },
       error: (error) => {
         console.error('Failed to create restaurant:', error);
-        this.errorMsg =
-          error.error.message || 'An error occurred during form submission.';
+        // this.errorMsg =
+        //   error.error.message || 'An error occurred during form submission.';
         return;
       },
     });
@@ -348,8 +374,8 @@ export class RestaurantComponent implements OnInit {
         },
         error: (error) => {
           console.error('Failed to create restaurant:', error);
-          this.errorMsg =
-            error.error.message || 'An error occurred during form submission.';
+          // this.errorMsg =
+          //   error.error.message || 'An error occurred during form submission.';
           return;
         },
       });
@@ -360,12 +386,12 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.errorMsg = 'Name field is required.';
+          // this.errorMsg = 'Name field is required.';
         } else {
-          this.errorMsg = 'Errors occur in the form';
+          // this.errorMsg = 'Errors occur in the form';
         }
       } else {
-        this.errorMsg = 'Errors occur in the form';
+        // this.errorMsg = 'Errors occur in the form';
       }
   }
 
@@ -379,7 +405,7 @@ public resetOwner() {
       },
       error: (error) => {
         console.error('Failed to reset user:', error);
-        this.errorMsg = error.error.message || 'An error occurred during form submission.';
+        // this.errorMsg = error.error.message || 'An error occurred during form submission.';
       },
     });
   }

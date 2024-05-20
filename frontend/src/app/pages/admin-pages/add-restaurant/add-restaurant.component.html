@@ -5,9 +5,7 @@
     <h1>Adding New Restaurant</h1>
 
     <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
-      <div *ngIf="errorMsg != ''">
-        <p>{{ errorMsg }}</p>
-      </div>
+
 
       <button class="buttonClass" [disabled]="false" (click)="submitForm()">
         Submit
@@ -16,9 +14,7 @@
     </div>
 
     <div class="buttonContainer" *ngIf="loadingService.getLoading()">
-      <div *ngIf="errorMsg != ''">
-        <p>{{ errorMsg }}</p>
-      </div>
+
 
       <button class="buttonClassDisabled" [disabled]="true" (click)="submitForm()">
         Submit

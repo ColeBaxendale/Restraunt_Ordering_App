@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AlertService } from 'easy-angular-alerts';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class CurrentAlertService {
 
   private currentAlertMessage!: string;
 
-  constructor() { }
+  constructor(private alertService: AlertService) { }
 
   setCurrentMessge(messge: string){
     this.currentAlertMessage = messge;
@@ -16,4 +17,19 @@ export class CurrentAlertService {
   getCurrentMessage(){
     return this.currentAlertMessage;
   }
+
+  showAlertBottomRight(type: string, message: string){
+    this.alertService.showAlert({
+      type: type,
+      message: message,
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right',
+      fontFamily: 'JetBrainsMono',
+      fontSize: '1rem',
+      borderStyle: 'none'
+    });
+
+  }
+
+
 }

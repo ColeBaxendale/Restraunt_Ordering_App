@@ -38,7 +38,6 @@ import { CurrentAlertService } from '../../../services/session/alerts/current.al
 export class AddRestaurantComponent implements OnInit{
   
   form!: FormGroup;
-  errorMsg = '';
 
 
   constructor(
@@ -161,51 +160,29 @@ export class AddRestaurantComponent implements OnInit{
      if (this.form.get('details.owner')?.value === '') {
       this.restaurantService.createRestaurant(this.form.value).subscribe({
         next: (response: RestaurantResponse) => {
-          console.log('Successfully created restaurant:', response.message);
-          console.log('in the alert things');
-          
           this.currentAlertServcice.setCurrentMessge('Successfully created restaurant: ' + response.restaurant?.details.name)
           this.router.navigate(['/admin']);
         },
           error: (error) => {
-            console.error('Failed to create restaurant:', error);
-            this.alertService.showAlert({
-              type: 'error',
-              message: error.error.message || 'An error occurred during form submission.',
-              verticalPosition: 'bottom',
-              horizontalPosition: 'right',
-              fontFamily: 'JetBrainsMono',
-              fontSize: '1rem',
-              borderStyle: 'none'
-            });
+            this.currentAlertServcice.showAlertBottomRight(
+              'error',
+             error.error.message || 'An error occurred during form submission.'
+            )
             return;
           },
         });
       } else {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
-            console.log('Successfully created restaurant with owner:', response.message);
-            this.alertService.showAlert({
-              type: 'error',
-
-              message: 'Successfully created new restaurant:',
-
-            });
-            return;
+            this.currentAlertServcice.setCurrentMessge('Successfully created restaurant: ' + response.restaurant?.details.name)
             this.router.navigate(['/admin']); 
             return;
           },
           error: (error) => {
-            console.error('Failed to create restaurant with owner:', error);
-            this.alertService.showAlert({
-              type: 'error',
-              message: error.error.message || 'An error occurred during form submission.',
-              verticalPosition: 'bottom',
-              horizontalPosition: 'right',
-              fontFamily: 'JetBrainsMono',
-              fontSize: '1rem',
-              borderStyle: 'none'
-            });
+            this.currentAlertServcice.showAlertBottomRight(
+              'error',
+             error.error.message || 'An error occurred during form submission.'
+            )
           },
         });
       }
@@ -213,38 +190,21 @@ export class AddRestaurantComponent implements OnInit{
       const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.alertService.showAlert({
-            type: 'error',
-            message: 'Error, name field must be filled in.',
-            verticalPosition: 'bottom',
-            horizontalPosition: 'right',
-            fontFamily: 'JetBrainsMono',
-            fontSize: '1rem',
-            borderStyle: 'none'
-          });
+          this.currentAlertServcice.showAlertBottomRight(
+            'error',
+            'Error, name field must be filled in.'
+          )
         } else {
-          this.alertService.showAlert({
-            type: 'error',
-            message: 'Errors occurs in the form',
-            verticalPosition: 'bottom',
-            horizontalPosition: 'right',
-            fontFamily: 'JetBrainsMono',
-            fontSize: '1rem',
-            borderStyle: 'none'
-          });
-
+          this.currentAlertServcice.showAlertBottomRight(
+            'error',
+            'Errors occurs in the form'
+          )
         }
       } else {
-        this.alertService.showAlert({
-          type: 'error',
-          message: 'Errors occurs in the form',
-          verticalPosition: 'bottom',
-          horizontalPosition: 'right',
-          fontFamily: 'JetBrainsMono',
-          fontSize: '1rem',
-          borderStyle: 'none'
-        });
-        
+        this.currentAlertServcice.showAlertBottomRight(
+          'error',
+          'Errors occurs in the form'
+        )
       }
     }
   }
