@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
-import { SessionService } from '../../services/session/session.service';
+import { SessionService } from '../../services/session/session/session.service';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({

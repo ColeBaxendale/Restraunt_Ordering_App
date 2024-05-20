@@ -2,7 +2,7 @@ import { NgIf, CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet, Router } from '@angular/router';
-import { SessionService } from '../../../services/session/session.service';
+import { SessionService } from '../../../services/session/session/session.service';
 import { LoginService } from '../../../services/admin/login/login.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { finalize } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
 import { Restaurant, RestaurantResponse } from '../../../../../types';
 import { RestaurantService } from '../../../services/admin/restaurant/requests/restaurant.service';
-import { SessionService } from '../../../services/session/session.service';
+import { SessionService } from '../../../services/session/session/session.service';
 import {
   FormGroup,
   FormBuilder,
@@ -23,6 +23,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AlertService } from 'easy-angular-alerts';
+import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -42,7 +44,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, AfterViewInit {
   restaurants: Restaurant[] = [];
   selectedRestaurant: Restaurant | null = null;
   totalIncome: number = 0;
@@ -54,6 +56,8 @@ export class AdminComponent implements OnInit {
   formGroup: FormGroup;
   filteredRestaurants: Restaurant[] = [];
   errorMsg!: string;
+  confirmationMsg!: string;
+  @ViewChild('alertContainer', { read: ViewContainerRef }) alertContainer!: ViewContainerRef;
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +67,9 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     public loadingService: LoadingService,
+    private alertService: AlertService,
+    private viewContainerRef: ViewContainerRef,
+    private currentAlertServcice: CurrentAlertService
   ) {
     this.formGroup = this.fb.group({
       selectedRestaurant: new FormControl(),
@@ -72,7 +79,27 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.deleteDialog = false;
     this.loadRestaurants();
+    if(this.currentAlertServcice.getCurrentMessage()){
+      console.log('in the alert things22');
+      console.log(this.currentAlertServcice.getCurrentMessage());
+      
+      this.alertService.showAlert({
+        type: 'simple',
+        message: this.currentAlertServcice.getCurrentMessage(),
+        verticalPosition: 'bottom',
+        horizontalPosition: 'right',
+        fontFamily: 'JetBrainsMono',
+        borderStyle: 'none'
+      });
+      this.currentAlertServcice.setCurrentMessge('');
+    }
+   
   }
+
+  ngAfterViewInit() {
+    this.alertService.setViewContainerRef(this.alertContainer);
+  }
+
 
   clearSearch(): void {
     this.searchTerm = '';

@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AlertService } from 'easy-angular-alerts';
+import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -34,8 +35,7 @@ import { AlertService } from 'easy-angular-alerts';
   templateUrl: './add-restaurant.component.html',
   styleUrls: ['./add-restaurant.component.css'],
 })
-export class AddRestaurantComponent implements OnInit, AfterViewInit {
-  @ViewChild('alertContainer', { read: ViewContainerRef }) alertContainer!: ViewContainerRef;
+export class AddRestaurantComponent implements OnInit{
   
   form!: FormGroup;
   errorMsg = '';
@@ -48,7 +48,7 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private alertService: AlertService, 
-    private viewContainerRef: ViewContainerRef
+    private currentAlertServcice: CurrentAlertService
   ) {}
 
   ngOnInit(): void {
@@ -97,9 +97,6 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.alertService.setViewContainerRef(this.alertContainer);
-  }
 
   private initDay() {
     return this.fb.group(
@@ -161,31 +158,26 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.form.valid) {
-      if (this.form.get('details.owner')?.value === '') {
-        this.restaurantService.createRestaurant(this.form.value).subscribe({
-          next: (response: RestaurantResponse) => {
-            console.log('Successfully created restaurant:', response.message);
-            // this.alertService.show({
-            //   message: 'Successfully created new restaurant: ' + response.restaurant?.details.name,
-            //   duration: 3000,
-            //   backgroundColor: '#007bff',
-            //   textColor: '#fff',
-            //   position: 'top',
-            //   horizontalPosition: 'center'
-            // }, this.viewContainerRef);
-            this.router.navigate(['/admin']);
-            return;
-          },
+     if (this.form.get('details.owner')?.value === '') {
+      this.restaurantService.createRestaurant(this.form.value).subscribe({
+        next: (response: RestaurantResponse) => {
+          console.log('Successfully created restaurant:', response.message);
+          console.log('in the alert things');
+          
+          this.currentAlertServcice.setCurrentMessge('Successfully created restaurant: ' + response.restaurant?.details.name)
+          this.router.navigate(['/admin']);
+        },
           error: (error) => {
             console.error('Failed to create restaurant:', error);
-            // this.alertService.show({
-            //   type: 'error',
-            //   message: error.error.message || 'An error occurred during form submission.',
-            //   duration: 3000,
-            //   textColor: '#dc3545',
-            //   position: 'bottom',
-            //   horizontalPosition: 'center'
-            // }, this.viewContainerRef);
+            this.alertService.showAlert({
+              type: 'error',
+              message: error.error.message || 'An error occurred during form submission.',
+              verticalPosition: 'bottom',
+              horizontalPosition: 'right',
+              fontFamily: 'JetBrainsMono',
+              fontSize: '1rem',
+              borderStyle: 'none'
+            });
             return;
           },
         });
@@ -193,27 +185,27 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
             console.log('Successfully created restaurant with owner:', response.message);
-            // this.alertService.show({
-            //   message: 'Successfully created new restaurant: ' + response.restaurant?.details.name,
-            //   duration: 3000,
-            //   backgroundColor: '#007bff',
-            //   textColor: 'green',
-            //   position: 'bottom',
-            //   horizontalPosition: 'center'
-            // }, this.viewContainerRef);
+            this.alertService.showAlert({
+              type: 'error',
+
+              message: 'Successfully created new restaurant:',
+
+            });
+            return;
             this.router.navigate(['/admin']); 
             return;
           },
           error: (error) => {
             console.error('Failed to create restaurant with owner:', error);
-            // this.alertService.show({
-            //   type: 'error',
-            //   message: error.error.message || 'An error occurred during form submission.',
-            //   duration: 3000,
-            //   textColor: '#dc3545',
-            //   position: 'bottom',
-            //   horizontalPosition: 'center'
-            // }, this.viewContainerRef);
+            this.alertService.showAlert({
+              type: 'error',
+              message: error.error.message || 'An error occurred during form submission.',
+              verticalPosition: 'bottom',
+              horizontalPosition: 'right',
+              fontFamily: 'JetBrainsMono',
+              fontSize: '1rem',
+              borderStyle: 'none'
+            });
           },
         });
       }
@@ -221,33 +213,37 @@ export class AddRestaurantComponent implements OnInit, AfterViewInit {
       const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          console.log('here');
-          
           this.alertService.showAlert({
-            type: 'simple',
-            message: 'This is a simple alert!',
+            type: 'error',
+            message: 'Error, name field must be filled in.',
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+            fontFamily: 'JetBrainsMono',
+            fontSize: '1rem',
+            borderStyle: 'none'
           });
         } else {
-          // this.alertService.showAlert({
-          //   type: 'error',
-          //   message: 'Errors occur in the form',
-          //   duration: 3000000,
-          //   backgroundColor: '#dc3545',
-          //   textColor: '#fff',
-          //   position: 'top',
-          //   horizontalPosition: 'right'
-          // }, this.viewContainerRef);
+          this.alertService.showAlert({
+            type: 'error',
+            message: 'Errors occurs in the form',
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+            fontFamily: 'JetBrainsMono',
+            fontSize: '1rem',
+            borderStyle: 'none'
+          });
 
         }
       } else {
-        // this.alertService.show({
-        //   type: 'error',
-        //   message: 'Errors occur in the form',
-        //   duration: 3000,
-        //   textColor: '#fff',
-        //   position: 'bottom',
-        //   horizontalPosition: 'center'
-        // }, this.viewContainerRef);
+        this.alertService.showAlert({
+          type: 'error',
+          message: 'Errors occurs in the form',
+          verticalPosition: 'bottom',
+          horizontalPosition: 'right',
+          fontFamily: 'JetBrainsMono',
+          fontSize: '1rem',
+          borderStyle: 'none'
+        });
         
       }
     }
