@@ -75,7 +75,7 @@ export class AdminComponent implements OnInit{
     this.deleteDialog = false;
     this.loadRestaurants();
     if(this.currentAlertServcice.getCurrentMessage()){
-      this.currentAlertServcice.showAlertBottomRight(
+      this.currentAlertServcice.showAlertSimpleBottomRight(
         'simple',
         this.currentAlertServcice.getCurrentMessage()
       )

@@ -20,6 +20,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../../../../../types';
 import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
+import { AlertService } from 'easy-angular-alerts';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -50,7 +51,8 @@ export class RestaurantComponent implements OnInit {
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private userService: UserService,
-    private currentAlertService: CurrentAlertService
+    private currentAlertService: CurrentAlertService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -188,7 +190,7 @@ export class RestaurantComponent implements OnInit {
                   });
                 },
                 error: (error) =>
-                  this.currentAlertService.showAlertBottomRight(
+                  this.currentAlertService.showAlertErrorBottomRight(
                     'error',
                     'Error fetching restaurant data:' + error,
                   )
@@ -196,7 +198,7 @@ export class RestaurantComponent implements OnInit {
           }
         },
         error: (error) =>
-          this.currentAlertService.showAlertBottomRight(
+          this.currentAlertService.showAlertErrorBottomRight(
             'error',
             'Error fetching restaurant data:' + error,
           )
@@ -288,7 +290,7 @@ export class RestaurantComponent implements OnInit {
         return;
       },
       error: (error) => {
-        this.currentAlertService.showAlertBottomRight(
+        this.currentAlertService.showAlertErrorBottomRight(
           'error',
           error.error.message || 'An error occurred during form submission.'
         )
@@ -307,7 +309,7 @@ export class RestaurantComponent implements OnInit {
         return;
       },
       error: (error) => {
-        this.currentAlertService.showAlertBottomRight(
+        this.currentAlertService.showAlertErrorBottomRight(
           'error',
           error.error.message || 'An error occurred during form submission.'
         )
@@ -326,7 +328,7 @@ export class RestaurantComponent implements OnInit {
         return;
       },
       error: (error) => {
-        this.currentAlertService.showAlertBottomRight(
+        this.currentAlertService.showAlertErrorBottomRight(
           'error',
           error.error.message || 'An error occurred during form submission.'
         )
@@ -346,7 +348,7 @@ export class RestaurantComponent implements OnInit {
           return;
         },
         error: (error) => {
-          this.currentAlertService.showAlertBottomRight(
+          this.currentAlertService.showAlertErrorBottomRight(
             'error',
             error.error.message || 'An error occurred during form submission.'
           )
@@ -360,18 +362,18 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.currentAlertService.showAlertBottomRight(
+          this.currentAlertService.showAlertErrorBottomRight(
             'error',
             'Name field is required'
           )
         } else {
-          this.currentAlertService.showAlertBottomRight(
+          this.currentAlertService.showAlertErrorBottomRight(
             'error',
             'Errors occur in the form'
           )
         }
       } else {
-        this.currentAlertService.showAlertBottomRight(
+        this.currentAlertService.showAlertErrorBottomRight(
           'error',
           'Errors occur in the form'
         )
@@ -379,21 +381,54 @@ export class RestaurantComponent implements OnInit {
   }
 
 public resetOwner() {
-  const ownerId = this.restaurantService.getCurrentOwnerId();
-  if (ownerId) {
-    this.userService.resetUser(ownerId).subscribe({
-      next: (response: UserResponse) => {
-        this.currentAlertService.setCurrentMessge('Successfully reset user:' + response.user?.email)
-        this.router.navigate(['/admin']);
-      },
-      error: (error) => {
-        this.currentAlertService.showAlertBottomRight(
-          'error',
-          error.error.message || 'An error occurred during form submission.'
-        )
-      },
-    });
-  }
+
+
+  this.alertService.showAlert({
+    type: 'confirmation',
+    message: 'Do you confirm this custom action?',
+  }, () => {
+    alert('Confirmed!'); // On confirm do something here
+  }, () => {
+    alert('Cancelled!'); // On cancel do something here
+  });
+  // const ownerId = this.restaurantService.getCurrentOwnerId();
+  // const email = this.restaurantService.getCurrentOwnerEmail();
+  // if(email){
+  //   this.currentAlertService.showAlertConfirmationBottomCenter(
+  //     'Are you sure you want to proceed?',
+  //     () => {
+  //       console.log('Confirmed!');
+  //       if (ownerId) {
+  //         this.userService.resetUser(ownerId).subscribe({
+  //           next: (response: UserResponse) => {
+  //             this.currentAlertService.setCurrentMessge('Successfully reset user:' + response.user?.email)
+  //             this.router.navigate(['/admin']);
+  //           },
+  //           error: (error) => {
+  //             this.currentAlertService.showAlertErrorBottomRight(
+  //               'error',
+  //               error.error.message || 'An error occurred during form submission.'
+  //             )
+  //           },
+  //         });
+  //       }
+  //     },
+  //     () => {
+  //       console.log('Cancelled!');
+  //       return;
+  //     });
+  //   }
+  
+  // else{
+  //   this.currentAlertService.showAlertErrorBottomRight(
+  //     'error',
+  //     'Owner email undefined.'
+  //   )
+  //   return;
+
+  // }
+
+  
 }
 
 
