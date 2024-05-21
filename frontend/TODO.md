@@ -1,7 +1,5 @@
 ## RESTAURANT EDIT PAGE:
 @DO
-- implement confirmation pop ups 
-@DO
 - bug test all of admin side of things 
 @DO
 - clean up admin side code get rid of unused code 

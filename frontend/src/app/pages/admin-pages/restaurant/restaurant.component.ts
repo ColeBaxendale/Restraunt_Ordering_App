@@ -402,7 +402,7 @@ export class RestaurantComponent implements OnInit {
             this.userService.resetUser(ownerId).subscribe({
               next: (response: UserResponse) => {
                 console.log('User reset successful');
-                this.currentAlertService.showAlertSimpleBottomRight('Successfully reset user: ' + response.user?.email);
+                this.currentAlertService.showAlertSimpleBottomRight('Successfully reset user: ' + email);
                 this.router.navigate(['/admin']);
               },
               error: (error) => {
