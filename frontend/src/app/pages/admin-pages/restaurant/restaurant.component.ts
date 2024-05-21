@@ -283,7 +283,7 @@ export class RestaurantComponent implements OnInit {
     .updateRestaurantWithNewOwner(this.restaurantId, this.form.value)
     .subscribe({
       next: (response: RestaurantAndUserResponse) => {
-        this.currentAlertService.setCurrentMessge('Successfully updated restaurant:' + response.restaurant?.details.name)
+        this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
         this.router.navigate(['/admin']);
         return;
       },
@@ -304,7 +304,7 @@ export class RestaurantComponent implements OnInit {
         .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
         .subscribe({
           next: (response: RestaurantAndUserResponse) => {
-            this.currentAlertService.setCurrentMessge('Successfully updated restaurant:' + response.restaurant?.details.name)
+            this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
             this.router.navigate(['/admin']);
             return;
           },
@@ -332,7 +332,7 @@ export class RestaurantComponent implements OnInit {
         .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
         .subscribe({
           next: (response: RestaurantAndUserResponse) => {
-            this.currentAlertService.setCurrentMessge('Successfully updated restaurant:' + response.restaurant?.details.name)
+            this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
             this.router.navigate(['/admin']);
             return;
           },
@@ -356,7 +356,7 @@ export class RestaurantComponent implements OnInit {
       .updateRestaurant(this.restaurantId, this.form.value)
       .subscribe({
         next: (response: RestaurantResponse) => {
-          this.currentAlertService.setCurrentMessge('Successfully updated restaurant:' + response.restaurant?.details.name)
+          this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
           this.router.navigate(['/admin']);
           return;
         },
@@ -402,7 +402,7 @@ export class RestaurantComponent implements OnInit {
             this.userService.resetUser(ownerId).subscribe({
               next: (response: UserResponse) => {
                 console.log('User reset successful');
-                this.currentAlertService.showAlertSimpleBottomRight('Successfully reset user:' + response.user?.email);
+                this.currentAlertService.showAlertSimpleBottomRight('Successfully reset user: ' + response.user?.email);
                 this.router.navigate(['/admin']);
               },
               error: (error) => {

@@ -155,7 +155,7 @@ export class AdminComponent implements OnInit{
     this.loadingService.setLoading(true, 'delete')
     this.restaurantService.deleteRestaurant(restaurantId).subscribe({
       next: (response: RestaurantResponse) => {
-        console.log('Successfully deleted restaurant:', response.message);
+        console.log('Successfully deleted restaurant: ', response.message);
         this.deleteDialog = false;
         this.loadRestaurants();
 
