@@ -76,7 +76,6 @@ export class AdminComponent implements OnInit{
     this.loadRestaurants();
     if(this.currentAlertServcice.getCurrentMessage()){
       this.currentAlertServcice.showAlertSimpleBottomRight(
-        'simple',
         this.currentAlertServcice.getCurrentMessage()
       )
       this.currentAlertServcice.setCurrentMessge('');

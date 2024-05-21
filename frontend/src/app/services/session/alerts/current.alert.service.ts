@@ -18,9 +18,11 @@ export class CurrentAlertService {
     return this.currentAlertMessage;
   }
 
-  showAlertErrorBottomRight(type: string, message: string){
+  
+
+  showAlertErrorBottomRight( message: string){
     this.alertService.showAlert({
-      type: type,
+      type: 'error',
       message: message,
       verticalPosition: 'bottom',
       horizontalPosition: 'right',
@@ -33,9 +35,9 @@ export class CurrentAlertService {
   }
 
 
-  showAlertSimpleBottomRight(type: string, message: string){
+  showAlertSimpleBottomRight( message: string){
     this.alertService.showAlert({
-      type: type,
+      type: 'simple',
       message: message,
       verticalPosition: 'bottom',
       horizontalPosition: 'right',
@@ -47,19 +49,13 @@ export class CurrentAlertService {
 
     });
   }
-
-  showAlertConfirmationBottomCenter(message: string, onConfirm: () => void, onCancel: () => void) {
+  showAlertConfirmationBottomCenter(message: string, confirmCallback: () => void, cancelCallback: () => void) {
     this.alertService.showAlert({
       type: 'confirmation',
       message: message,
-      textColor: 'black',
       verticalPosition: 'bottom',
-      horizontalPosition: 'center',
-      fontFamily: 'JetBrainsMono',
-      backgroundColor: '#609af7',
-      duration: 0,
-      fontSize: '1rem',
-    }, onConfirm, onCancel);
-  }
-
+      horizontalPosition: 'center'
+    }, confirmCallback, cancelCallback);
+  
+}
 }

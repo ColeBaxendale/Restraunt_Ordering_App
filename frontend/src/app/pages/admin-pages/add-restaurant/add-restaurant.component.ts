@@ -161,7 +161,6 @@ export class AddRestaurantComponent implements OnInit{
         },
           error: (error) => {
             this.currentAlertService.showAlertErrorBottomRight(
-              'error',
              error.error.message || 'An error occurred during form submission.'
             )
             return;
@@ -176,7 +175,6 @@ export class AddRestaurantComponent implements OnInit{
           },
           error: (error) => {
             this.currentAlertService.showAlertErrorBottomRight(
-              'error',
              error.error.message || 'An error occurred during form submission.'
             )
           },
@@ -187,18 +185,15 @@ export class AddRestaurantComponent implements OnInit{
       if (control) {
         if (control.hasError('required')) {
           this.currentAlertService.showAlertErrorBottomRight(
-            'error',
             'Error, name field must be filled in.'
           )
         } else {
           this.currentAlertService.showAlertErrorBottomRight(
-            'error',
             'Errors occurs in the form'
           )
         }
       } else {
         this.currentAlertService.showAlertErrorBottomRight(
-          'error',
           'Errors occurs in the form'
         )
       }
