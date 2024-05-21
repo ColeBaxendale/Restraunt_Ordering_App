@@ -8,4 +8,3 @@
 
 ## RESTAURANT EDIT PAGE BUGS: 
 @BUG 
-- when reseting user password alert is undefined
