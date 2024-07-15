@@ -45,3 +45,17 @@ html {
   
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.custom-alert-snackbar {
+  background-color: #333;
+  color: #000000;
+}
+
+.custom-confirmation-snackbar {
+  color: #000000;
+}
+
+.custom-confirmation-snackbar button {
+  color: #000000;
+}

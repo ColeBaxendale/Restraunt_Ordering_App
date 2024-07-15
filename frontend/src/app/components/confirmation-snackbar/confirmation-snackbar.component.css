@@ -1,0 +1,12 @@
+/* You can add more styles specific to the confirmation component if needed */
+.actions {
+    display: flex;
+    margin: auto;
+  }
+
+
+
+  button{
+    margin-left: 1rem;
+  }
+  

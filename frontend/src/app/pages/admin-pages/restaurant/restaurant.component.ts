@@ -19,8 +19,9 @@ import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../../../../../types';
-import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AlertService } from 'easy-angular-alerts';
+import { SnackbarService } from '../../../services/snackbar.service';
 @Component({
   selector: 'app-restaurant',
   standalone: true,
@@ -51,8 +52,8 @@ export class RestaurantComponent implements OnInit {
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private userService: UserService,
-    private currentAlertService: CurrentAlertService,
-    private alertService: AlertService
+    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -190,14 +191,14 @@ export class RestaurantComponent implements OnInit {
                   });
                 },
                 error: (error) =>
-                  this.currentAlertService.showAlertErrorBottomRight(
+                  this.showAlert(
                     'Error fetching restaurant data:' + error,
                   )
               });
           }
         },
         error: (error) =>
-          this.currentAlertService.showAlertErrorBottomRight(
+          this.showAlert(
             'Error fetching restaurant data:' + error,
           )
       });
@@ -283,12 +284,12 @@ export class RestaurantComponent implements OnInit {
     .updateRestaurantWithNewOwner(this.restaurantId, this.form.value)
     .subscribe({
       next: (response: RestaurantAndUserResponse) => {
-        this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
+        this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
         this.router.navigate(['/admin']);
         return;
       },
       error: (error) => {
-        this.currentAlertService.showAlertErrorBottomRight(
+        this.showAlert(
           error.error.message || 'An error occurred during form submission.'
         )
         return;
@@ -297,57 +298,57 @@ export class RestaurantComponent implements OnInit {
   }
 
   private updateRestaurantWithOldAndNewOwner(){
-    this.currentAlertService.showAlertConfirmationBottomCenter(
-      'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
-      () => {
-        this.restaurantService
-        .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
-        .subscribe({
-          next: (response: RestaurantAndUserResponse) => {
-            this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
-            this.router.navigate(['/admin']);
-            return;
-          },
-          error: (error) => {
-            this.currentAlertService.showAlertErrorBottomRight(
-              error.error.message || 'An error occurred during form submission.'
-            )
-            return;
-          },
-        });
-      },
-      () => {
-        console.log('Cancelled!');
-        return;
-      });
+    // this.showAlert(
+    //   'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
+    //   () => {
+    //     this.restaurantService
+    //     .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
+    //     .subscribe({
+    //       next: (response: RestaurantAndUserResponse) => {
+    //         this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
+    //         this.router.navigate(['/admin']);
+    //         return;
+    //       },
+    //       error: (error) => {
+    //         this.showAlert(
+    //           error.error.message || 'An error occurred during form submission.'
+    //         )
+    //         return;
+    //       },
+    //     });
+    //   },
+    //   () => {
+    //     console.log('Cancelled!');
+    //     return;
+    //   });
    
   }
 
   private updateRestaurantWithOwnerRemoval(){
 
-    this.currentAlertService.showAlertConfirmationBottomCenter(
-      'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
-      () => {
-        this.restaurantService
-        .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
-        .subscribe({
-          next: (response: RestaurantAndUserResponse) => {
-            this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
-            this.router.navigate(['/admin']);
-            return;
-          },
-          error: (error) => {
-            this.currentAlertService.showAlertErrorBottomRight(
-              error.error.message || 'An error occurred during form submission.'
-            )
-            return;
-          },
-        });
-      },
-      () => {
-        console.log('Cancelled!');
-        return;
-      });
+    // this.showAlert(
+    //   'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
+    //   () => {
+    //     this.restaurantService
+    //     .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
+    //     .subscribe({
+    //       next: (response: RestaurantAndUserResponse) => {
+    //         this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
+    //         this.router.navigate(['/admin']);
+    //         return;
+    //       },
+    //       error: (error) => {
+    //         this.showAlert(
+    //           error.error.message || 'An error occurred during form submission.'
+    //         )
+    //         return;
+    //       },
+    //     });
+    //   },
+    //   () => {
+    //     console.log('Cancelled!');
+    //     return;
+    //   });
   }
 
 
@@ -356,12 +357,12 @@ export class RestaurantComponent implements OnInit {
       .updateRestaurant(this.restaurantId, this.form.value)
       .subscribe({
         next: (response: RestaurantResponse) => {
-          this.currentAlertService.setCurrentMessge('Successfully updated restaurant: ' + response.restaurant?.details.name)
+          this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
           this.router.navigate(['/admin']);
           return;
         },
         error: (error) => {
-          this.currentAlertService.showAlertErrorBottomRight(
+          this.showAlert(
             error.error.message || 'An error occurred during form submission.'
           )
           return;
@@ -374,16 +375,16 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.currentAlertService.showAlertErrorBottomRight(
+          this.showAlert(
             'Name field is required'
           )
         } else {
-          this.currentAlertService.showAlertErrorBottomRight(
+          this.showAlert(
             'Errors occur in the form'
           )
         }
       } else {
-        this.currentAlertService.showAlertErrorBottomRight(
+        this.showAlert(
           'Errors occur in the form'
         )
       }
@@ -392,39 +393,43 @@ export class RestaurantComponent implements OnInit {
   public resetOwner() {
     const ownerId = this.restaurantService.getCurrentOwnerId();
     const email = this.restaurantService.getCurrentOwnerEmail();
-    if(email){
+    console.log('in reset');
+    
+    if (email) {
       console.log('Showing confirmation alert');
-      this.currentAlertService.showAlertConfirmationBottomCenter(
-        'Are you sure you want to proceed, ' + email +' password will be reset?' ,
+      this.snackbarService.showConfirmation(
+        'Are you sure you want to proceed? ' + email + ' password will be reset?',
         () => {
           console.log('Confirmed!');
           if (ownerId) {
             this.userService.resetUser(ownerId).subscribe({
               next: (response: UserResponse) => {
                 console.log('User reset successful');
-                this.currentAlertService.showAlertSimpleBottomRight('Successfully reset user: ' + email);
+                this.snackbarService.showAlert('Successfully reset user: ' + email);
                 this.router.navigate(['/admin']);
               },
               error: (error) => {
                 console.error('Error during reset:', error);
-                this.currentAlertService.showAlertErrorBottomRight(
-                  error.error.message || 'An error occurred during form submission.'
-                );
+                this.snackbarService.showAlert(error.error.message || 'An error occurred during form submission.');
               },
             });
           }
         },
         () => {
           console.log('Cancelled!');
-          return;
-        });
+        }
+      );
     } else {
       console.log('Owner email undefined.');
-      this.currentAlertService.showAlertErrorBottomRight('Owner email undefined.');
-      return;
+      this.snackbarService.showAlert('Owner email undefined.');
     }
   }
   
-
-
+  showAlert(message: string, action: string = 'Close', duration: number = 3000) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
+  }
 }

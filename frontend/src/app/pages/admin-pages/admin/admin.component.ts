@@ -23,7 +23,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlertService } from 'easy-angular-alerts';
-import { CurrentAlertService } from '../../../services/session/alerts/current.alert.service';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -64,7 +63,6 @@ export class AdminComponent implements OnInit{
     private router: Router,
     private sessionService: SessionService,
     public loadingService: LoadingService,
-    private currentAlertServcice: CurrentAlertService
   ) {
     this.formGroup = this.fb.group({
       selectedRestaurant: new FormControl(),
@@ -74,12 +72,12 @@ export class AdminComponent implements OnInit{
   ngOnInit(): void {
     this.deleteDialog = false;
     this.loadRestaurants();
-    if(this.currentAlertServcice.getCurrentMessage()){
-      this.currentAlertServcice.showAlertSimpleBottomRight(
-        this.currentAlertServcice.getCurrentMessage()
-      )
-      this.currentAlertServcice.setCurrentMessge('');
-    }
+    // if(this.currentAlertServcice.getCurrentMessage()){
+    //   this.currentAlertServcice.showAlertSimpleBottomRight(
+    //     this.currentAlertServcice.getCurrentMessage()
+    //   )
+    //   this.currentAlertServcice.setCurrentMessge('');
+    // }
    
   }
 
