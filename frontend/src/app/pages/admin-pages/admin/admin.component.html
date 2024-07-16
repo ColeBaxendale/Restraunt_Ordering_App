@@ -13,6 +13,33 @@
     <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
 
 
+
+    <button
+          (click)="testAlert()"
+        >
+          Alert Test
+        </button>
+
+      <button
+        (click)="testErrorAlert()"
+      >
+        Error Test
+      </button>
+
+      <button
+      (click)="testConfirmationAlert()"
+    >
+      Confirmation Test
+    </button>
+
+
+
+
+
+
+
+
+
     </div>
 
     <div class="buttonContainer">
@@ -75,6 +102,8 @@
 
     <div class="loadingContainer" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'restaurants'">
     <mat-spinner [diameter]="100"mode="indeterminate"></mat-spinner>
+
+
 
     </div>
 </div>

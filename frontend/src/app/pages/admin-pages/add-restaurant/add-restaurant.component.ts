@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -45,7 +46,7 @@ export class AddRestaurantComponent implements OnInit{
     private router: Router,
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,   
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -156,11 +157,11 @@ export class AddRestaurantComponent implements OnInit{
      if (this.form.get('details.owner')?.value === '') {
       this.restaurantService.createRestaurant(this.form.value).subscribe({
         next: (response: RestaurantResponse) => {
-          this.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
+          this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
           this.router.navigate(['/admin']);
         },
           error: (error) => {
-            this.showAlert(
+            this.snackbarService.showAlert(
              error.error.message || 'An error occurred during form submission.'
             )
             return;
@@ -169,12 +170,12 @@ export class AddRestaurantComponent implements OnInit{
       } else {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
-           this.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
+           this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
             this.router.navigate(['/admin']); 
             return;
           },
           error: (error) => {
-            this.showAlert(
+            this.snackbarService.showAlert(
              error.error.message || 'An error occurred during form submission.'
             )
           },
@@ -184,16 +185,16 @@ export class AddRestaurantComponent implements OnInit{
       const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.showAlert(
+          this.snackbarService.showAlert(
             'Error, name field must be filled in.'
           )
         } else {
-          this.showAlert(
+          this.snackbarService.showAlert(
             'Errors occurs in the form'
           )
         }
       } else {
-        this.showAlert(
+        this.snackbarService.showAlert(
           'Errors occurs in the form'
         )
       }
@@ -204,12 +205,5 @@ export class AddRestaurantComponent implements OnInit{
     this.router.navigate(['/admin']);
   }
 
-showAlert(message: string, action: string = 'Close', duration: number = 3000) {
-  this.snackBar.open(message, action, {
-    duration: duration,
-    horizontalPosition: 'center',
-    verticalPosition: 'bottom',
-  });
-}
 
 }

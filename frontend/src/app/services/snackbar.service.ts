@@ -12,7 +12,7 @@ export class SnackbarService {
   showAlert(message: string, duration: number = 5000): void {
     this.snackBar.open(message, 'Close', {
       duration: duration,
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       verticalPosition: 'bottom',
     });
   }

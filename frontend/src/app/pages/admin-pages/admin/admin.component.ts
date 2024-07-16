@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlertService } from 'easy-angular-alerts';
+import { SnackbarService } from '../../../services/snackbar.service';
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -63,6 +64,7 @@ export class AdminComponent implements OnInit{
     private router: Router,
     private sessionService: SessionService,
     public loadingService: LoadingService,
+    public snackbarService: SnackbarService
   ) {
     this.formGroup = this.fb.group({
       selectedRestaurant: new FormControl(),
@@ -180,4 +182,24 @@ export class AdminComponent implements OnInit{
         error: (error) => console.error('Logout failed:', error),
       });
   }
+
+
+
+  testAlert(): void {
+    this.snackbarService.showAlert('test alert');
+  }
+
+  testErrorAlert(): void {
+    this.snackbarService.showAlert('test error alert');
+  }
+
+  testConfirmationAlert(): void {
+    this.snackbarService.showConfirmation('test confirmation', () => {
+      console.log('confirmed');
+    }, () => {
+      console.log('cancelled');
+    })
+  }
 }
+
+
