@@ -186,15 +186,15 @@ export class AdminComponent implements OnInit{
 
 
   testAlert(): void {
-    this.snackbarService.showAlert('test alert');
+    this.snackbarService.showAlert('test alert', 'Success');
   }
 
   testErrorAlert(): void {
-    this.snackbarService.showAlert('test error alert');
+    this.snackbarService.showAlert('test error alert', 'Error');
   }
 
   testConfirmationAlert(): void {
-    this.snackbarService.showConfirmation('test confirmation', () => {
+    this.snackbarService.showConfirmation('Are you sure you would like to complete this action?', 'Confirmation', () => {
       console.log('confirmed');
     }, () => {
       console.log('cancelled');

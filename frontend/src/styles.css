@@ -46,16 +46,35 @@ html {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
-.custom-alert-snackbar {
-  background-color: #333;
-  color: #000000;
+/* Override default snackbar label styles */
+.mat-mdc-snack-bar-label {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: visible !important;
+  opacity: 100% !important;
 }
 
-.custom-confirmation-snackbar {
-  color: #000000;
+.mdc-snackbar__label {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.custom-confirmation-snackbar button {
-  color: #000000;
+.mat-mdc-snack-bar-container {
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.mdc-snackbar__surface {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  visibility: visible !important;
+  opacity: 100% !important;
 }

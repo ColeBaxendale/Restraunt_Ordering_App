@@ -157,12 +157,12 @@ export class AddRestaurantComponent implements OnInit{
      if (this.form.get('details.owner')?.value === '') {
       this.restaurantService.createRestaurant(this.form.value).subscribe({
         next: (response: RestaurantResponse) => {
-          this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
+          this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name, 'Success')
           this.router.navigate(['/admin']);
         },
           error: (error) => {
             this.snackbarService.showAlert(
-             error.error.message || 'An error occurred during form submission.'
+             error.error.message || 'An error occurred during form submission.', 'Error'
             )
             return;
           },
@@ -170,13 +170,13 @@ export class AddRestaurantComponent implements OnInit{
       } else {
         this.restaurantService.createRestaurantWithOwner(this.form.get('details.owner')?.value, this.form.value).subscribe({
           next: (response: RestaurantAndUserResponse) => {
-           this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name)
+           this.snackbarService.showAlert('Successfully created restaurant: ' + response.restaurant?.details.name, 'Success')
             this.router.navigate(['/admin']); 
             return;
           },
           error: (error) => {
             this.snackbarService.showAlert(
-             error.error.message || 'An error occurred during form submission.'
+             error.error.message || 'An error occurred during form submission.', 'Error'
             )
           },
         });
@@ -186,16 +186,16 @@ export class AddRestaurantComponent implements OnInit{
       if (control) {
         if (control.hasError('required')) {
           this.snackbarService.showAlert(
-            'Error, name field must be filled in.'
+            'Error, name field must be filled in.', 'Error'
           )
         } else {
           this.snackbarService.showAlert(
-            'Errors occurs in the form'
+            'Errors occurs in the form', 'Error'
           )
         }
       } else {
         this.snackbarService.showAlert(
-          'Errors occurs in the form'
+          'Errors occurs in the form', 'Error'
         )
       }
     }

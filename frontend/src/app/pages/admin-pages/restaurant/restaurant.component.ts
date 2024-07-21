@@ -398,19 +398,19 @@ export class RestaurantComponent implements OnInit {
     if (email) {
       console.log('Showing confirmation alert');
       this.snackbarService.showConfirmation(
-        'Are you sure you want to proceed? ' + email + ' password will be reset?',
+        'Are you sure you want to proceed? ' + email + ' password will be reset?', 'Confirmation',
         () => {
           console.log('Confirmed!');
           if (ownerId) {
             this.userService.resetUser(ownerId).subscribe({
               next: (response: UserResponse) => {
                 console.log('User reset successful');
-                this.snackbarService.showAlert('Successfully reset user: ' + email);
+                this.snackbarService.showAlert('Successfully reset user: ' + email, 'Success');
                 this.router.navigate(['/admin']);
               },
               error: (error) => {
                 console.error('Error during reset:', error);
-                this.snackbarService.showAlert(error.error.message || 'An error occurred during form submission.');
+                this.snackbarService.showAlert(error.error.message || 'An error occurred during form submission.' , 'Error');
               },
             });
           }
@@ -421,7 +421,7 @@ export class RestaurantComponent implements OnInit {
       );
     } else {
       console.log('Owner email undefined.');
-      this.snackbarService.showAlert('Owner email undefined.');
+      this.snackbarService.showAlert('Owner email undefined.' , 'Error');
     }
   }
   

@@ -1,0 +1,12 @@
+<div class="snackbar-container" [ngClass]="data.type">
+    <span class="message">{{ data.message }}</span>
+    <div *ngIf="confirmation" class="actions">
+      <button (click)="onConfirm()" class="confirm">Confirm</button>
+      <button (click)="onDismiss()" class="cancel">Dismiss</button>
+    </div>
+
+    <div *ngIf="!confirmation">
+        <button (click)="onDismiss()">Close</button>
+      </div>
+  </div>
+  
