@@ -2,7 +2,7 @@
     <span class="message">{{ data.message }}</span>
     <div *ngIf="confirmation" class="actions">
       <button (click)="onConfirm()" class="confirm">Confirm</button>
-      <button (click)="onDismiss()" class="cancel">Dismiss</button>
+      <button (click)="onDismiss()" class="cancel">Cancel</button>
     </div>
 
     <div *ngIf="!confirmation">
