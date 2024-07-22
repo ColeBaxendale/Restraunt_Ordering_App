@@ -11,7 +11,7 @@
   /* Specific styles for success and error types */
   .Success {
     background-color: var(--black);
-    color: rgb(0, 255, 0);
+    color: rgb(0, 255, 0) !important;
     button{
         color:white;
     }
@@ -24,7 +24,7 @@
   }
   
   .Error {
-    background-color: var(--black);
+    background-color: var(--black) !important;
     color: rgb(255, 0, 0);
     button{
         color:white;
@@ -38,7 +38,7 @@
   
   .Confirmation {
     background-color: var(--black);
-    color: rgb(255, 255, 0);
+    color: rgb(255, 255, 0) !important;
     button{
         color:white;
     }

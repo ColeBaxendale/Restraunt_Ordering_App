@@ -50,8 +50,8 @@ a {
   color: var(--darkestBlue) !important;
   cursor: pointer;
   border: none;
-
 }
+
 .header .buttonContainer{
   display: flex;
   flex-direction: row;
@@ -62,6 +62,7 @@ a {
 .header .buttonClass:hover {
   text-decoration: underline;
   text-underline-offset: .5rem;
+  background-color: none !important;
 
 }
 
@@ -152,28 +153,23 @@ mat-card-title{
   color: var(--darkestBlue);
   margin-top: 0rem;
   padding-top: 0;
+  background-color: transparent !important;
 }
 
-.cardButtonDelete{
-  cursor: pointer;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
-  color: var(--darkestBlue);
-  margin-top: 0rem;
-  padding-top: 0;
-}
 
-.cardButtonDelete:hover{
-  cursor: pointer;
-  background-color: red;
-}
+
+
 
 
 .cardButton:hover{
-  cursor: pointer;
-
-  background-color: var(--lightBlue2);
+  text-decoration: underline;
+  text-underline-offset: .5rem;
+  transform: translateY(-4px);
+  transition: transform 0.3s ease; /* Smooth transform on hover */
 }
+
+
+
 
 mat-card{
   max-width: 30rem;
@@ -217,23 +213,15 @@ mat-progress-bar{
   margin-top: 1rem;
 }
 
-.deleteConfirm{
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: "JetBrainsMono", sans-serif;
-  font-weight: 100;
-  font-size: .8rem;
-}
+
 .buttonContainer{
   margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   grid-area: .5rem;
+  background-color: transparent !important;
+
 
 }
 
@@ -289,6 +277,23 @@ mat-progress-bar{
   margin-left: 3rem;
   margin-top: 3rem;
 
+}
+
+
+
+.header .buttonClassDisabled{
+  background: none;        /* Remove background color */
+  width: auto;             /* Adjust width as necessary */
+  height: auto;            /* Adjust height as necessary */
+  padding: 0; 
+  text-align: center;
+  font-family: "JetBrainsMono";
+  font-size: 1.5rem;
+  opacity: 45%;
+  font-weight: 100;
+  color: var(--darkestBlue) !important;
+  cursor:default;
+  border: none;
 }
 
 @media (max-width: 660px) {

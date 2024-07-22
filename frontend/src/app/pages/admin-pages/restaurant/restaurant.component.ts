@@ -19,8 +19,7 @@ import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RestaurantAndUserResponse, RestaurantResponse, UserResponse } from '../../../../../types';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AlertService } from 'easy-angular-alerts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from '../../../services/snackbar.service';
 @Component({
   selector: 'app-restaurant',
@@ -52,7 +51,6 @@ export class RestaurantComponent implements OnInit {
     private restaurantValidator: RestaurantValidatorService,
     public loadingService: LoadingService,
     private userService: UserService,
-    private snackBar: MatSnackBar,
     private snackbarService: SnackbarService
   ) {}
 
@@ -65,6 +63,9 @@ export class RestaurantComponent implements OnInit {
     } else {
       this.router.navigate(['/admin']);
     }
+
+    // Subscribe to loading state
+    
   }
 
   private initializeForm() {
@@ -144,7 +145,31 @@ export class RestaurantComponent implements OnInit {
         closeControl?.reset();
       }
     }
+  } 
+
+  public toggleDays(): void {
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+  
+    days.forEach(day => {
+      const dayGroup = this.form.get(`details.operatingHours.${day}`);
+      if (dayGroup) {
+        const isOpen = dayGroup.get('isOpen')?.value;
+        const openControl = dayGroup.get('open');
+        const closeControl = dayGroup.get('close');
+  
+        if (isOpen) {
+          openControl?.enable();
+          closeControl?.enable();
+        } else {
+          openControl?.disable();
+          closeControl?.disable();
+          openControl?.reset();
+          closeControl?.reset();
+        }
+      }
+    });
   }
+  
 
   private loadRestaurantData(restaurantId: string) {
     this.loadingService.setLoading(true, 'page');
@@ -191,15 +216,15 @@ export class RestaurantComponent implements OnInit {
                   });
                 },
                 error: (error) =>
-                  this.showAlert(
-                    'Error fetching restaurant data:' + error,
+                  this.snackbarService.showAlert(
+                    'Error fetching restaurant data:' + error, 'Error'
                   )
               });
           }
         },
         error: (error) =>
-          this.showAlert(
-            'Error fetching restaurant data:' + error,
+          this.snackbarService.showAlert(
+            'Error fetching restaurant data:' + error, 'Error'
           )
       });
   }
@@ -284,13 +309,13 @@ export class RestaurantComponent implements OnInit {
     .updateRestaurantWithNewOwner(this.restaurantId, this.form.value)
     .subscribe({
       next: (response: RestaurantAndUserResponse) => {
-        this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
+        this.snackbarService.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name, 'Success')
         this.router.navigate(['/admin']);
         return;
       },
       error: (error) => {
-        this.showAlert(
-          error.error.message || 'An error occurred during form submission.'
+        this.snackbarService.showAlert(
+          error.error.message || 'An error occurred during form submission.', 'Error'
         )
         return;
       },
@@ -298,57 +323,68 @@ export class RestaurantComponent implements OnInit {
   }
 
   private updateRestaurantWithOldAndNewOwner(){
-    // this.showAlert(
-    //   'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
-    //   () => {
-    //     this.restaurantService
-    //     .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
-    //     .subscribe({
-    //       next: (response: RestaurantAndUserResponse) => {
-    //         this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
-    //         this.router.navigate(['/admin']);
-    //         return;
-    //       },
-    //       error: (error) => {
-    //         this.showAlert(
-    //           error.error.message || 'An error occurred during form submission.'
-    //         )
-    //         return;
-    //       },
-    //     });
-    //   },
-    //   () => {
-    //     console.log('Cancelled!');
-    //     return;
-    //   });
+    this.loadingService.setLoading(true,'confirmation')
+    this.form.disable()
+
+    this.snackbarService.showConfirmation('Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?', 'Confirmation', () => {
+      this.form.enable();
+      this.toggleDays();
+      this.restaurantService
+      .deleteOwnerAddNewOwnerUpdateRestaurant(this.restaurantId, this.form.value)
+      .subscribe({
+        next: (response: RestaurantAndUserResponse) => {
+          this.snackbarService.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name,'Success');
+          this.router.navigate(['/admin']);
+          this.loadingService.setLoading(false,'');
+          return;
+          
+        },
+        error: (error) => {
+          this.form.enable();
+          this.toggleDays();
+          this.snackbarService.showAlert(error.error.message || 'An error occurred during form submission.', 'Error')
+          this.loadingService.setLoading(false,'');
+
+          return;
+        }
+      })
+    }, () => {
+            this.form.enable();
+            this.toggleDays();
+      this.loadingService.setLoading(false,'');
+      return;
+    })
    
   }
 
   private updateRestaurantWithOwnerRemoval(){
-
-    // this.showAlert(
-    //   'Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?',
-    //   () => {
-    //     this.restaurantService
-    //     .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
-    //     .subscribe({
-    //       next: (response: RestaurantAndUserResponse) => {
-    //         this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
-    //         this.router.navigate(['/admin']);
-    //         return;
-    //       },
-    //       error: (error) => {
-    //         this.showAlert(
-    //           error.error.message || 'An error occurred during form submission.'
-    //         )
-    //         return;
-    //       },
-    //     });
-    //   },
-    //   () => {
-    //     console.log('Cancelled!');
-    //     return;
-    //   });
+    this.loadingService.setLoading(true,'confirmation')
+    this.form.disable()
+    this.snackbarService.showConfirmation('Are you sure you want to proceed, ' + this.restaurantService.getCurrentOwnerEmail() + ' will be deleted?', 'Confirmation', () => {
+      this.form.enable();
+      this.toggleDays();
+      this.restaurantService
+      .deleteOwnerAndUpdateRestaurant(this.restaurantId, this.form.value)
+      .subscribe({
+        next: (response: RestaurantAndUserResponse) => {
+                   this.snackbarService.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name, 'Success')
+                   this.router.navigate(['/admin']);
+                   this.loadingService.setLoading(false,'');
+                   return;
+                 },
+                 error: (error) => {
+                  this.form.enable();
+                  this.toggleDays();
+                  this.snackbarService.showAlert(error.error.message || 'An error occurred during form submission.', 'Error')
+                  this.loadingService.setLoading(false,'');
+                   return;
+                },
+               });
+    }, () => {
+      this.form.enable();
+      this.toggleDays();
+      this.loadingService.setLoading(false,'');
+    })
   }
 
 
@@ -357,13 +393,13 @@ export class RestaurantComponent implements OnInit {
       .updateRestaurant(this.restaurantId, this.form.value)
       .subscribe({
         next: (response: RestaurantResponse) => {
-          this.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name)
+          this.snackbarService.showAlert('Successfully updated restaurant: ' + response.restaurant?.details.name, 'Success')
           this.router.navigate(['/admin']);
           return;
         },
         error: (error) => {
-          this.showAlert(
-            error.error.message || 'An error occurred during form submission.'
+          this.snackbarService.showAlert(
+            error.error.message || 'An error occurred during form submission.', 'Error'
           )
           return;
         },
@@ -375,17 +411,17 @@ export class RestaurantComponent implements OnInit {
     const control = this.form.get('details.name');
       if (control) {
         if (control.hasError('required')) {
-          this.showAlert(
-            'Name field is required'
+          this.snackbarService.showAlert(
+            'Name field is required', 'Error'
           )
         } else {
-          this.showAlert(
-            'Errors occur in the form'
+          this.snackbarService.showAlert(
+            'Errors occur in the form', 'Error'
           )
         }
       } else {
-        this.showAlert(
-          'Errors occur in the form'
+        this.snackbarService.showAlert(
+          'Errors occur in the form', 'Error'
         )
       }
   }
@@ -425,11 +461,5 @@ export class RestaurantComponent implements OnInit {
     }
   }
   
-  showAlert(message: string, action: string = 'Close', duration: number = 3000) {
-    this.snackBar.open(message, action, {
-      duration: duration,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
-  }
+
 }

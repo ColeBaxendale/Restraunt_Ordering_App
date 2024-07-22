@@ -141,8 +141,8 @@ a {
 .loginContainer .formInputLogin:hover {
   text-decoration: underline;
   text-underline-offset: .5rem;
-  color: var(--lightBlue2) !important;
-
+  transform: translateY(-2px);
+  transition: transform 0.2s ease; /* Smooth transform on hover */
 }
 
 .loginContainer .forgotPassword {
@@ -157,9 +157,9 @@ a {
 }
 
 .loginContainer .forgotPassword:hover {
-  color: var(--lightBlue2) !important;
   text-decoration: underline;
   text-underline-offset: .5rem;
+
 }
 
 .brandingContainer {
@@ -198,155 +198,4 @@ a {
 .loginLoader{
   display: flex;
   gap: 1rem;
-}
-
-
-
-@media (max-width: 1024px) {
-  .loginContainer .formInput {
-    width: 20rem;
-  }
-  .brandingContainer h1 {
-    font-size: 6.2rem;
-    line-height: 7.45rem;
-  }
-  
-  .brandingContainer h2 {
-    font-size: 1.7rem;
-    line-height: 3.7rem;
-  }
-
-
-}
-
-@media (max-width: 770px) {
-  .container {
-    display: flex;
-    flex-direction: column-reverse;
-    min-height: 100vh;
-  }
-  .loginContainer{
-    width: 100vw;
-    height: 55vh;
-    text-align: center;
-    justify-content: flex-start;
-  }
-
-  .loginContainer h1 {
-    font-size: 2.5rem;
-    color: var(--darkestBlue);
-    font-weight: 100;
-    margin-bottom: 2rem;
-    margin-top: 1.5rem;
-  }
-
-  .loginContainer .formInput {
-    text-align: center;
-    width: 24rem;
-    margin-bottom: 2rem;
-
-
-  }
-
-  .loginContainer .formInputLogin{
-    margin-bottom: 1.5rem;
-  }
-  
-  .brandingContainer{
-    width: 100vw;
-    height: 45vh;
-  }
-
-  .brandingContainer h1 {
-    font-size: 4.5rem;
-    line-height: 5.75rem;
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .brandingContainer h2 {
-    font-size: 1.5rem;
-    line-height: 3rem;
-    margin-bottom: 1rem;
-  }
-}
-
-@media (max-width: 435px) {
-
-  .loginContainer .formInput {
-    width: 20rem;
-
-  }
-
-  .loginContainer .formInputLogin {
-    margin-bottom: 1rem;
-  }
-
-  .loginContainer h1{
-    margin-top: 0.5rem;
-
-  }
-
-  .brandingContainer h1 {
-    font-size: 3.5rem;
-    line-height: 4.75rem;
-    
-  }
-  
-  .brandingContainer h2 {
-    font-size: 1rem;
-    line-height: 3rem;
-  letter-spacing: 0.38125rem;
-
-  }
-}
-
-@media (max-width: 380px) {
-  .loginContainer{
-    height: 70vh;
-  }
-  .brandingContainer{
-    height: 30vh;
-  }
-
-  .loginContainer h1{
-    margin-top: 0.5rem;
-
-  }
-  .brandingContainer h1 {
-    font-size:2rem;
-    line-height: 4.65rem;
-    margin-bottom: .5rem;
-    letter-spacing: 1rem;
-    line-height: 3rem;
-  }
-  
-  .brandingContainer h2 {
-    font-size: .8rem;
-    line-height: 1.5rem;
-    letter-spacing: 0.28125rem;
-    margin-bottom: 1rem;
-
-  }
-}
-
-@media (max-width: 320px) {
-  .loginContainer .formInput {
-    width: 16rem;
-
-  }
-
-  .brandingContainer h1 {
-    font-size: 2.5rem;
-    line-height: 2.65rem;
-    margin-top: 0.5rem;
-
-  }
-  
-  .brandingContainer h2 {
-    font-size: 1rem;
-    line-height: 1.9rem;
-  letter-spacing: 0.18125rem;
-
-  }
 }

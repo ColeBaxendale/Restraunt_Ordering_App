@@ -22,7 +22,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AlertService } from 'easy-angular-alerts';
 import { SnackbarService } from '../../../services/snackbar.service';
 @Component({
   selector: 'app-admin',
@@ -51,10 +50,8 @@ export class AdminComponent implements OnInit{
   totalAmountMade: number = 0;
   searchTerm: string = '';
   editingRestaurantId: string | null = null;
-  deleteDialog!: boolean;
   formGroup: FormGroup;
   filteredRestaurants: Restaurant[] = [];
-  errorMsg!: string;
   confirmationMsg!: string;
 
   constructor(
@@ -72,15 +69,7 @@ export class AdminComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.deleteDialog = false;
     this.loadRestaurants();
-    // if(this.currentAlertServcice.getCurrentMessage()){
-    //   this.currentAlertServcice.showAlertSimpleBottomRight(
-    //     this.currentAlertServcice.getCurrentMessage()
-    //   )
-    //   this.currentAlertServcice.setCurrentMessge('');
-    // }
-   
   }
 
 
@@ -135,37 +124,28 @@ export class AdminComponent implements OnInit{
         restaurant.details.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else {
-      // If no search term is provided, show all restaurants
       this.filteredRestaurants = this.restaurants;
     }
     this.loadingService.setLoading(false, '');
   }
 
-  delete(restaurantId: string): void {
-    this.deleteDialog = true;
-    this.editingRestaurantId = restaurantId;
-
-  }
-
-  cancel() {
-    this.deleteDialog = false;
-  }
-
-  confirmDelete(restaurantId: string) {
-    this.loadingService.setLoading(true, 'delete')
-    this.restaurantService.deleteRestaurant(restaurantId).subscribe({
-      next: (response: RestaurantResponse) => {
-        console.log('Successfully deleted restaurant: ', response.message);
-        this.deleteDialog = false;
-        this.loadRestaurants();
-
-      },
-      error: (error) => {
-        console.error('Delete failed', error);
-        this.errorMsg = error.error.message;
-      },
-    });
-    this.loadingService.setLoading(false, '')
+  delete(restaurantId: string , restaurantName: string): void {
+    this.loadingService.setLoading(true, 'confirmation')
+    this.snackbarService.showConfirmation('Are you sure you would like delete ' + restaurantName + '?', 'Confirmation', () => {
+      this.restaurantService.deleteRestaurant(restaurantId).subscribe({
+        next: (response: RestaurantResponse) => {
+          this.snackbarService.showAlert(restaurantName + ' deleted successfully', 'Success');
+          this.loadRestaurants();
+  
+        },
+        error: (error) => {
+          this.snackbarService.showAlert('Delete failed' + error, 'Error');
+        },
+      });
+      this.loadingService.setLoading(false, '')
+    }, () => {
+      this.loadingService.setLoading(false, '')
+    })
 
   }
 
@@ -184,15 +164,6 @@ export class AdminComponent implements OnInit{
   }
 
 
-
-  testAlert(): void {
-    this.snackbarService.showAlert('test alert', 'Success');
-  }
-
-  testErrorAlert(): void {
-    this.snackbarService.showAlert('test error alert', 'Error');
-  }
-
   testConfirmationAlert(): void {
     this.snackbarService.showConfirmation('Are you sure you would like to complete this action?', 'Confirmation', () => {
       console.log('confirmed');
@@ -200,6 +171,8 @@ export class AdminComponent implements OnInit{
       console.log('cancelled');
     })
   }
+
+  
 }
 
 

@@ -1,54 +1,56 @@
 <div class="container">
   <div #alertContainer></div>
-
   <div class="header">
-    <div class="searchAndLoading">
+    <div class="searchAndLoading" *ngIf="!loadingService.getLoading()">
       <input
       class="searchbar"
       type="text"
       placeholder="Search For Restaurant Name..."
       [(ngModel)]="searchTerm"
       (input)="searchRestaurants(searchTerm)"
-    />
-    <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
-
-
-
-    <button
-          (click)="testAlert()"
-        >
-          Alert Test
-        </button>
-
-      <button
-        (click)="testErrorAlert()"
-      >
-        Error Test
-      </button>
-
-      <button
-      (click)="testConfirmationAlert()"
-    >
-      Confirmation Test
-    </button>
-
-
-
-
-
-
-
-
-
+      />
+      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
     </div>
 
-    <div class="buttonContainer">
+    <div class="searchAndLoading" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
+      <input
+      class="searchbar"
+      type="text"
+      disabled="true"
+      placeholder="Finish confirmation before searching..."
+      [(ngModel)]="searchTerm"
+      (input)="searchRestaurants(searchTerm)"
+      />
+      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
+    </div>
+
+    <div class="searchAndLoading" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() != 'confirmation'">
+      <input
+      class="searchbar"
+      type="text"
+      placeholder="Restaurants loading..."
+      [(ngModel)]="searchTerm"
+      (input)="searchRestaurants(searchTerm)"
+      />
+      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
+    </div>
+
+    <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
       <button class="buttonClass" (click)="addRestaurant()">
         New Restaurant
       </button>
       <button class="buttonClass" (click)="logout()">Logout</button>
     </div>
+
+    <div class="buttonContainer" *ngIf="loadingService.getLoading()">
+      <button class="buttonClassDisabled" disabled="true">
+        New Restaurant
+      </button>
+      <button class="buttonClass"  (click)="logout()">Logout</button>
+    </div>
   </div>
+
+  
 
   <div class="restaurantContainer" *ngIf="restaurants.length > 0">
     <mat-card class="card" *ngFor="let restaurant of filteredRestaurants">
@@ -66,7 +68,7 @@
       >
       <mat-divider></mat-divider>
 
-      <mat-card-actions align="end" *ngIf="!this.deleteDialog" >
+      <mat-card-actions align="end"  *ngIf="!loadingService.getLoading()">
         <button
           class="cardButton"
           (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
@@ -74,15 +76,20 @@
         >
           Edit
         </button>
-        <button class="cardButton" (click)="restaurant._id ? delete(restaurant._id) : null" mat-button>Delete</button>
+        <button class="cardButton" (click)="restaurant._id ? delete(restaurant._id, restaurant.details.name) : null" mat-button>Delete</button>
       </mat-card-actions>
-      <div class="deleteConfirm" *ngIf="this.deleteDialog && this.editingRestaurantId == restaurant._id">
-        <p>Are you sure you want to delete <br>{{ restaurant.details.name }}</p>
-        <div class="buttonContainer">
-        <button class="cardButton" (click)="cancel()" mat-button>Cancel</button>
-        <button class="cardButtonDelete" (click)="confirmDelete(restaurant._id)" mat-button>Delete</button>
-      </div>
-      </div>
+
+      <mat-card-actions align="end" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
+        <button
+          class="cardButton"
+          disabled="true"
+          mat-button
+        >
+          Edit
+        </button>
+        <button class="cardButton" disabled="true" mat-button>Delete</button>
+      </mat-card-actions>
+
     <mat-card-footer>
       <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'delete'" mode="indeterminate"></mat-progress-bar>
 
