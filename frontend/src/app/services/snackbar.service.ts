@@ -19,6 +19,16 @@ export class SnackbarService {
     });
   }
 
+  showAlertTwo(message: string, duration: number = 5000): void {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      data: { message: message, type: 'Error' },
+      duration: duration,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      panelClass: ['custom-snackbar']
+    });
+  }
+
 
 
   showConfirmation(message: string, type: string , confirmAction: () => void, cancelAction?: () => void, duration: number = 5000): void {

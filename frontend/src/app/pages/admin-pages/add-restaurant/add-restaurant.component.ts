@@ -16,7 +16,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingService } from '../../../services/loading/loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
@@ -204,6 +203,4 @@ export class AddRestaurantComponent implements OnInit{
   cancel() {
     this.router.navigate(['/admin']);
   }
-
-
 }
