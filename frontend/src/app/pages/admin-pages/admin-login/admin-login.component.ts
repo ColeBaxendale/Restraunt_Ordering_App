@@ -1,5 +1,5 @@
 import { NgIf, CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet, Router } from '@angular/router';
 import { SessionService } from '../../../services/session/session/session.service';
@@ -40,4 +40,27 @@ export class AdminLoginComponent {
     });
     this.loadingService.setLoading(false,'');
   }
+
+  triggerLogin() {
+    document.getElementById('loginBtn')?.click();
+  }
+
+    // Track whether the user is using the keyboard for navigation
+    isKeyboardNavigation = false;
+
+    @HostListener('window:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+      if (event.key === 'Tab') {
+        this.isKeyboardNavigation = true;
+      }
+    }
+  
+    @HostListener('window:mousedown', ['$event'])
+    handleMouseEvent() {
+      this.isKeyboardNavigation = false;
+    }
+
+    toLogin(){
+      this.router.navigate(['/login']);
+    }
 }

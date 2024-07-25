@@ -1,10 +1,26 @@
-.page-container {
+/* Base styles for mobile devices */
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page-container-small {
   background-color: var(--white);
   overflow: hidden;
   height: 100vh;
   margin: 0;
   display: flex;
   flex-direction: column;
+}
+
+.page-container-large{
+  display: none;
+}
+
+.header-container {
+  height: 30vh;
 }
 
 .header {
@@ -18,7 +34,7 @@ h1 {
   font-family: "Montserrat", sans-serif;
   font-size: 1.75rem;
   letter-spacing: 0.1em;
-  font-weight: 500;
+  font-weight: 300;
   color: var(--darkBlue);
 }
 
@@ -57,78 +73,78 @@ h2 {
   opacity: 1;
 }
 
-.line-one {
+.line-one, .line-two {
   width: 66.93vw;
-  background-color: var(--dark);
+  background-color: var(--blue);
   height: 1.5px;
   margin-top: 0.35rem;
-  margin-bottom: 3.125rem;
 }
 
-.line-two {
-  width: 66.93vw;
-  background-color: var(--dark);
-  height: 1.5px;
-  margin-top: 0.35rem;
+.line-one {
+  margin-bottom: 3.125rem;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  
 }
-.login {
+
+.login, .forgot {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.5rem;
-  text-align: left;
-  padding: 0;
-  font-weight: 400;
-  color: var(--dark);
   background: none;
   border: none;
   outline: none;
-  margin-bottom: 1.75rem;
-  &&:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--darkBlue);
-    text-decoration-thickness: 0.075em;
-    text-underline-offset: 0.35rem;
+  cursor: pointer;
+  &:focus-visible{
+    outline: 1px solid var(--darkBlue); /* Change the color and width as needed */
+    outline-offset: 4px;
+  }
+}
 
+.login {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--darkBlue);
+  margin-bottom: 1.75rem;
+  &:hover{
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-underline-offset: 0.35rem;
+    text-decoration-thickness: 0.05em;
     cursor: pointer;
   }
 }
 
 .forgot {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.125em;
+  font-size: 1.125rem;
   font-weight: 400;
-  text-align: left;
-  padding: 0;
-  color: var(--dark);
-  background: none;
-  border: none;
-  outline: none;
-  &&:hover {
+  color: var(--darkBlue);
+  margin-top: 1rem;
+  &:hover{
+    color: var(--blue);
     text-decoration: underline;
-    text-decoration-color: var(--darkBlue);
+    text-decoration-color: var(--blue);
     text-underline-offset: 0.35rem;
-    text-decoration-thickness: 0.075em;
-
+    text-decoration-thickness: 0.05em;
     cursor: pointer;
   }
 }
 
 .footer-container {
-  margin-top: 8.5rem;
+  margin-top: 5.5rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
 }
 
 .footer-text {
   text-align: center;
+  color: var(--darkBlue);
   font-family: "Montserrat", sans-serif;
   font-size: 0.825rem;
-
   margin-bottom: 0.5rem;
   color: var(--dark);
   font-weight: 400;
@@ -140,22 +156,21 @@ h2 {
   font-size: 0.825rem;
   color: var(--dark);
   margin-bottom: 0.5rem;
-
   font-weight: 400;
-
-  &&:hover {
+  &:hover{
+    color: var(--blue);
     text-decoration: underline;
-    text-decoration-color: var(--darkBlue);
+    text-decoration-color: var(--blue);
     text-underline-offset: 0.35rem;
-    text-decoration-thickness: 0.075em;
+    text-decoration-thickness: 0.05em;
     cursor: pointer;
   }
 }
+
 .footer-text-copy {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-size: 0.825rem;
-
   margin-bottom: 0;
   color: var(--dark);
   font-weight: 400;
@@ -174,352 +189,254 @@ h2 {
   color: rgb(233, 0, 0);
 }
 
-
-
-
-
-
-/* h1,
-h2,
-h3,
-h4,
-p,
-a {
-  font-family: "JetBrainsMono";
-}
-
-.container {
-  display: flex;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-.loginContainer {
-  width: 40vw;
-  height: 100vh;
-  background-image: linear-gradient(to bottom, var(--offWhite), #ffffff);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-}
-
-.loginContainer h1 {
-  font-size: 2.5rem;
-  color: var(--darkestBlue);
-  font-weight: 100;
-  margin-bottom: 3rem;
-}
-
-.loginContainer .form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: -1.6rem;
-}
-
-.loginContainer .formInput {
-  width: 24rem;
-  height: 2.5rem;
-  border-bottom: 0.15rem solid var(--lightBlue2);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  text-align: left;
-  font-family: "JetBrainsMono";
-  font-size: 1.25rem;
-  letter-spacing: -0.043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
-  margin-bottom: 3rem;
-  color: var(--darkestBlue);
-  background-color: #ffffff;
-
-
-}
-
-.loginContainer .formInput::placeholder {
-  color: var(--darkestBlue);
-  background-color: #ffffff;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-
-
-  font-size: 1.25rem;
-}
-.loginContainer .formInput:focus {
-  outline: none;
-  
-}
-.loginContainer .formInput:-webkit-autofill,
-.loginContainer .formInput:-webkit-autofill:hover,
-.loginContainer .formInput:-webkit-autofill:focus,
-.loginContainer .formInput:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: 1.25rem;
-  
-}
-
-.loginContainer .formInput:-webkit-autofill::first-line {
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: 1.25rem;
-  
-}
-
-.loginContainer .formInput:-webkit-autofill {
-  -webkit-box-shadow: none;
-  font-family: "JetBrainsMono" !important;
-  font-size: 1.25rem !important;
-  background-color: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-
-.loginFormContainer .formInput:focus::placeholder {
-  color: transparent;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-.loginContainer .errorMessageContainer {
-  width: 100%;
-  height: 1rem;
-  margin-bottom: 1.4rem;
-}
-
-.loginContainer .errorMessageContainer p {
-  font-weight: 100;
-  font-size: 0.8rem;
-  color: rgb(233, 0, 0);
-  letter-spacing: -0.043125rem;
-}
-
-.loginContainer .formInputLogin {
-  background: none;        
-  width: auto;             
-  height: auto;          
-  padding: 0; 
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-size: 1.5rem;
-  color: var(--darkestBlue) !important;
-  cursor: pointer;
-  margin-bottom: 3rem;
-  border: none;
-  text-shadow:
-  -0.1px -0.1px 0 var(--lightBlue2),  
-  0.1px 0.1px 0 var(--lightBlue2),
-  -0.1px -0.1px 0 var(--lightBlue2),
-  0.1px 0.1px 0 var(--lightBlue2);
-  text-underline-offset: .5rem;
-
-}
-.loginContainer .formInputLogin:hover {
-  text-decoration: underline;
-}
-
-.loginContainer .forgotPassword {
-  text-align: left;
-  font-family: "JetBrainsMono";
-  font-weight: 100;
-  font-size: 0.9rem;
-  letter-spacing: 0.05rem;
-  text-decoration: none;
-  color: var(--darkestBlue) !important;
-  margin-bottom: 3rem;
-}
-
-.loginContainer .forgotPassword:hover {
-  color: var(--lightBlue2) !important;
-}
-
-.brandingContainer {
-  width: 60vw;
-  height: 100vh;
-  background-image: linear-gradient(
-    to top,
-    var(--lightBlue2),
-    var(--darkestBlue)
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.brandingContainer h1 {
-  font-size: 6.5rem;
-  line-height: 7.75rem;
-  letter-spacing: 1.45125rem;
-  color: var(--offWhite);
-  font-weight: 400;
-  margin-bottom: 2.5rem;
-}
-
-.brandingContainer h2 {
-  font-size: 2rem;
-  line-height: 4rem;
-  letter-spacing: 0.48125rem;
-  color: var(--darkestBlue);
-  font-weight: 100;
-  margin-bottom: 3rem;
-}
-
-
-
-@media (max-width: 1024px) {
-  .loginContainer .formInput {
-    width: 20rem;
+@media (max-width: 480px) {
+  .header {
+    padding-top: 13%;
   }
-  .brandingContainer h1 {
-    font-size: 6.2rem;
-    line-height: 7.45rem;
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .header {
+    padding-top: 9%;
   }
-  
-  .brandingContainer h2 {
-    font-size: 1.7rem;
-    line-height: 3.7rem;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .header {
+    padding-top: 6%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .page-container-small {
+    display: none;
   }
 
-
-}
-
-@media (max-width: 843px) {
-  .container {
+  .page-container-large {
     display: flex;
-    flex-direction: column-reverse;
-    min-height: 100vh;
+    flex-direction: row;
+    height: 100vh;
   }
-  .loginContainer{
-    width: 100vw;
-    height: 55vh;
+
+  .left-container {
+    height: 100vh;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .left-container-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5vw;
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
-    justify-content: flex-start;
   }
 
-  .loginContainer h1 {
-    font-size: 2.5rem;
-    color: var(--darkestBlue);
-    font-weight: 100;
-    margin-bottom: 2rem;
-    margin-top: 1.5rem;
+  h3{
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
   }
-
-  .loginContainer .formInput {
+  .right-container {
+    background: linear-gradient(to bottom, var(--darkBlue), var(--blue));
+    height: 100vh;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    width: 24rem;
-    margin-bottom: 2rem;
-
-
   }
 
-  .loginContainer .formInputLogin{
-    margin-bottom: 1.5rem;
-  }
-  
-  .brandingContainer{
-    width: 100vw;
-    height: 45vh;
+  .input {
+    margin-top: 3.5rem;
+    margin-bottom: 4rem;
   }
 
-  .brandingContainer h1 {
-    font-size: 4.5rem;
-    line-height: 5.75rem;
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
+  .line-one, .line-two {
+    width: 28vw;
+    background-color: var(--dark);
+    height: 1.5px;
+    margin-top: 0.35rem;
   }
-  
-  .brandingContainer h2 {
-    font-size: 1.5rem;
-    line-height: 3rem;
-    margin-bottom: 1rem;
+
+  .line-one {
+    margin-bottom: 3.125rem;
+  }
+
+  .input-text {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.025rem;
+    font-weight: 400;
+    color: var(--dark);
+    border: none;
+    outline: none;
+  }
+
+  .input-text::placeholder {
+    color: var(--dark);
+    opacity: 1;
+  }
+  h1{
+    font-family: "Montserrat", sans-serif;
+    font-size: 5.375rem; /* 70px */
+    font-weight: 300; /* Regular weight */
+    color: var(--white);
+    line-height: 2.5rem; /* 40px */
+    margin-bottom: 2.5rem; /* Adjust as needed */
+    letter-spacing: 6%; /* Adjust as needed */
+    /* Assuming paragraph spacing means margin-bottom */
+    margin-bottom: 55px; /* Paragraph spacing */
+  }
+
+
+  .saying {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem; /* 40px */
+    font-weight: 200; /* Light weight */
+    color: var(--gray); /* Adjust color as needed */
+    line-height: 2.5rem; /* 40px */
+    margin-bottom: 28px; /* Paragraph spacing */
+  }
+  .row{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .line{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem; /* 40px */
+    font-weight: 200; /* Light weight */
+    color: var(--darkBlue); /* Adjust color as needed */
   }
 }
 
-@media (max-width: 435px) {
 
-  .loginContainer .formInput {
-    width: 20rem;
 
+@media (min-width: 1201px) {
+  .page-container-small {
+    display: none;
   }
 
-  .loginContainer .formInputLogin {
-    margin-bottom: 1rem;
+  .page-container-large {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
   }
 
-  .loginContainer h1{
-    margin-top: 0.5rem;
-
+  .left-container {
+    height: 100vh;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
   }
 
-  .brandingContainer h1 {
-    font-size: 3.5rem;
-    line-height: 4.75rem;
-    
+  .left-container-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5vw;
   }
-  
-  .brandingContainer h2 {
+
+  .copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  h3{
     font-size: 1rem;
-    line-height: 3rem;
-  letter-spacing: 0.38125rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+  }
+  .right-container {
+    background: linear-gradient(to bottom, var(--darkBlue), var(--blue));
+    height: 100vh;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 
+  .input {
+    margin-top: 3.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .line-one, .line-two {
+    width: 28vw;
+    background-color: var(--dark);
+    height: 1.5px;
+    margin-top: 0.35rem;
+  }
+
+  .line-one {
+    margin-bottom: 3.125rem;
+  }
+
+  .input-text {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.025rem;
+    font-weight: 400;
+    color: var(--dark);
+    border: none;
+    outline: none;
+  }
+
+  .input-text::placeholder {
+    color: var(--dark);
+    opacity: 1;
+  }
+  h1{
+    font-family: "Montserrat", sans-serif;
+    font-size: 5.375rem; /* 70px */
+    font-weight: 300; /* Regular weight */
+    color: var(--white);
+    line-height: 2.5rem; /* 40px */
+    margin-bottom: 2.5rem; /* Adjust as needed */
+    letter-spacing: 6%; /* Adjust as needed */
+    /* Assuming paragraph spacing means margin-bottom */
+    margin-bottom: 55px; /* Paragraph spacing */
+  }
+
+
+  .saying {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem; /* 40px */
+    font-weight: 200; /* Light weight */
+    color: var(--gray); /* Adjust color as needed */
+    line-height: 2.5rem; /* 40px */
+    margin-bottom: 28px; /* Paragraph spacing */
+  }
+  .row{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .line{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem; /* 40px */
+    font-weight: 200; /* Light weight */
+    color: var(--darkBlue); /* Adjust color as needed */
   }
 }
-
-@media (max-width: 380px) {
-  .loginContainer{
-    height: 70vh;
-  }
-  .brandingContainer{
-    height: 30vh;
-  }
-
-  .loginContainer h1{
-    margin-top: 0.5rem;
-
-  }
-  .brandingContainer h1 {
-    font-size:2rem;
-    line-height: 4.65rem;
-    margin-bottom: .5rem;
-    letter-spacing: 1rem;
-    line-height: 3rem;
-  }
-  
-  .brandingContainer h2 {
-    font-size: .8rem;
-    line-height: 1.5rem;
-    letter-spacing: 0.28125rem;
-    margin-bottom: 1rem;
-
-  }
-}
-
-@media (max-width: 320px) {
-  .loginContainer .formInput {
-    width: 16rem;
-
-  }
-
-  .brandingContainer h1 {
-    font-size: 2.5rem;
-    line-height: 2.65rem;
-    margin-top: 0.5rem;
-
-  }
-  
-  .brandingContainer h2 {
-    font-size: 1rem;
-    line-height: 1.9rem;
-  letter-spacing: 0.18125rem;
-
-  }
-} */

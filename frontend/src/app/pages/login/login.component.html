@@ -1,4 +1,4 @@
-<div class="page-container">
+<div class="page-container-small">
   <div class="header-container">
     <div class="header">
       <h1>ORDER FEAST</h1>
@@ -6,6 +6,7 @@
   </div>
   <div class="content-container">
     <div class="content">
+      <h2>Sign into owner dashboard</h2>
       <div class="inputs">
         <form (ngSubmit)="onSubmit()">
           <input
@@ -14,6 +15,8 @@
             [(ngModel)]="user.email"
             name="email"
             placeholder="Email..."
+            (keydown.enter)="triggerLogin()"
+            [class.focus-visible]="isKeyboardNavigation"
             required
           />
           <div class="line-one"></div>
@@ -23,6 +26,8 @@
             [(ngModel)]="user.password"
             name="password"
             placeholder="Password..."
+            (keydown.enter)="triggerLogin()"
+            [class.focus-visible]="isKeyboardNavigation"
             required
           />
           <div class="line-two"></div>
@@ -33,10 +38,9 @@
           </div>
         </form>
       </div>
-
       <div class="buttons">
-        <button type="submit" (click)="onSubmit()" class="login">Login</button>
-        <a class="forgot">Forgot Password?</a>
+        <button type="submit" id="loginBtn" (click)="onSubmit()" class="login">Login</button>
+        <button class="forgot" (click)="toForgot()">Forgot Password?</button>
       </div>
     </div>
   </div>
@@ -47,51 +51,60 @@
   </div>
 </div>
 
-
-
-
-
-
-<!-- <div class="container">
-  <div class="loginContainer">
-    <div class="loginInsideContainer">
-      <h1>LOGIN</h1>
-      <form class="form" (ngSubmit)="onSubmit()">
-        <input
-          type="email"
-          class="formInput"
-          [(ngModel)]="user.email"
-          name="email"
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          class="formInput"
-          [(ngModel)]="user.password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-      </form>
-      <div class="errorMessageContainer">
-        <div *ngIf="errorMsg != ''">
-          <p>{{ errorMsg }}</p>
-        </div>
+<div class="page-container-large">
+  <div class="left-container">
+    <div class="left-container-content">
+      <h2>Sign into owner dashboard</h2>
+      <div class="input">
+        <form (ngSubmit)="onSubmit()">
+          <input
+            type="email"
+            class="input-text"
+            [(ngModel)]="user.email"
+            name="email"
+            placeholder="Email..."
+            required
+            [class.focus-visible]="isKeyboardNavigation"
+            (keydown.enter)="triggerLogin()"
+          />
+          <div class="line-one"></div>
+          <input
+            type="password"
+            class="input-text"
+            [(ngModel)]="user.password"
+            name="password"
+            placeholder="Password..."
+            required
+            [class.focus-visible]="isKeyboardNavigation"
+            (keydown.enter)="triggerLogin()"
+          />
+          <div class="line-two"></div>
+          <div class="errorMessageContainer">
+            <div *ngIf="errorMsg != ''">
+              <p>{{ errorMsg }}</p>
+            </div>
+          </div>
+        </form>
       </div>
-      <button type="submit" (click)="onSubmit()" class="formInputLogin">
-        Login
-      </button>
-      <div>
-        <a class="forgotPassword" href="">Forgot Password?</a>
+      <div class="buttons">
+        <button type="submit" id="loginBtn" (click)="onSubmit()" class="login">Login</button>
+        <button class="forgot" (click)="toForgot()" >Forgot Password?</button>
+
       </div>
+    </div>
+    <div class="copyright">
+      <h3>Copyright 2024</h3>
     </div>
   </div>
 
-  <div class="brandingContainer">
-    <div class="header">
-      <h1>ORDER<br />FEAST</h1>
-      <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
+  <div class="right-container">
+    <h1>ORDER</h1>
+    <h1>FEAST</h1>
+    <div class="row">
+      <h2 class="saying">Simplify Ordering</h2>
+      <h2 class="line">|</h2>
+      <h2 class="saying">Amplify Success</h2>
+
     </div>
   </div>
-</div> -->
+</div>
