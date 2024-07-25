@@ -1,4 +1,59 @@
-<div class="container">
+<div class="page-container">
+  <div class="header-container">
+    <div class="header">
+      <h1>ORDER FEAST <br>ADMIN</h1>
+    </div>
+  </div>
+  <div class="content-container">
+    <div class="content">
+      <div class="inputs">
+        <form (ngSubmit)="onSubmit()">
+          <input
+            type="text"
+            class="input-text"
+            [(ngModel)]="adminCreds.username"
+            name="username"
+            placeholder="Username..."
+            required
+          />
+          <div class="line-one"></div>
+          <input
+            type="password"
+            class="input-text"
+            [(ngModel)]="adminCreds.password"
+            name="password"
+            placeholder="Password..."
+            required
+          />
+          <div class="line-two"></div>
+          <div class="errorMessageContainer">
+            <div *ngIf="errorMsg != ''">
+              <p>{{ errorMsg }}</p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" (click)="onSubmit()" class="login">Login</button>
+        <a class="forgot" href="">Not supposed to be here?</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container">
+    <h3 class="footer-text">Simplify Ordering, Amplify your Success</h3>
+    <h3 class="footer-text-link">www.orderfeast.com</h3>
+    <h3 class="footer-text-copy">Copyright 2024</h3>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="container">
   <div class="loginContainer">
     <div class="loginInsideContainer">
       <h1>ADMIN LOGIN</h1>
@@ -44,4 +99,4 @@
       <h2>SIMPLIFY ORDERING.<br />AMPLIFY YOUR SUCCESS.</h2>
     </div>
   </div>
-</div>
+</div> -->

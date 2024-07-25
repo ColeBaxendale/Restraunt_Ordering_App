@@ -1,4 +1,186 @@
-h1,
+.page-container {
+  background-color: var(--white);
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding-top: 13%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.75rem;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  color: var(--darkBlue);
+}
+
+.content-container {
+  margin-top: 4.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.content {
+  margin-left: 11.73%;
+}
+
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.125rem;
+  color: var(--dark);
+  font-weight: 400;
+}
+
+.inputs {
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.input-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.025rem;
+  font-weight: 400;
+  color: var(--dark);
+  border: none;
+  outline: none;
+}
+
+.input-text::placeholder {
+  color: var(--dark);
+  opacity: 1;
+}
+
+.line-one {
+  width: 66.93vw;
+  background-color: var(--dark);
+  height: 1.5px;
+  margin-top: 0.35rem;
+  margin-bottom: 3.125rem;
+}
+
+.line-two {
+  width: 66.93vw;
+  background-color: var(--dark);
+  height: 1.5px;
+  margin-top: 0.35rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.login {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  text-align: left;
+  padding: 0;
+  font-weight: 400;
+  color: var(--dark);
+  background: none;
+  border: none;
+  outline: none;
+  margin-bottom: 1.75rem;
+  &&:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--darkBlue);
+    text-decoration-thickness: 0.075em;
+    text-underline-offset: 0.35rem;
+
+    cursor: pointer;
+  }
+}
+
+.forgot {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.125em;
+  font-weight: 400;
+  text-align: left;
+  padding: 0;
+  text-decoration: none;
+  color: var(--dark);
+  background: none;
+  border: none;
+  outline: none;
+  &&:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--darkBlue);
+    text-underline-offset: 0.35rem;
+    text-decoration-thickness: 0.075em;
+
+    cursor: pointer;
+  }
+}
+
+.footer-container {
+  margin-top: 8.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-text {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.825rem;
+
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+  font-weight: 400;
+}
+
+.footer-text-link {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.825rem;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+
+  font-weight: 400;
+
+  &&:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--darkBlue);
+    text-underline-offset: 0.35rem;
+    text-decoration-thickness: 0.075em;
+    cursor: pointer;
+  }
+}
+.footer-text-copy {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.825rem;
+
+  margin-bottom: 0;
+  color: var(--dark);
+  font-weight: 400;
+}
+
+.errorMessageContainer {
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: -1.5rem;
+  margin-top: 0.5rem;
+  height: 0.5rem;
+}
+
+.errorMessageContainer p {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: rgb(233, 0, 0);
+}
+
+
+
+
+
+
+/* h1,
 h2,
 h3,
 h4,
@@ -16,7 +198,7 @@ a {
 .loginContainer {
   width: 40vw;
   height: 100vh;
-  background-color: var(--offWhite3);
+  background-image: linear-gradient(to bottom, var(--offWhite), #ffffff);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,7 +209,6 @@ a {
 .loginContainer h1 {
   font-size: 2.5rem;
   color: var(--darkestBlue);
-
   font-weight: 100;
   margin-bottom: 3rem;
 }
@@ -39,7 +220,6 @@ a {
   justify-content: center;
   text-align: center;
   margin-bottom: -1.6rem;
-  
 }
 
 .loginContainer .formInput {
@@ -52,57 +232,62 @@ a {
   text-align: left;
   font-family: "JetBrainsMono";
   font-size: 1.25rem;
-  letter-spacing: .043125rem;
+  letter-spacing: -0.043125rem;
   color: var(--darkestBlue) !important;
   caret-color: var(--darkestBlue);
   margin-bottom: 3rem;
-  background-color: var(--offWhite3);
+  color: var(--darkestBlue);
+  background-color: #ffffff;
+
 
 }
 
 .loginContainer .formInput::placeholder {
   color: var(--darkestBlue);
-  font-size: 1.25rem;
-  background-color: var(--offWhite3);
+  background-color: #ffffff;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 
+
+  font-size: 1.25rem;
 }
 .loginContainer .formInput:focus {
   outline: none;
-  background-color: var(--offWhite3);
-
+  
 }
 .loginContainer .formInput:-webkit-autofill,
 .loginContainer .formInput:-webkit-autofill:hover,
 .loginContainer .formInput:-webkit-autofill:focus,
 .loginContainer .formInput:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
   transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: var(--darkestBlue) !important;
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
-  background-color: var(--offWhite3);
-
+  
 }
 
 .loginContainer .formInput:-webkit-autofill::first-line {
   font-family: "JetBrainsMono", sans-serif;
   font-size: 1.25rem;
-  background-color: var(--offWhite3);
-
+  
 }
 
 .loginContainer .formInput:-webkit-autofill {
   -webkit-box-shadow: none;
-  background-color: var(--offWhite3);
-
   font-family: "JetBrainsMono" !important;
   font-size: 1.25rem !important;
+  background-color: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 .loginFormContainer .formInput:focus::placeholder {
   color: transparent;
-  background-color: var(--offWhite3);
-
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 .loginContainer .errorMessageContainer {
   width: 100%;
@@ -118,9 +303,9 @@ a {
 }
 
 .loginContainer .formInputLogin {
-  background: none;        /* Remove background color */
-  width: auto;             /* Adjust width as necessary */
-  height: auto;            /* Adjust height as necessary */
+  background: none;        
+  width: auto;             
+  height: auto;          
   padding: 0; 
   text-align: center;
   font-family: "JetBrainsMono";
@@ -137,12 +322,8 @@ a {
   text-underline-offset: .5rem;
 
 }
-
 .loginContainer .formInputLogin:hover {
   text-decoration: underline;
-  text-underline-offset: .5rem;
-  transform: translateY(-2px);
-  transition: transform 0.2s ease; /* Smooth transform on hover */
 }
 
 .loginContainer .forgotPassword {
@@ -157,9 +338,7 @@ a {
 }
 
 .loginContainer .forgotPassword:hover {
-  text-decoration: underline;
-  text-underline-offset: .5rem;
-
+  color: var(--lightBlue2) !important;
 }
 
 .brandingContainer {
@@ -195,7 +374,153 @@ a {
   margin-bottom: 3rem;
 }
 
-.loginLoader{
-  display: flex;
-  gap: 1rem;
+
+
+@media (max-width: 1024px) {
+  .loginContainer .formInput {
+    width: 20rem;
+  }
+  .brandingContainer h1 {
+    font-size: 6.2rem;
+    line-height: 7.45rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1.7rem;
+    line-height: 3.7rem;
+  }
+
+
 }
+
+@media (max-width: 843px) {
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+    min-height: 100vh;
+  }
+  .loginContainer{
+    width: 100vw;
+    height: 55vh;
+    text-align: center;
+    justify-content: flex-start;
+  }
+
+  .loginContainer h1 {
+    font-size: 2.5rem;
+    color: var(--darkestBlue);
+    font-weight: 100;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .loginContainer .formInput {
+    text-align: center;
+    width: 24rem;
+    margin-bottom: 2rem;
+
+
+  }
+
+  .loginContainer .formInputLogin{
+    margin-bottom: 1.5rem;
+  }
+  
+  .brandingContainer{
+    width: 100vw;
+    height: 45vh;
+  }
+
+  .brandingContainer h1 {
+    font-size: 4.5rem;
+    line-height: 5.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1.5rem;
+    line-height: 3rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 435px) {
+
+  .loginContainer .formInput {
+    width: 20rem;
+
+  }
+
+  .loginContainer .formInputLogin {
+    margin-bottom: 1rem;
+  }
+
+  .loginContainer h1{
+    margin-top: 0.5rem;
+
+  }
+
+  .brandingContainer h1 {
+    font-size: 3.5rem;
+    line-height: 4.75rem;
+    
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1rem;
+    line-height: 3rem;
+  letter-spacing: 0.38125rem;
+
+  }
+}
+
+@media (max-width: 380px) {
+  .loginContainer{
+    height: 70vh;
+  }
+  .brandingContainer{
+    height: 30vh;
+  }
+
+  .loginContainer h1{
+    margin-top: 0.5rem;
+
+  }
+  .brandingContainer h1 {
+    font-size:2rem;
+    line-height: 4.65rem;
+    margin-bottom: .5rem;
+    letter-spacing: 1rem;
+    line-height: 3rem;
+  }
+  
+  .brandingContainer h2 {
+    font-size: .8rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.28125rem;
+    margin-bottom: 1rem;
+
+  }
+}
+
+@media (max-width: 320px) {
+  .loginContainer .formInput {
+    width: 16rem;
+
+  }
+
+  .brandingContainer h1 {
+    font-size: 2.5rem;
+    line-height: 2.65rem;
+    margin-top: 0.5rem;
+
+  }
+  
+  .brandingContainer h2 {
+    font-size: 1rem;
+    line-height: 1.9rem;
+  letter-spacing: 0.18125rem;
+
+  }
+} */

@@ -1,26 +1,11 @@
 :root {
-    --lightBlue: #D7F9FF;
-    --lightBlue2: #8fb5bc;
 
-    --darkerBlue: #AFCBFF;
-    --darkestBlue: #0E1C36;
-    --lightTan: #F9FBF2;
-    --offWhite: #fefefe;
-    --offWhite2: #f9f9f9;
-    --offWhite3: #ecebeb;
-
-    --lightOrange: #FFEDE1;
-
-
-
-
-    --light: #b8bfbc;
-    --middle: #A5AFAB;
-    --dark: #818181;
-    --darker: #111312;
-
-    --black: #000000;
-    --white: #ffffff;
+  --white: #ffffff;
+  --silver: #EDEEEB;
+  --gray: #CCC7BF;
+  --dark: #31393C;
+  --blue: #3E96F4;
+  --darkBlue: #00509E;
 
 
 
@@ -38,8 +23,8 @@ html {
 
 
 @font-face {
-    font-family: 'JetBrainsMono';
-    src: url('assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+    font-family: 'montserrat';
+    src: url('assets/fonts/Montserrat-VariableFont_wght.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
   }
