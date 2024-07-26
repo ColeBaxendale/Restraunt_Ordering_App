@@ -81,7 +81,11 @@ export class AdminComponent implements OnInit{
 
   loadRestaurants(): void {
     this.loadingService.setLoading(true, 'restaurants');
-    this.restaurantService.getAllRestaurants().subscribe({
+    this.restaurantService.getAllRestaurants().pipe(
+      finalize(() => {
+        this.loadingService.setLoading(false, 'restaurants');
+      })
+    ).subscribe({
       next: (response: any) => {
         if (response && response.restaurants) {
           this.restaurants = response.restaurants;
@@ -104,8 +108,8 @@ export class AdminComponent implements OnInit{
         console.error('Error loading restaurants:', err);
       },
     });
-    this.loadingService.setLoading(false, '');
   }
+  
 
   restaurantPage(restaurantId: string) {
     this.loadingService.setLoading(true, 'edit');

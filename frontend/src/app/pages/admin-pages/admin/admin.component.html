@@ -1,12 +1,14 @@
 <div class="mobile-page">
-
-
   <div class="mobile-header" *ngIf="!loadingService.getLoading()">
     <mat-progress-bar
-    class="mobile-loading-header"
-    mode="indeterminate"
-    *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"
-  ></mat-progress-bar>
+      class="mobile-loading-header"
+      mode="indeterminate"
+      *ngIf="
+        loadingService.getLoading() &&
+        loadingService.getLoadingItem() === 'search' &&
+        searchTerm != ''
+      "
+    ></mat-progress-bar>
     <input
       class="mobile-searchbar"
       type="text"
@@ -16,16 +18,25 @@
     />
     <div class="mobile-line-container">
       <div class="mobile-line"></div>
-
     </div>
   </div>
 
-  <div class="mobile-header" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
+  <div
+    class="mobile-header"
+    *ngIf="
+      loadingService.getLoading() &&
+      loadingService.getLoadingItem() === 'confirmation'
+    "
+  >
     <mat-progress-bar
-    class="mobile-loading-header"
-    mode="indeterminate"
-    *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"
-  ></mat-progress-bar>
+      class="mobile-loading-header"
+      mode="indeterminate"
+      *ngIf="
+        loadingService.getLoading() &&
+        loadingService.getLoadingItem() === 'search' &&
+        searchTerm != ''
+      "
+    ></mat-progress-bar>
     <input
       class="mobile-searchbar"
       type="text"
@@ -35,16 +46,25 @@
     />
     <div class="mobile-line-container">
       <div class="mobile-line"></div>
-
     </div>
   </div>
 
-  <div class="mobile-header" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() != 'confirmation'">
+  <div
+    class="mobile-header"
+    *ngIf="
+      loadingService.getLoading() &&
+      loadingService.getLoadingItem() != 'confirmation'
+    "
+  >
     <mat-progress-bar
-    class="mobile-loading-header"
-    mode="indeterminate"
-    *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"
-  ></mat-progress-bar>
+      class="mobile-loading-header"
+      mode="indeterminate"
+      *ngIf="
+        loadingService.getLoading() &&
+        loadingService.getLoadingItem() === 'search' &&
+        searchTerm != ''
+      "
+    ></mat-progress-bar>
     <input
       class="mobile-searchbar"
       type="text"
@@ -52,195 +72,137 @@
       [(ngModel)]="searchTerm"
       (input)="searchRestaurants(searchTerm)"
     />
-    <div class="mobile-line-container" >
+    <div class="mobile-line-container">
       <div class="mobile-line"></div>
-
     </div>
   </div>
 
-  <div class="mobile-content-container" *ngIf="restaurants.length > 0">
-    <mat-card class="card" *ngFor="let restaurant of filteredRestaurants">
-      <mat-card-subtitle
-        ><p>{{ restaurant._id }}</p></mat-card-subtitle
-      >
-      <mat-card-title class="cardHeader"
+  <div class="mobile-content" *ngIf="restaurants.length > 0">
+    <mat-card
+      class="mobile-card"
+      *ngFor="let restaurant of filteredRestaurants"
+    >
+      <mat-card-title class="mobile-card-header"
         ><p>{{ restaurant.details.name }}</p></mat-card-title
       >
-      <mat-divider></mat-divider>
-      <mat-card-content
-        >Overall Income: ${{
+
+      <mat-card-content class="mobile-income"
+        >${{
           restaurant.admin.overallIncome - 0.01 | number : "1.2-2"
         }}</mat-card-content
       >
-      <mat-divider></mat-divider>
+      <div class="mobile-card-footer">
+        <div class="mobile-card-footer-icons-container">
+          <mat-icon
+            *ngIf="!loadingService.getLoading()"
+            class="mobile-card-icons"
+            (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
+            aria-hidden="false"
+            aria-label="edit icon"
+            fontIcon="edit"
+          ></mat-icon>
+          <mat-icon
+            *ngIf="!loadingService.getLoading()"
+            class="mobile-card-icons"
+            (click)="
+              restaurant._id
+                ? delete(restaurant._id, restaurant.details.name)
+                : null
+            "
+            aria-hidden="false"
+            aria-label="delete icon"
+            fontIcon="delete"
+          ></mat-icon>
 
-      <mat-card-actions align="end"  *ngIf="!loadingService.getLoading()">
-        <button
-          class="cardButton"
-          (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
-          mat-button
-        >
-          Edit
-        </button>
-        <button class="cardButton" (click)="restaurant._id ? delete(restaurant._id, restaurant.details.name) : null" mat-button>Delete</button>
-      </mat-card-actions>
+          <mat-icon
+            *ngIf="loadingService.getLoading()"
+            class="mobile-card-icons-disabled"
+            aria-hidden="false"
+            aria-label="edit icon"
+            fontIcon="edit"
+          ></mat-icon>
+          <mat-icon
+            *ngIf="loadingService.getLoading()"
+            class="mobile-card-icons-disabled"
+            aria-hidden="false"
+            aria-label="delete icon"
+            fontIcon="delete"
+          ></mat-icon>
+        </div>
 
-      <mat-card-actions align="end" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
-        <button
-          class="cardButton"
-          disabled="true"
-          mat-button
-        >
-          Edit
-        </button>
-        <button class="cardButton" disabled="true" mat-button>Delete</button>
-      </mat-card-actions>
+        <mat-progress-bar
+          *ngIf="
+            loadingService.getLoading() &&
+            this.editingRestaurantId === restaurant._id &&
+            loadingService.getLoadingItem() === 'delete'
+          "
+          mode="indeterminate"
+        ></mat-progress-bar>
 
-    <mat-card-footer>
-      <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'delete'" mode="indeterminate"></mat-progress-bar>
-
-        <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'edit'" mode="indeterminate"></mat-progress-bar>
-      </mat-card-footer>
-
+        <mat-progress-bar
+          *ngIf="
+            loadingService.getLoading() &&
+            this.editingRestaurantId === restaurant._id &&
+            loadingService.getLoadingItem() === 'edit'
+          "
+          mode="indeterminate"
+        ></mat-progress-bar>
+      </div>
     </mat-card>
   </div>
 
+  <div
+    class="mobile-message"
+    *ngIf="
+      filteredRestaurants.length < 1 &&
+      restaurants.length > 0 &&
+      !loadingService.getLoading()
+    "
+  >
+    <h1>No Restaurants Have Been Found With That Search...</h1>
+  </div>
+  <div
+    class="mobile-message"
+    *ngIf="restaurants.length < 1 && !loadingService.getLoading()"
+  >
+    <h1>No Restaurants Have Been Added Yet...</h1>
+  </div>
+  <div class="mobile-footer">
+    <mat-icon
+      class="mobile-icons"
+      *ngIf="!loadingService.getLoading()"
+      (click)="addRestaurant()"
+      aria-hidden="false"
+      aria-label="add icon"
+      fontIcon="add"
+    ></mat-icon>
+    <mat-icon
+      class="mobile-icons"
+      *ngIf="!loadingService.getLoading()"
+      (click)="logout()"
+      aria-hidden="false"
+      aria-label="logout icon"
+      fontIcon="logout"
+    ></mat-icon>
 
-
-
-
+    <mat-icon
+      class="mobile-icons-disabled"
+      *ngIf="loadingService.getLoading()"
+      (click)="addRestaurant()"
+      aria-hidden="false"
+      aria-label="add icon"
+      fontIcon="add"
+    ></mat-icon>
+    <mat-icon
+      class="mobile-icons-disabled"
+      *ngIf="loadingService.getLoading()"
+      (click)="logout()"
+      aria-hidden="false"
+      aria-label="logout icon"
+      fontIcon="logout"
+    ></mat-icon>
+  </div>
+  <div class="mobile-loading" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'restaurants'">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
-
-
-
-
-
-
-
-
-
-<!-- <div class="container">
-  <div #alertContainer></div>
-  <div class="header">
-    <div class="searchAndLoading" *ngIf="!loadingService.getLoading()">
-      <input
-      class="searchbar"
-      type="text"
-      placeholder="Search For Restaurant Name..."
-      [(ngModel)]="searchTerm"
-      (input)="searchRestaurants(searchTerm)"
-      />
-      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
-    </div>
-
-    <div class="searchAndLoading" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
-      <input
-      class="searchbar"
-      type="text"
-      disabled="true"
-      placeholder="Finish confirmation before searching..."
-      [(ngModel)]="searchTerm"
-      (input)="searchRestaurants(searchTerm)"
-      />
-      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
-    </div>
-
-    <div class="searchAndLoading" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() != 'confirmation'">
-      <input
-      class="searchbar"
-      type="text"
-      placeholder="Restaurants loading..."
-      [(ngModel)]="searchTerm"
-      (input)="searchRestaurants(searchTerm)"
-      />
-      <mat-spinner [diameter]="30" class="loadingHeader" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'search' && searchTerm != ''"  mode="indeterminate"></mat-spinner>
-    </div>
-
-    <div class="buttonContainer" *ngIf="!loadingService.getLoading()">
-      <button class="buttonClass" (click)="addRestaurant()">
-        New Restaurant
-      </button>
-      <button class="buttonClass" (click)="logout()">Logout</button>
-    </div>
-
-    <div class="buttonContainer" *ngIf="loadingService.getLoading()">
-      <button class="buttonClassDisabled" disabled="true">
-        New Restaurant
-      </button>
-      <button class="buttonClassDisabled" disabled="true" (click)="logout()">Logout</button>
-    </div>
-  </div>
-
-  
-
-  <div class="restaurantContainer" *ngIf="restaurants.length > 0">
-    <mat-card class="card" *ngFor="let restaurant of filteredRestaurants">
-      <mat-card-subtitle
-        ><p>{{ restaurant._id }}</p></mat-card-subtitle
-      >
-      <mat-card-title class="cardHeader"
-        ><p>{{ restaurant.details.name }}</p></mat-card-title
-      >
-      <mat-divider></mat-divider>
-      <mat-card-content
-        >Overall Income: ${{
-          restaurant.admin.overallIncome - 0.01 | number : "1.2-2"
-        }}</mat-card-content
-      >
-      <mat-divider></mat-divider>
-
-      <mat-card-actions align="end"  *ngIf="!loadingService.getLoading()">
-        <button
-          class="cardButton"
-          (click)="restaurant._id ? restaurantPage(restaurant._id) : null"
-          mat-button
-        >
-          Edit
-        </button>
-        <button class="cardButton" (click)="restaurant._id ? delete(restaurant._id, restaurant.details.name) : null" mat-button>Delete</button>
-      </mat-card-actions>
-
-      <mat-card-actions align="end" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'confirmation'">
-        <button
-          class="cardButton"
-          disabled="true"
-          mat-button
-        >
-          Edit
-        </button>
-        <button class="cardButton" disabled="true" mat-button>Delete</button>
-      </mat-card-actions>
-
-    <mat-card-footer>
-      <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'delete'" mode="indeterminate"></mat-progress-bar>
-
-        <mat-progress-bar *ngIf="loadingService.getLoading() && this.editingRestaurantId === restaurant._id && loadingService.getLoadingItem() === 'edit'" mode="indeterminate"></mat-progress-bar>
-      </mat-card-footer>
-
-    </mat-card>
-
-    <div class="notAdded" *ngIf="restaurants.length < 1">
-      <h1>No Restaurants Have Been Added Yet...</h1>
-    </div>
-
-    <div class="notAdded" *ngIf="filteredRestaurants.length < 1">
-      <h1>No Restaurants Have Been Found With That Search...</h1>
-    </div>
-  </div>
-
-    <div class="loadingContainer" *ngIf="loadingService.getLoading() && loadingService.getLoadingItem() === 'restaurants'">
-    <mat-spinner [diameter]="100"mode="indeterminate"></mat-spinner>
-
-
-
-    </div>
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="logout"></mat-icon>
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
-    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
-
-
-
-
-</div> -->
