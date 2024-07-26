@@ -1,466 +1,85 @@
-h1,
-h2,
-h3,
-h4,
-p,
-a {
-  font-family: "JetBrainsMono";
+h1, h2, h3, h4, h5, h6, a, p {
+  font-family: 'Montserrat', sans-serif;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow: hidden;
-  background-color: var(--offWhite3);
-  /* background-image: linear-gradient(
-    to top,
-    var(--lightBlue2),
-    var(--darkestBlue)
-  ); */
-}
-
-.header{
-  height: 5vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 1.5rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  padding-bottom: 1.5rem;
-}
-
-.header .searchAndLoading {
-  display: flex;
-  align-items: center; /* Align items vertically in the center */
-  gap: 10px; /* Optional: adds space between search bar and loading text */
-}
-
-.header .buttonClass{
-  background: none;        /* Remove background color */
-  width: auto;             /* Adjust width as necessary */
-  height: auto;            /* Adjust height as necessary */
-  padding: 0; 
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-size: 1.5rem;
-  font-weight: 100;
-  color: var(--darkestBlue) !important;
-  cursor: pointer;
-  border: none;
-}
-
-.header .buttonContainer{
-  display: flex;
-  flex-direction: row;
-  gap: 4rem;
-  margin-right: 6rem;
-}
-
-.header .buttonClass:hover {
-  text-decoration: underline;
-  text-underline-offset: .5rem;
-  background-color: none !important;
-
-}
-
-.header .searchbar{
-  width: 28rem;
-  height: 2.5rem;
-  border-bottom: 0.15rem solid var(--darkestBlue);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  text-align: left;
-  font-family: "JetBrainsMono";
-  font-size: 1.25rem;
-  letter-spacing: .043125rem;
-  color: var(--darkestBlue) !important;
-  caret-color: var(--darkestBlue);
-  background-color: inherit;
-
-}
-
-.header .searchbar::placeholder {
-  color: var(--darkestBlue) !important;
-  font-size: 1.25rem;
-}
-.header .searchbar:focus {
-  outline: none;
-}
-.header .searchbar:-webkit-autofill,
-.header .searchbar:-webkit-autofill:hover,
-.header .searchbar:-webkit-autofill:focus,
-.header .searchbar:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px white inset !important;
-  -webkit-text-fill-color: var(--darkestBlue) !important;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: 1.25rem;
-}
-
-.header .searchbar:-webkit-autofill::first-line {
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: 1.25rem;
-}
-
-.header .searchbar:-webkit-autofill {
-  -webkit-box-shadow: none;
-  background-color: none;
-  font-family: "JetBrainsMono" !important;
-  font-size: 1.25rem !important;
-}
-
-.header .searchbar:focus::placeholder {
-  color: transparent;
-}
-
-.header .searchbar::placeholder {
-  color: var(--darkestBlue);
-  font-size: 1rem;
-}
-
-
-.restaurantContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start; /* Space between to handle multiple cards */
-  gap: 20px; /* Space between cards */
-  padding-top: 1.5rem;
-  margin-left: 3rem;
-  margin-right: 1.5rem;
-  
-}
-
-.loadingContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 95vh;
-  padding-bottom: 5vh;
-}
-mat-card-title{
-  font-family: "JetBrainsMono", sans-serif;
-  font-weight: 100;
-  font-size: 1rem;
-  
-}
-.cardButton{
-  cursor: pointer;
-  font-family: "JetBrainsMono", sans-serif;
-  font-size: .8rem;
-  color: var(--darkestBlue);
-  margin-top: 0rem;
-  padding-top: 0;
-  background-color: transparent !important;
-}
-
-
-
-
-
-
-.cardButton:hover{
-  text-decoration: underline;
-  text-underline-offset: .5rem;
-  transform: translateY(-4px);
-  transition: transform 0.3s ease; /* Smooth transform on hover */
-}
-
-
-
-
-mat-card{
-  max-width: 30rem;
-  padding: 1rem;
-  font-family: "JetBrainsMono", sans-serif;
-  transition: transform 0.3s ease; /* Smooth transform on hover */
-
-}
-mat-card:hover {
-  transform: translateY(-8px); /* Slight raise effect on hover */
-  background-color: var(--offWhite2);
-  border: 1px solid var(--lightOrange);
-
-}
-
-mat-card-content{
-  margin-bottom: 1rem;
-}
-
-
-mat-divider {
-  padding-bottom: .5rem;
-  
-}
-
-mat-card-subtitle{
-  margin-left: 1rem;
-  margin-right: 1rem;
-
-  font-size: .75rem;
-}
-mat-card-title{
-  margin-left: 1rem;
-  margin-right: 1rem;
-
-  font-size: 1.25rem;
-}
-
-mat-progress-bar{
-
-  margin-top: 1rem;
-}
-
-
-.buttonContainer{
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-area: .5rem;
-  background-color: transparent !important;
-
-
-}
-
-
-
-.restaurantContainer .restaurantCard {
-  background-color: var(--offWhite2);
-  border: 1px solid var(--lightTan);
-  border-radius: 5px;
-  width: 16rem; 
-  height: 10rem;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.1); /* Subtle shadow for depth */
-  cursor: pointer;
-  transition: transform 0.3s ease; /* Smooth transform on hover */
-  font-family: "JetBrainsMono";
-  font-weight: 100;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.restaurantContainer .restaurantCard:hover {
-  transform: translateY(-8px); /* Slight raise effect on hover */
-  background-color: var(--offWhite2);
-  border: 1px solid var(--lightOrange);
-
-}
-
-.restaurantCard h3{
-  margin: 1rem;
-  font-size: 1rem;
-}
-
-.restaurantCard h4{
-  margin: 1rem;
-  font-size: .9rem;
-}
-
-.restaurantCard h5{
-  margin: 1rem;
-  font-size: .8rem;
-}
-
-.restaurantCard h6{
-  margin: 1rem;
-  font-size: .7em;
-}
-
-.notAdded h1{ 
-  color: var(--darkestBlue);
-  font-weight: 100;
-  font-family: "JetBrainsMono" !important;
-  margin-left: 3rem;
-  margin-top: 3rem;
-
-}
-
-
-
-.header .buttonClassDisabled{
-  background: none;        /* Remove background color */
-  width: auto;             /* Adjust width as necessary */
-  height: auto;            /* Adjust height as necessary */
-  padding: 0; 
-  text-align: center;
-  font-family: "JetBrainsMono";
-  font-size: 1.5rem;
-  opacity: 45%;
-  font-weight: 100;
-  color: var(--darkestBlue) !important;
-  cursor:default;
-  border: none;
-}
-
-@media (max-width: 660px) {
-  .header{
-    height: 10vh;
-    flex-direction: column;
-  }
-
-  .header .searchbar{
-    margin-bottom: 1rem;
-  }
-
-  .header .buttonContainer{
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin-left: 0rem;
-  }
-}
-
-@media (max-width: 440px) {
-  .header .searchbar{
-    width: 15rem;
-  }
-}
-
-
-
-/* .container {
-  display: flex;
-  min-height: 100vh;
-  background-color: var(--darkestBlue);
-  overflow: hidden;
-}
-
-.leftContainer {
-  width: 53.23vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2.875rem;
+.mobile-page {
+  background-color: var(--dark);
   height: 100vh;
-  overflow: auto;
-}
-
-.leftContainer .searchBarContainer .searchbar {
-  width: 56.25rem;
-  height: 6rem;
-  border-radius: 6.25rem;
-  border: none;
-  text-align: center;
-  font-size: 2.3125rem;
-  margin-bottom: 2.875rem;
-}
-
-.leftContainer .searchbar::placeholder {
-  color: var(--darkestBlue);
-  font-size: 2.3125rem;
-}
-.leftContainer .searchbar:focus {
-  outline: none;
-}
-.leftContainer .searchbar:-webkit-autofill,
-.leftContainer .searchbar:-webkit-autofill:hover,
-.leftContainer .searchbar:-webkit-autofill:focus,
-.leftContainer .searchbar:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: var(--lightTan) !important;
-}
-.leftContainer .searchbar:focus::placeholder {
-  color: transparent;
-}
-
-.leftContainer .restaurantContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2.875rem;
-}
-
-.leftContainer .restaurantContainer .restaurantItem {
-  background-color: var(--lightTan);
-  height: 10.625rem;
-  width: 26.25rem;
-  text-align: center;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--darkestBlue);
-  cursor: pointer;
 }
 
-.leftContainer .restaurantContainer .restaurantItem h3 {
-  margin-bottom: 0.5rem;
-  font-family: "JetBrainsMono";
-  font-size: 1.5rem;
-}
-
-.leftContainer .restaurantContainer .restaurantItem p {
-  font-family: "JetBrainsMono";
-  font-size: 1rem;
-}
-
-.rightContainer {
-  width: 46.77vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.rightContainer .buttonsContainer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 5.5rem;
-  margin-bottom: 5.375rem;
-}
-
-.rightContainer .buttonsContainer button {
-  border-radius: 6.25rem;
-  width: 14.9375rem;
-  height: 6rem;
-  background-color: var(--darkerBlue);
-  margin: 1rem;
-  font-family: "JetBrainsMono";
-  font-size: 1.375rem;
-  color: var(--darkestBlue);
-  cursor: pointer;
-  border: none;
-}
-
-.rightContainer .branding {
+.mobile-header {
+  padding-top: 5.39vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.rightContainer h2 {
-  font-family: "JetBrainsMono";
-  font-size: 2.125rem;
-  color: var(--lightTan);
-  margin-bottom: 5.375rem;
-}
-
-.rightContainer .branding h1 {
-  font-family: "JetBrainsMono";
-  font-size: 8.0625rem;
-  line-height: 9.375rem;
-  text-align: center;
-  letter-spacing: 1.45125rem;
-  color: var(--lightBlue);
-  margin-bottom: 4.75rem;
+.mobile-searchbar {
+  font-size: 1.125rem;
   font-weight: 300;
-  overflow: hidden;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    2px 1px 0 #000;
+  border: none;
+  background-color: transparent;
+  color: var(--white);
+  outline: none;
 }
 
-.rightContainer .branding h2 {
-  font-family: "JetBrainsMono";
-  font-size: 2.1875rem;
-  line-height: 4.875rem;
-  text-align: center;
-  letter-spacing: 0.48125rem;
-  color: var(--lightTan);
-  font-weight: 100;
-} */
+.mobile-searchbar::placeholder {
+  color: var(--white);
+  opacity: 1;
+}
+
+.mobile-line-container {
+  width: 75vw;
+  position: relative;
+  height: 2vh; /* Adjust as necessary */
+}
+
+.mobile-line {
+  width: 100%;
+  height: 0.15vh;
+  background-color: var(--blue);
+  margin-top: 1vh;
+}
+
+.mobile-loading-header {
+  position: absolute;
+  top: 2.15vh; /* Adjust as necessary */
+  width: 100%;
+  background-color: var(--white);
+
+}
+
+.mobile-content-container{}
+
+
+
+
+
+
+
+
+
+@media (max-width: 480px) {
+
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+
+}
+
+
+
+@media (min-width: 1201px) {
+
+}
