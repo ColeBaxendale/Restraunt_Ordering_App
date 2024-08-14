@@ -1,4 +1,10 @@
 <div class="mobile-page">
+  
+  
+  
+  
+  
+  
   <div class="mobile-header" *ngIf="!loadingService.getLoading()">
     <mat-progress-bar
       class="mobile-loading-header"
@@ -20,6 +26,58 @@
       <div class="mobile-line"></div>
     </div>
   </div>
+
+
+
+
+  <div class="laptop-header" *ngIf="!loadingService.getLoading()">
+    <mat-progress-bar
+      class="mobile-loading-header"
+      mode="indeterminate"
+      *ngIf="
+        loadingService.getLoading() &&
+        loadingService.getLoadingItem() === 'search' &&
+        searchTerm != ''
+      "
+    ></mat-progress-bar>
+    <input
+      class="mobile-searchbar"
+      type="text"
+      placeholder="Search For Restaurant Name..."
+      [(ngModel)]="searchTerm"
+      (input)="searchRestaurants(searchTerm)"
+    />
+    <div class="mobile-line-container">
+      <div class="mobile-line"></div>
+    </div>
+    <mat-icon
+    class="mobile-icons"
+    *ngIf="!loadingService.getLoading()"
+    (click)="addRestaurant()"
+    aria-hidden="false"
+    aria-label="add icon"
+    fontIcon="add"
+  ></mat-icon>
+  <mat-icon
+    class="mobile-icons"
+    *ngIf="!loadingService.getLoading()"
+    (click)="logout()"
+    aria-hidden="false"
+    aria-label="logout icon"
+    fontIcon="logout"
+  ></mat-icon>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
 
   <div
     class="mobile-header"
@@ -76,6 +134,8 @@
       <div class="mobile-line"></div>
     </div>
   </div>
+
+  
 
   <div class="mobile-content" *ngIf="restaurants.length > 0">
     <mat-card
